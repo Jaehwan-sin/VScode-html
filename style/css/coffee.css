@@ -1,0 +1,17 @@
+body{
+    background-color: yellow;
+    font-family: inpact serif 맑은고딕;
+    color: #333;
+}
+h1{
+    border-bottom: 3px solid red;
+}
+p.first{
+    color: green;
+}
+p.second{
+    color: blue;
+}
+em{
+    color: red;
+}
