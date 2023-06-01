@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>css6</title>
+    <!-- 후손 자식 구분 -->
+    <style>
+        body em{
+            /* 후손 */
+            color: red;
+        }
+        body>em{
+            /* 자식 */
+            color: blue;
+        }
+        body>h2{
+            color: aqua;
+        }
+    </style>
+</head>
+<body>
+    <h2>This is <em>very</em> important</h2>
+    <p>This is <em>very</em> important</p>
+    <em>very</em>
+</body>
+</html>
