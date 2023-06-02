@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>z-index</title>
+</head>
+<body>
+    <style>
+        #box1{
+            position: absolute;
+            width: 100px; height: 100px; background-color: blue;
+            top: 0; left: 0;
+            z-index: 101;
+        }
+        #box2{
+            position: absolute;
+            width: 100px; height: 100px; background-color: yellow;
+            top: 30px; left: 30px;
+            z-index: 100;
+        }
+        #box3{
+            position: absolute;
+            width: 100px; height: 100px; background-color: green;
+            top: 60px; left: 60px;
+            z-index: 99;
+            /* z-index의 숫자가 크면 앞으로 온다 */
+        }
+    </style>
+    <div id="box1">box #1</div>
+    <div id="box2">box #2</div>
+    <div id="box3">box #3</div>
+    <p>배경에 이미지 넣기</p>
+</body>
+</html>

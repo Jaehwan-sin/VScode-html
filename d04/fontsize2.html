@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Font Size2</title>
+    <style>
+        /* em은 상위의 영향을 받지만 rem은 상위의 영향을 받지않는다. em은 배수의 크기 */
+        /* html>div>li의 순서인데 div에 em을 쓰면 html의 영향을 받지만 rem은 html의 영향을 받지않는다. */
+        html{
+            font-size: 15px;
+        }
+        div{
+            font-size: 2rem;
+        }
+        li{
+            font-size: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- px em rem 비교 -->
+    <!-- em은 부모의 배수로 사이징
+    rem 루트의 사이즈의 영향을 받아 사이징 -->
+    <div>div font
+        <li>font li1</li>
+    </div>
+    <li>font li2</li>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>static position</title>
+        <!-- absolute 절대위치 relative 상대위치 static 고정위치 정적위치 -->
+    </head>
+
+    <body>
+        <!-- 정적설정은 페이지의 정상흐름으로 결정
+        대신, top,bottom,right 등의 속성 영향받지않는다. -->
+        <style>
+            #one {
+                width: 200px;
+                height: 50px;
+                background-color: cyan;
+            }
+
+            #two {
+                /* margin-left: 50px; */
+                position: absolute;
+                width: 200px;
+                height: 50px;
+                background-color: yellow;
+                left: 130px;
+                top: 30px;
+            }
+
+            #three {
+                width: 200px;
+                height: 50px;
+                background-color: lightgreen;
+            }
+        </style>
+        <p id="one">block #1</p>
+        <div id="two">block #2
+            <br>
+            position:static
+        </div>
+        <p id="three">block #3</p>
+    </body>
+
+</html>
