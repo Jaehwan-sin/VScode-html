@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>layout mission</title>
+</head>
+<body>
+     <style>
+        #header{
+            width: 100%;
+            height: 50px;
+            background-color: plum;
+            text-align: center;
+        }
+        #Links{
+            float: left;
+            width: 400px;
+            height: 300px;
+            background-color: orange;
+        }
+        #Links a{
+            padding-left: 40px;
+        }
+        #Links img{
+            padding-left: 20px;
+            padding-top: 10px;
+        }
+        #content{
+            float: right;
+            width: calc(100% - 400px);
+            height: 300px;
+            background-color: yellow;
+        }
+        #footer{
+            width: 100%;
+            height: 40px;
+            background-color: rgb(114, 14, 39);
+            text-align: center;
+            color: white;
+            /* clear : both; 는 위 쪽 스타일의 영향을 받지 않게 하는 명령 */
+        }
+        .clear{
+            clear: both;
+        }
+        
+    </style>
+    <div id="wrapper">
+        <div id="header"><h1>My Linux WebPage</h1></div>
+        <div id="Links"  ><h2 style="margin-top: 0;">Links</h2>
+            <a href="https://www.w3.org/">W3C</a> <br>
+            <a href="https://www.mozilla.org/ko/firefox/new/">MOZILLA</a> <br>
+            <a href="https://www.htmldog.com/">HTML DOGS</a> <br>
+            <img src="../imgs/coffee.png" alt="coffee"><br>
+            <div style="color:white; padding-left: 95px;">coffee</div>
+            </div>
+        <div id="content">
+            <h2 style="margin-top: 0;">Senamtic Tags</h2>
+            시멘틱 요소(Senamtic elements)들은 브라우저에게 요소의 의미나 목적을 명확하게 알려주는 요소이다.
+            <h2>div와 span</h2>
+            div는 "divide"의 약자로서 페이지를 논리적인 섹션으로 분리하는데 사용되는 태그이다. span 요소는 인라인 요소로서 텍스트를 위한
+            컨테이너로 사용할 수 있다.
+        </div>
+        <div class="clear"></div>
+        <div id="footer">Copyright(c) 2022 Hong Master</div>
+    </div>
+</body>
+</html>
