@@ -1,0 +1,102 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #ede7f6;
+}
+
+a {
+    color: black; text-decoration: none;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 20vh;
+}
+
+.icon {
+    margin: 13px;
+    width: 100px;
+    display: flex;
+
+}
+
+.menubar ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.menubar ul li {
+    margin: 10px;
+    padding: 10px;
+}
+
+.signButton > button {
+    margin: 15px;
+    width: 60px;
+    height: 30px;
+    border: 0;
+    border-radius: 5px;
+    background-color: #b39ddb;
+}
+.signButton > button:hover {
+    background-color: #e6ceff;
+}
+
+.main {
+    height: 80vh;
+    display: flex;
+    flex-direction:row;
+}
+.main *{
+    margin-bottom: 20px;
+}
+
+.left {
+    width: 50%;
+    margin-left: 50px;
+    display: flex;
+    flex-direction: column;
+}
+.text {
+    width: 40vh;
+}
+.text h5 {
+    color: #ae52d4;
+}
+.text h2 {
+    color: #e7b9ff;
+    font-size: 2em;
+}
+
+.main button {
+    margin: 10px;
+    width: 100px;
+    height: 45px;
+    border: 0;
+    border-radius: 5px;
+
+    background-color: #b39ddb;
+}
+.main button:hover {
+    background-color: #e6ceff;
+}
+.right {
+    width: 50%;
+}
+.labImg {
+    align-self: flex-end;
+    justify-self: center;
+}
