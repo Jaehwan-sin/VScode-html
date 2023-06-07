@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>csstranslate2</title>
+</head>
+<body>
+    <style>
+        div{
+            width: 200px; height: 50px;
+            border: 1px solid red;
+            /* hover때 호출하는 시간 */
+            -webkit-transition: width 5s, height 5s, border 5s, -webkit-transform 5s;
+        }
+        div:hover{
+            width: 200px; height: 50px;
+            border: 5px solid green;
+            transform: rotate(1440deg);
+        }
+    </style>
+    <div id="box1">마우스를 올려보세요</div>
+</body>
+</html>

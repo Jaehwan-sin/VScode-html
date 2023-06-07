@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jsif</title>
+</head>
+<body>
+    <script>
+        var time = new Date().getHours();// 현재시간 가져오기
+        var msg;
+        if(time<12){
+            msg="굿모닝"
+        }else if(time<18){
+            msg="굿이브닝"
+        }else{
+            msg="굿나잇"
+        }
+        alert(msg)
+    </script>
+</body>
+</html>

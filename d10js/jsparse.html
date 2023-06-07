@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jsparse</title>
+</head>
+<body>
+    <script>
+        function calc(){
+        var xnum = parseInt(document.getElementById("x").value)
+        var ynum = parseInt(document.getElementById("y").value)
+        var sum = xnum+ynum;
+        // snum의 텍스트 필드에 값을 넣는 법
+        document.getElementById("sum").value = sum
+        }
+    </script>
+
+    <h1>덧셈계산</h1>
+    <form action="">
+        first num : <input type="text" id="x"> <br>
+        second num : <input type="text" id="y"> <br>
+        snum : <input type="text" id="sum"> <br>
+        <input type="button" value="계산" onclick="calc()">
+    </form>
+    
+</body>
+</html>

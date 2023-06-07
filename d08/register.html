@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>register</title>
+</head>
+
+<body>
+    <style>
+        body {
+            background-color: #f3f1e9;
+        }
+
+        label {
+            display: inline-block;
+            width: 120px;
+            vertical-align: top;
+        }
+
+        input {
+            display: inline-block;
+            width: 200px;
+        }
+    </style>
+    <form action="#">
+        <fieldset>
+            <legend><strong>회원가입 폼</strong></legend>
+            <label for="name">아이디</label>
+            <!-- label for는 해당 텍스트에 마우스 커서를 올리면 input type이 활성화된다. -->
+            <input type="text" name="name" id="name">
+            <button>중복검사</button> <br>
+            <label for="pass1">패스워드</label>
+            <input type="text" name="pass1" id="pass1"> <br>
+            <label for="pass2">패스워드 확인</label>
+            <input type="text" name="pass2" id="pass2"> <br>
+
+            <label for="content">내용</label>
+            <textarea type="text" name="content" id="content" cols="30" rows="10"></textarea> <br>
+            <input type="radio" name="gender" value="male">남성 <br>
+            <input type="radio" name="gender" value="female">여성 <br>
+            <button type="submit">전송</button>
+            <button type="reset">취소</button>
+        </fieldset>
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jslem</title>
+</head>
+<body>
+    <h1 id="test">This is a Heading</h1>
+    <!-- 버튼 클릭하면 func()을 호출하겠다. -->
+    <button onclick="func();">click</button>
+
+    <script>
+        function func(){
+            var e = document.getElementById("test")
+            // alert(typeof(e))
+            e.style.color="red"
+            // innerHTML은 글자를 바꾼다.
+            e.innerHTML="Changed String"
+        }
+    </script>
+
+</body>
+</html>

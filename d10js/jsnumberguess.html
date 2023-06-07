@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jsnumberGuess</title>
+</head>
+<body>
+    <h2>숫자 맞추기 게임</h2>
+    이 게임은 랜덤숫자를 몇번에 맞추는가 하는 게임<br>
+    숫자 1~100 사이의 랜덤숫자의 값을 맞춰라
+    <form action="">
+        숫자 : <input type="text" id="user" size="5">
+        <input type="button" value="확인" onclick="guess()">
+    </form>
+
+    <script>
+        var computerNumber = parseInt(Math.random()*100);
+        function guess(){
+            var result = "";
+            var number = parseInt(document.getElementById("user").value);
+            // alert(number+" type : "+typeof(number))
+            if(number==computerNumber)
+                result="성공";
+            else if(number<computerNumber)
+                result="입력숫자가 작습니다.";
+            else if(number>computerNumber)
+                result="입력숫자가 큽니다.";
+            alert(result)
+        }
+    </script>
+    
+</body>
+</html>

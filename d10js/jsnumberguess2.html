@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jsnumberGuess</title>
+</head>
+<body>
+    <h2>숫자 맞추기 게임</h2>
+    이 게임은 랜덤숫자를 몇번에 맞추는가 하는 게임<br>
+    숫자 1~100 사이의 랜덤숫자의 값을 맞춰라
+    <form action="">
+        숫자 : <input type="text" id="user" size="5">
+        <input type="button" value="확인" onclick="guess()"> <br>
+        힌트 : <input type="text" id="result" size="20"> <br>
+        추측횟수 : <input type="text" id="totguess" size="20">
+    </form>
+
+    <script>
+        var computerNumber = parseInt(Math.random()*100);
+        var count = 0; 
+        function guess(){
+            count++; // 클릭할 때마다 1씩 증가
+            var result = "";
+            var number = parseInt(document.getElementById("user").value);
+            // alert(number+" type : "+typeof(number))
+            if(number==computerNumber)
+            result="성공";
+            else if(number<computerNumber)
+            result="입력숫자가 작습니다.";
+            else if(number>computerNumber)
+            result="입력숫자가 큽니다.";
+            alert(result)
+
+            document.getElementById("result").value = result;
+            document.getElementById("totguess").value = count;
+        }
+            
+    </script>
+    
+</body>
+</html>

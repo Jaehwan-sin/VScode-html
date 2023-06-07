@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>cssopacity</title>
+</head>
+<body>
+    <style>
+        img{
+            opacity: 0.4;
+            /* 투명도 */
+        }
+        img:hover{
+            opacity: 1.0;
+            /* hover는 마우스 커서 올릴 때 동작하는 것 */
+        }
+
+        #a{
+            /* id는 #으로 받을 수 있다. */
+            /* display: none; */
+            /* display none은 이미지가 아예 사라지고 visibility는 숨겨진다. */
+            /* visibility: hidden; */
+            border: 2px dotted red;
+        }
+        #b{
+            border: 2px dotted red;
+        }
+    </style>
+
+    <h1>opacity</h1>
+    <img src="../imgs/lion.png" alt="lion" width="150px" height="120px">
+    <img src="../imgs/audio.png" alt="audio" width="150px" height="120px">
+    <br>
+    <img id="a" src="../imgs/lion.png" alt="lion" width="150px" height="120px">
+    <img id="b" src="../imgs/audio.png" alt="audio" width="150px" height="120px">
+    
+</body>
+</html>
