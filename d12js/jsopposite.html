@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jsopposite</title>
+</head>
+<body>
+    <button onclick="func();">click</button>
+    <button onclick="opposite('123456');">color</button>
+
+    <h1>This is a Heading</h1>
+
+    <script>
+        function func(){
+            document.write("새로운 내용이 다시 쓰여집니다.");
+        }
+
+        function opposite(c){
+            var result = "";
+            var ch = "";
+            var list1 = "123456789abcdef";
+            var list2 = "fedcba987654321";
+            for(var i = 0; i < c.length; i++){
+                ch = c.charAt(i);
+                for(var n = 0; n < list1.length; n++){
+                    if(ch==list1.charAt(n)){
+                        result+=list2.charAt(n);
+                    }                                       
+                 }
+            }
+            alert(result);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jsreturn</title>
+</head>
+<body>
+    <script>
+        // 너비를 구하면서 return 하기
+        var width = 100;
+        var height = 50;
+        area = getRectArea(width,height);
+        
+        function getRectArea(w,h){
+            result=h*w;
+            return result;
+        }
+
+        document.write(width+" : "+height+" result : "+area);
+
+        console.log(getRectArea(300,30));
+        console.log(getRectArea(200,20));
+    </script>
+</body>
+</html>

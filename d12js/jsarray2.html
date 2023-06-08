@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jsarray2</title>
+</head>
+<body>
+    <!-- html요소의 name속성을 이용해서 데이터 처리 -->
+    <form action="#" name="myform">
+        필드1 : <input type="text" name="a0"> <br>
+        필드2 : <input type="text" name="a1"> <br>
+        필드3 : <input type="text" name="a2"> <br>
+        <input type="button" value="reset" onclick="init();">
+    </form>
+
+    <script>
+        function init() {
+            // form의 input에 접근
+            // document.myform["a0"].value = 100;
+            for(i=0; i<3; i++){
+                document.myform["a"+i].value = 100*(i+1);
+            }
+        }
+    </script>
+</body>
+</html>

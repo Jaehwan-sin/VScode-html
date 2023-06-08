@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Colortable2</title>
+</head>
+<body>
+    <h3>홍길동 컬러 테이블</h3>
+    <table border="1">
+
+        <script>
+        var dec = 15;
+        var r1,r2,r3,r4;
+
+        var hex = dec.toString(16); // 16진수로 변환
+        
+        // document.write("<h3 style='background:#ff0000'>배경색 #ff0000</h3>");
+        for(i=0; i<16; i+=4){
+            document.write("<tr>");
+                for(j=0; j<16; j++){
+                    r1 = i.toString(16);
+                    r2 = j.toString(16);                    
+                    document.write("<td style='background:#"+r1+r2+"0000'> #"+r1+r2+"0000</td>");
+                }
+            document.write("</tr>");
+        }
+        for(a=0; a<16; a+=4){
+            document.write("<tr>");
+                for(b=0; b<16; b++){
+                    r3 = a.toString(16);
+                    r4 = b.toString(16);
+                    document.write("<td style='background:#"+r3+r4+"9999'> #"+r3+r4+"9999</td>");
+                        }
+                    }
+            document.write("</tr>");
+        for(a=0; a<16; a+=4){
+            document.write("<tr>");
+                for(b=0; b<16; b++){
+                    r3 = a.toString(16);
+                    r4 = b.toString(16);
+                    document.write("<td style='background:#ff"+r3+r4+"66'> #ff"+r3+r4+"66</td>");
+                        }
+                    }
+            document.write("</tr>");
+        for(a=0; a<16; a+=4){
+            document.write("<tr>");
+                for(b=0; b<16; b++){
+                    r3 = a.toString(16);
+                    r4 = b.toString(16);
+                    document.write("<td style='background:#33"+r3+r4+"ff'> #33"+r3+r4+"ff</td>");
+                        }
+                    }
+            document.write("</tr>");
+        for(c=0; c<16; c+=4){
+            document.write("<tr>");
+                for(d=0; d<16; d++){
+                    r5 = c.toString(16);
+                    r6 = d.toString(16);
+                    document.write("<td style='background:#"+r5+r6+"6633'> #"+r5+r6+"6633</td>");
+                        }
+                    }
+            document.write("</tr>");
+        for(c=0; c<16; c+=4){
+            document.write("<tr>");
+                for(d=0; d<16; d++){
+                    r5 = c.toString(16);
+                    r6 = d.toString(16);
+                    document.write("<td style='background:#99"+r5+r6+"33'> #99"+r5+r6+"33</td>");
+                        }
+                    }
+            document.write("</tr>");
+        for(c=0; c<16; c+=4){
+            document.write("<tr>");
+                for(d=0; d<16; d++){
+                    r5 = c.toString(16);
+                    r6 = d.toString(16);
+                    document.write("<td style='background:#ff99"+r5+r6+"'> #ff99"+r5+r6+"</td>");
+                        }
+                    }
+            document.write("</tr>");  
+        for(c=0; c<16; c+=4){
+            document.write("<tr>");
+                for(d=0; d<16; d++){
+                    r5 = c.toString(16);
+                    r6 = d.toString(16);
+                    document.write("<td style='background:#33ff"+r5+r6+"'> #33ff"+r5+r6+"</td>");
+                        }
+                    }
+            document.write("</tr>"); 
+        for(c=0; c<16; c+=4){
+            document.write("<tr>");
+                for(d=0; d<16; d++){
+                    r5 = c.toString(16);
+                    r6 = d.toString(16);
+                    document.write("<td style='background:#99"+r5+r6+"ff'> #99"+r5+r6+"ff</td>");
+                        }
+                    }
+            document.write("</tr>");     
+        </script>
+    </table>
+</body>
+</html>

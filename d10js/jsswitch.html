@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jsswitch</title>
+</head>
+<body>
+    <script>
+        var grade = prompt("평점을 입력하세요","(A,B,C,D,F) 사이값");
+        grade = grade.toUpperCase(); // 대문자로 변환
+        switch(grade){
+            case 'A': alert("Gooood 10000"); break;
+            case 'B': alert("Gooood 1000"); break;
+            case 'C': alert("Gooood 100"); break;
+            case 'D': alert("Gooood 10"); break;
+            case 'F': alert("Bad 1"); break;
+            default: alert("잘 못 입력했습니다."); break;
+        }
+            
+    </script>
+</body>
+</html>

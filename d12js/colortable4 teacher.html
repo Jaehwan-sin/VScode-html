@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>colortable1</title>
+</head>
+<body>
+    <h3>홍길동 칼라테이블</h3>
+    <table border="1">
+
+        <script>
+            function opposite(c) {
+                var result='';
+                var ch='';
+                var list1='0123456789abcedf';
+                var list2='fedcba9876543210';
+                for(var i=0; i<c.length; i++) {
+                    ch=c.charAt(i);
+                    for(var n=0; n<list1.length; n++) {
+                        if(ch==list1.charAt(n)) {
+                            result+=list2.charAt(n);
+                        }
+                    }
+                }
+                return result;
+            }
+            var r1, r2, r3;
+            for(i=0; i<16; i++) {
+                for(j=0; j<16; j++) {
+                    document.write("<tr>")
+                    for(k=0; k<16; k++) {
+                        r1=i.toString(16);
+                        r2=j.toString(16);
+                        r3=k.toString(16);
+                        rtot=r1+r1+r2+r2+r3+r3;
+                        var bo=opposite(rtot);
+                        document.write("<td style='background:#"+rtot+";color:#"+bo+";'>#"+rtot+"</td>");
+                        
+                    }
+                    document.write("</tr>")
+                }
+            }
+        </script> 
+    </table>
+</body>
+</html>

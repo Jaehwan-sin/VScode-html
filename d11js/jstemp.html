@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jstemp</title>
+</head>
+<body>
+    <h3>섭씨 화씨 계산테이블 (0~100)</h3>
+    <table width="300" border="1">
+        <tr>
+            <td>섭씨온도</td>
+            <td>화씨온도</td>
+        </tr>
+    <script>   
+        for(celsius=0; celsius<=100; celsius++){
+            document.write("<tr><td>"+celsius+"</td><td>"+(celsius*1.8+32).toFixed(1)+"</td><tr>")
+        }
+    </script>
+    </table>
+</body>
+</html>
