@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>changeimage2 mission</title>
+</head>
+<body>
+    <img src="../imgs/poem.png" alt="강아지" id="image1" width="120" height="100">
+    <img src="../imgs/poem.png" alt="강아지" id="image2" width="120" height="100">
+    <img src="../imgs/poem.png" alt="강아지" id="image3" width="120" height="100">
+    <img src="../imgs/poem.png" alt="강아지" id="image4" width="120" height="100"> <br>
+    <input type="button" value="click1" onclick="changeImg();">
+    <input type="button" value="click2" onclick="changeImg1();">
+    <input type="button" value="click3" onclick="changeImg2();">
+    <input type="button" value="click4" onclick="changeImg3();">
+
+    <script>
+        var b = true;
+        function changeImg(){
+            if(b){
+                document.getElementById("image1").src = "../imgs/poodle.png";
+                b = false;
+            } else{
+                document.getElementById("image1").src = "../imgs/poem.png";
+                b = true;
+            } 
+        }
+        function changeImg1(){
+            if(b){
+                document.getElementById("image2").src = "../imgs/poem.png";
+                b = false;
+            } else{
+                document.getElementById("image2").src = "../imgs/coffee.png";
+                b = true;
+            } 
+        }
+        function changeImg2(){
+            if(b){
+                document.getElementById("image3").src = "../imgs/poem.png";
+                b = false;
+            } else{
+                document.getElementById("image3").src = "../imgs/audio.png";
+                b = true;
+            } 
+        }
+        function changeImg3(){
+            if(b){
+                document.getElementById("image4").src = "../imgs/poem.png";
+                b = false;
+            } else{
+                document.getElementById("image4").src = "../imgs/lion.png";
+                b = true;
+            } 
+        }
+    </script>
+</body>
+</html>
