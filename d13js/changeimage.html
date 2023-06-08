@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>changeimage</title>
+</head>
+<body>
+    <img src="../imgs/poem.png" alt="강아지" id="image1" width="120" height="100"> <br>
+    <input type="button" value="click1" onclick="changeImg();">
+
+    <script>
+        var b = true;
+        function changeImg(){
+            if(b){
+                document.getElementById("image1").src = "../imgs/poodle.png";
+                b = false;
+            } else {
+                document.getElementById("image1").src = "../imgs/poem.png";
+                b = true;
+            }
+        }
+    </script>
+</body>
+</html>

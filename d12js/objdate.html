@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>objdate</title>
+</head>
+<body>
+    <script>
+        function checkDate(){
+            // 구매한날짜 현재날짜 비교
+            var s = document.getElementById("pdate").value;
+            var pdate = new Date(s);// 구매날짜
+            var today = new Date();// 현재날짜
+            var diff = today.getTime()-pdate.getTime();
+            // 날짜로 바꾸기
+            // var days = diff/(1000*60*60*24);
+            var days = Math.floor(diff/(1000*60*60*24))
+            if(days>5){
+                alert("교환불가")
+            }else{
+                alert("교환가능")
+            }
+        }
+    </script>
+    구매날짜 : <input type="date" id="pdate">
+    <button onclick="checkDate();">검사</button>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>objcar</title>
+</head>
+<body>
+    <script>
+        var model,speed,color,brake,accel;
+
+        function Car(model,speed,color){
+            this.model = model;
+            this.speed = speed;
+            this.color = color;
+            this.brake = function(){
+                this.speed-=10;// 10감소
+            }
+            this.accel = function(){
+                this.accel+=10;// 10증가
+            }
+        }
+
+        myCar = new Car("520d",60,"red");
+        document.write("model : "+myCar.model+", speed : "+myCar.speed+"<br>");
+        myCar.brake();
+        document.write("model : "+myCar.model+", speed : "+myCar.speed+"<br>");
+        myCar.accel();
+        myCar.accel();
+        document.write("model : "+myCar.model+", speed : "+myCar.speed+"<br>");
+    </script>
+    
+</body>
+</html>
