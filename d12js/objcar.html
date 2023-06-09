@@ -7,7 +7,7 @@
 <body>
     <script>
         var model,speed,color,brake,accel;
-
+        // 매개변수 전달
         function Car(model,speed,color){
             this.model = model;
             this.speed = speed;
@@ -20,6 +20,7 @@
             }
         }
 
+        // Car(model,speed,color)를 다음과 같이 받음.
         myCar = new Car("520d",60,"red");
         document.write("model : "+myCar.model+", speed : "+myCar.speed+"<br>");
         myCar.brake();
