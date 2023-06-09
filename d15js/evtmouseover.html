@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>evtmouseover</title>
+</head>
+<body>
+    <script>
+        function onMouseIn(elem){
+            elem.style.border = "2px solid red";
+        }
+        function onMouseOut(elem){
+            elem.style.border = "";
+        }
+    </script>
+    <div style="background-color: yellow; width:200px"
+        onmouseover="onMouseIn(this)" onmouseout="onMouseOut(this)"
+    >마우스를 올려 놓으세요</div>
+</body>
+</html>
+<!-- this는 div 그 자체를 의미한다 -->

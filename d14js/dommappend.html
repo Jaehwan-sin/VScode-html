@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>dommapped</title>
+</head>
+<body>
+    <!-- 노드 추가 -->
+    <script>
+        function addText(msg){
+            if(document.createTextNode){
+                var node = document.createTextNode(msg);
+                // 타겟에 추가
+                document.getElementById('target').appendchild(node);
+            }
+        }
+    </script>
+    <div id="target" onclick="addText('동적메시지 추가');"style="font:20px bold">이 곳을 클릭하세요</div>
+</body>
+</html>

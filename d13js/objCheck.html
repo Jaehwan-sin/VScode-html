@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>objCheck</title>
+</head>
+<body>
+    <script>
+        function checkId(){
+            var s = document.getElementById("id").value;
+            if(s.length<6){
+                // alert("6글자 이상이어야 합니다.")
+            }
+            var s1 = '문자1';
+            var s2 = '문자2';
+            var s3 = s1.concat(s2);// 문자열 결합
+            var str = "자바스크립트에 오신걸 환영합니다.";
+            // 글자의 위치정보 알아보기
+            var pos = str.indexOf(' ');
+            // 없는 문자 검색 시 -1이 출력된다.
+            alert(pos);
+        }
+    </script>
+
+    id : <input type="text" id="id" size="10"> <br>
+    <button onclick="checkId();">검사</button>
+
+</body>
+</html>

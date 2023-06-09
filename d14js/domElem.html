@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>domElem</title>
+</head>
+<body>
+    <script>
+        function changeStyle(){
+            // p1 스타일 변경
+            document.getElementById("p1").style.color='blue';
+            document.getElementById("p1").style.fontFamily='impact';
+            document.getElementById("p1").style.fontStyle='italic';
+        }
+    </script>
+    <p id="p1">This is blue color</p>
+    <input type="button" onclick="changeStyle();" value="click">
+    <!-- 버튼 누르면 글씨가 숨겨진다. -->
+    <input type="button" onclick="document.getElementById('p1').style.visibility='hidden';" value="elem hidden">
+    <input type="button" onclick="document.getElementById('p1').style.visibility='visible';" value="elem visible">
+</body>
+</html>

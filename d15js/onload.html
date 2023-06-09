@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>onload</title>
+</head>
+<body onload="onLoadDoc();">
+    <script>
+        var x = lightblue;
+        function onLoadDoc(){
+            document.body.style.backgroundColor='orange';
+        }
+
+        function changecolor(color){
+            document.body.style.backgroundColor=color;   
+        }
+        
+    </script>
+
+    문서가 로드 되었습니다 <br>
+    <input type="radio" name="c1" value="v1" onclick="changecolor('lightblue');">파랑색
+    <input type="radio" name="c1" value="v1" onclick="changecolor('lightgreen');">연두색
+</body>
+</html>

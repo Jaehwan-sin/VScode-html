@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>returnfalse</title>
+</head>
+<body>
+        <script>
+            function checkEmpty(field){
+                if(field.value.length==0){
+                    alert("공백");
+                    field.focus();
+                    return false;
+                }
+                location.replace("http://google.com");
+            }
+        </script>
+        <form action="#">
+        이름 : <input type="text" id="user">
+        <input type="button" onclick="checkEmpty(document.getElementById('user'));" value="확인">
+    </form>
+</body>
+</html>

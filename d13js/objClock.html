@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>objClock</title>
+</head>
+<body>
+    <h3>Clock</h3>
+    <h1><div id="clock"></div></h1>
+
+    <script>
+        function setClock(){
+            var now = new Date();
+            var s = now.getHours()+":"+now.getMinutes()+":"+now.getSeconds();
+            // div clock에 넣기
+            document.getElementById("clock").innerHTML = s;
+            setTimeout('setClock()',1000);
+        }
+        setClock();// 위 함수 호출
+    </script>
+</body>
+</html>

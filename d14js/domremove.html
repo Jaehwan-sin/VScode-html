@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>domremove</title>
+</head>
+<body>
+    <script>
+        function removeNode(){
+            // 부모 노드를 이용해서 자식노드 삭제
+            var parent = document.getElementById("target");
+            var child = document.getElementById("p1");
+            parent.removeChild(child);
+        }
+    </script>
+
+    <div id="target">
+        <p id="p1">첫번째 단락</p>
+        <p id="p2">두번째 단락</p>
+    </div>
+
+    <button onclick="removeNode();">클릭</button>
+</body>
+</html>
