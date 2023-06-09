@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>changeimage2 mission</title>
+</head>
+<body>
+    <img src="../imgs/poem.png" alt="강아지" id="image1" width="200" height="200">
+    <img src="../imgs/poem.png" alt="강아지" id="image2" width="200" height="200">
+    <img src="../imgs/poem.png" alt="강아지" id="image3" width="200" height="200">
+    <img src="../imgs/poem.png" alt="강아지" id="image4" width="200" height="200"> <br>
+    <input type="button" value="click1" onclick="changeImg(1);">
+    <input type="button" value="click2" onclick="changeImg1(2);">
+    <input type="button" value="click3" onclick="changeImg2(3);">
+    <input type="button" value="click4" onclick="changeImg3(4);">
+
+    <script>
+        var b = true;
+        function changeImg(n){
+            if(b){
+                document.getElementById("image"+n).src="../imgs.poodle.png";
+                b = false;
+            }else {
+                document.getElementById("image"+n).src="../imgs.poem.png";
+                b = true;
+            }
+        }
+    </script>
+</body>
+</html>
