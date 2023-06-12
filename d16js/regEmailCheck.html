@@ -8,6 +8,8 @@
     <script>
         function checkEmail(){
             var s = document.getElementById("e-mail").value;
+            // 정규식 시각화 사이트 : https://regexper.com/
+            // ?는 0개 또는 1개라는 의미
             var exp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
             var bool = exp.test(s);
             if (bool) {
