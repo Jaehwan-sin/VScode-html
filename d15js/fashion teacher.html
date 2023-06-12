@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fashion teacher</title>
+</head>
+<body>
+
+    <style>
+        table{
+            margin: auto;
+        }
+        caption{
+            padding-bottom: 50px;
+            margin: 60px 0;
+            text-decoration: underline;
+            font-size: 30px;
+            color: rgb(109, 107, 107);
+        }
+        td{
+            padding: 30px;
+            padding-bottom: 20px;
+            color: rgb(109, 107, 107);
+        }
+        tr.price td{
+            padding-top: 20px;
+            padding-bottom: 50px;
+            border-bottom: 1px solid rgb(189, 182, 182);
+        }
+    </style>
+
+    <table>
+        <caption>NEW ITEM</caption>
+        <script>
+            var descript=[
+            "파넬 셔링 블라우스(3colors)",
+            "[주문폭주]깐느 머메이드 나시 원피스(2colors)",
+            "퍼브 셔링 스커트(2colors)",
+            "[자체제작]베르메르 반팔 원피스(2colors)",
+            "[only arima]로엘 슬릿 스커트(smL)",
+            "[자체제작][주문폭주]피치 플라워 셔링 원피스",
+            "도나엘 하이 셔링 스커트(4colors)",
+            "트로피카 플리츠 팬츠(4colors)",
+            "워너비 원피스(2colors)",
+            "아프로디테 투피스(set)",
+            "[자체제작]데이즈 펜슬 스커트(4colors)",
+            "포시즌 원피스(3colors)"
+            ];
+
+            var price=[
+            "41,500",
+            "51,000",
+            "39,800",
+            "59,000",
+            "37,000",
+            "74,000",
+            "42,000",
+            "19,900",
+            "78,000",
+            "49,800",
+            "49,000",
+            "38,000"
+            ];
+
+            for(i=0; i<3; i++){
+                document.write("<tr class='images'>");
+                    for(j=1; j<5; j++){
+                        if(i==0){
+                            document.write("<td> <img src='../images/page"+j+".gif' </td>");
+                        }else if(i==1){
+                            document.write("<td> <img src='../images/page"+(j+4)+".gif' </td>");
+                        }else {
+                            document.write("<td> <img src='../images/page"+(j+8)+".gif' </td>");
+                        }
+                    }
+                document.write("</tr>");
+                // 상품설명
+                document.write("<tr class='descript'>");
+                    for(j=0; j<4; j++){
+                        document.write("<td>");
+                            if(i==0) document.write(descript[j]);
+                            else if(i==1) document.write(descript[j+4]);
+                            else document.write(descript[j+8]);
+                            document.write("</td>");
+                    }
+                document.write("</tr>");
+                 // 상품설명
+                    document.write("<tr class='price'>");
+                    for(j=0; j<4; j++){
+                        document.write("<td>");
+                            if(i==0) document.write(price[j]);
+                            else if(i==1) document.write(price[j+4]);
+                            else document.write(price[j+8]);
+                            document.write("</td>");
+                    }
+                    document.write("</tr>");
+            }
+
+        </script>
+    </table>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EmailCheck</title>
+</head>
+<body>
+    <script>
+        function checkEmail(){
+            var s = document.getElementById("e-mail").value;
+            var exp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+            var bool = exp.test(s);
+            if (bool) {
+                alert("올바른 이메일 형식입니다.")
+            }else {
+                alert("잘못된 이메일 형식입니다.")
+            }
+        }
+    </script>
+    E-mail : <input type="text" id="e-mail" size="20">
+    <button id="button1" onclick="checkEmail();">검사</button>
+</body>
+</html>

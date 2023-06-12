@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>regIdCheck</title>
+</head>
+<body>
+    <script>   
+        function checkId(){
+            var s = document.getElementById("id").value
+            // 영어로 시작하며 영어숫자가 와도 되고 5~8글자인지 확인
+            var exp = /^[a-z]+[a-z0-9]{5,8}$/;
+            var bool = exp.test(s);
+            if(bool){
+                alert("login done");
+            }else {
+                alert("try again")
+            }
+        }   
+    </script>
+
+    id : <input type="text" id="id" size="10"> <br>
+    <button id="button1" onclick="checkId();">검사</button>
+</body>
+</html>
