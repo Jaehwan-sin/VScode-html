@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FadeInOut</title>
+    <!-- CDN (Content Delivery NetWork) 방식의 jquery 사용 -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <script>
+        $(document).ready(function(){
+            $("#FadeIn").click(function(){
+                $("#poodle").fadeIn(2000);
+            });
+            $("#FadeOut").click(function(){
+                $("#poodle").fadeOut(2000);
+            });
+        });
+    </script>
+    <button id="FadeIn">Fade In</button>
+    <button id="FadeOut">Fade Out</button><br>
+    <img src="../imgs/poodle.png" alt="" width="500px" height="500px"
+    style="display:none; position: relative;" id="poodle">
+</body>
+</html>

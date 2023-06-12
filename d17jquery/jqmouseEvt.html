@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jqmouseEvt</title>
+    <script src="../script/jquery-3.7.0.min.js"></script>
+    <script>
+        var i = 0;
+        $().ready(function(){
+            $("div.out").click(function(){
+                $("p:first",this).text("mouse clicked");
+                $("p:last",this).text(++i);
+            });
+        }); 
+    </script>
+</head>
+<body>
+    <style>
+        div.out{
+            border: 1px solid green;
+            width: 200px; height: 100px;
+            background-color: yellow;
+        }
+    </style>
+
+    <div class="out">
+        <p>마우스를 이곳으로 움직여 보세요</p>
+        <p>0</p>
+    </div>
+
+</body>
+</html>

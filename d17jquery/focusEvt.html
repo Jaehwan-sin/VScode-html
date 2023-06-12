@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>focusEvent</title>
+    <script src="../script/jquery-3.7.0.min.js"></script>
+</head>
+<body>
+    <script>
+        $().ready(function(){
+            $("input").focus(function(){
+                $(this).css("background-color","orange");
+            });
+            $("input").blur(function(){
+                $(this).css("background-color","white")
+            });
+        });
+    </script>
+    ID : <input type="text" name="name" />
+</body>
+</html>
