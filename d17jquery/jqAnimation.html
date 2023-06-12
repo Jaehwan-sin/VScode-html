@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jqAnimation</title>
+    <script src="../script/jquery-3.7.0.min.js"></script>
+</head>
+<body>
+    <script>
+        $().ready(function(){
+            $("#move").click(function(){
+                $("#coffee").animate({
+                    left:'1800px', opacity:'0.1', width:'150px'
+                },3000);
+            });
+            $("#stop").click(function(){
+                $("#coffee").stop();
+            });
+        });
+    </script>
+    <img src="../imgs/coffee.png" alt="" width="300" height="200"
+    style="position: relative;" id="coffee"> <br> <br>
+    <button id="move">animation move</button>
+    <button id="stop">animation stop</button>
+</body>
+</html>
