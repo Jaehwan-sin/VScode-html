@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jqAppend</title>
+    <!-- CDN Jquery 연결 -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script>
+        $().ready(function(){
+            $("#button1").click(function(){
+                // append는 문장의 뒤에 단어 추가
+                $("P").append("<b style='color:red;'>hihi</b>");
+            });
+                // prepend는 문장의 앞에 단어 추가
+            $("#button2").click(function(){
+                $("P").prepend("<b style='color:blue;'>hihi</b>");
+            });
+        });
+    </script>
+</head>
+<body>
+    
+    <p style="font-size: 30px;"> I Like to Say,</p>
+    <button id="button1">append</button>
+    <button id="button2">prepend</button>
+
+</body>
+</html>

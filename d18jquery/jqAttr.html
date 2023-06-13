@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jqAttr</title>
+    <script src="../script/jquery-3.7.0.min.js"></script>
+</head>
+<body>
+    <script>
+        // 문서가 준비되면
+        $().ready(function(){
+            // 버튼을 클릭하면
+            $("button").click(function(){
+                // 커피 이미지 변경하기
+                $("#coffee").attr("src","../imgs/lion.png");
+            });
+        });
+    </script>
+    <img src="../imgs/coffee.png" alt="" width="300" height="200" id="coffee"><br>
+    <button>attr</button>
+</body>
+</html>

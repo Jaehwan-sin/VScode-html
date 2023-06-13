@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jqDom2</title>
+    <script src="../script/jquery-3.7.0.min.js"></script>
+    <!-- html과 text의 차이점 -->
+    <script>
+        $().ready(function(){
+            $("#text").click(function(){
+                // alert(("#target").text());
+                $("#target").text("<b>단락이 변형됩니다.</b>");
+            });
+            $("#html").click(function(){
+                // alert($("#target").html());
+                $("#target").html("<b>단락이 변형됩니다.</b>");
+            });
+        });
+    </script>
+</head>
+<body>
+    
+    <p id="target">이 곳은 <strong>하나의</strong> 단락입니다.</p>
+    <button id="text">text button</button>
+    <button id="html">html button</button>
+
+</body>
+</html>

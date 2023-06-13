@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jqValue</title>
+    <!-- CDN Jquery 연결 -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script>
+        $().ready(function(){
+            // button 이 하나여서 button으로 써도되고 여러개라면 #text로 id를 써야한다.
+            $("button").click(function(){
+                // 이름 텍스트필드의 값 가져오기
+                alert($("#target").val());
+            });
+        });
+    </script>
+</head>
+<body>
+
+    이름 : <input type="text" id="target" value="">
+    <button id="text">Value</button>
+</body>
+</html>
