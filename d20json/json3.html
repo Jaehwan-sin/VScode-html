@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>json3</title>
+    <script src="../script/jquery-3.7.0.min.js"></script>
+    <!-- jquery를 이용한 json 데이터 출력 -->
+</head>
+<body>
+    <script>
+        // 복잡한 json 구조
+        var param2 = {
+            "quiz":{
+                "sport":{
+                    "q1":{
+                        "question":"Which one is correct team name in NBA?",
+                        "options":[
+                            "New York Bulls1",
+                            "New York Bulls2",
+                            "New York Bulls3",
+                            "New York Bulls4"
+                        ],
+                        "Answer":"Huston Rocket"
+                    }
+                },
+                "math":{
+                    "q1":{
+                        "question":"5 + 7 = ?",
+                        "options":[
+                            "10",
+                            "11",
+                            "12",
+                            "13"
+                        ],
+                        "Answer":"12"
+                    },
+                    "q2":{
+                        "question":"12 - 8 = ?",
+                        "options":[
+                            "1",
+                            "2",
+                            "3",
+                            "4"
+                        ],
+                        "Answer":"4"
+                    }
+                }
+            }
+        }
+
+        $().ready(function(){
+            jsonGetData();
+        });
+
+        function jsonGetData(){
+            console.log(param2.quiz["sport"].q1.question);
+            console.log(param2.quiz["sport"].q1.options[2]);
+            console.log(param2.quiz["math"].q1.question);
+            console.log(param2.quiz["math"].q1.options[2]);
+        }
+    </script>
+</body>
+</html>

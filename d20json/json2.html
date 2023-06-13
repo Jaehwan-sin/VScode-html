@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>json2</title>
+    <script src="../script/jquery-3.7.0.min.js"></script>
+    <!-- jquery를 이용한 json 데이터 출력 -->
+</head>
+<body>
+    <script>
+        // 단순한 json 구조
+        var param1 = {
+            "name1":"Tom1",
+            "name2":"Tom2",
+            "name3":"Tom3",
+        };
+        var param2 = {
+            "name1":"111",
+            "name2":"222",
+            "name3":"333",
+        };
+        
+        $().ready(function(){
+            jsonGetData();
+        });
+
+        function jsonGetData(){
+            // 많은 양의 데이터를 출력할 땐 alert 보단 console.log 가 좋다
+            console.log(param1.name1);
+            console.log(param1.name2);
+            console.log(param1.name3);
+            console.log(param2.name1);
+            console.log(param2.name2);
+            console.log(param2.name3);
+        }
+    </script>
+</body>
+</html>

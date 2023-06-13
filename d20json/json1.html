@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>json1</title>
+    <!-- json 데이터 출력 -->
 </head>
 <body>
     <h4>학생명단</h4>
-    <p>
+    <p style="background-color: yellow;">
         이름 : <span id="name"></span> &nbsp;
         나이 : <span id="age"></span> &nbsp;
     </p>
@@ -21,6 +22,14 @@
         '{"name":"hong3","age":"26"},'+
         '{"name":"hong4","age":"27"},'+
         '{"name":"hong5","age":"28"}]'
+        //자바스크립트를 활용 json 데이터 객체화
+        var student = JSON.parse(s);
+        //데이터 수정
+        student[0].name="kang";
+        student[0].age="35";
+        //출력
+        document.getElementById("name").innerHTML = student[0].name;
+        document.getElementById("age").innerHTML = student[0].age;
     </script>
 </body>
 </html>
