@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jqChain</title>
+    <script src="../script/jquery-3.7.0.min.js"></script>
+    <script>
+        $().ready(function(){
+            $("button").click(function(){
+                // 메소드 체인
+                $("img").show("slow").fadeOut(3000).slideDown("slow");
+            });
+        });
+    </script>
+</head>
+<body>
+    
+    <img src="../imgs/coffee.png" alt="" width="300" height="300"
+    style="display: none;">
+    <button><b>메소드 체인 시작</b></button>
+    
+
+</body>
+</html>

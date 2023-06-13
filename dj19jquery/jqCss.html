@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jqCss</title>
+    <style>
+        div{
+            width: 60px; height: 60px;
+        }
+    </style>
+    <script src="../script/jquery-3.7.0.min.js"></script>
+    <script>
+        $().ready(function(){
+            $("#button1").click(function(){
+                // div1의 백그라운드 컬러를 받아 result에 출력
+                var color = $("#div1").css("background-color");
+                $("#result").text("bgcolor : "+color);
+            });
+            $("#button2").click(function(){
+                // div1의 백그라운드 컬러 변경
+                $("#div1").css("background-color","red");
+            });
+        });
+    </script>
+</head>
+<body>
+    
+    <div id="div1" style="background-color: orange;"></div>
+    <button id="button1">css(ele)</button>
+    <button id="button2">css(ele,style)</button>
+    <p id="result">결과표시</p>
+
+</body>
+</html>
