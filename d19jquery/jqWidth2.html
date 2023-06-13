@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>jqWidth2</title>
+    <script src="../script/jquery-3.7.0.min.js"></script>
+    <script>
+        $().ready(function () {
+            var modWidth = 50;
+            $("div").click(function () {
+                $(this).width(modWidth).addClass("next");
+
+                if ($(this).index() < 5) {
+                    modWidth -= 8;
+                } else {
+                    modWidth += 8;
+                }
+
+            });
+        });
+    </script>
+</head>
+
+<body>
+
+    <style>
+        div {
+            width: 70px;
+            height: 50px;
+            float: left;
+            margin: 5px;
+            background-color: red;
+        }
+
+        .next {
+            background-color: blue;
+        }
+    </style>
+
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+    <div>5</div>
+</body>
+
+</html>
