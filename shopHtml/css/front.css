@@ -1,0 +1,10 @@
+#main_img{
+    width: 971px; 
+    height: 308px;
+    background-image: url(../images/img_back.png);
+    background-repeat: no-repeat;
+    background-position: center top;
+}
+#main_img img{
+    margin: 9px 0 0 0;
+}
