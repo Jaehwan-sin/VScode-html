@@ -8,15 +8,39 @@
     <script>
         $().ready(function () {
             var modWidth = 50;
-            $("div").click(function () {
-                $(this).width(modWidth).addClass("next");
+            // $("div").click(function () {
+            //     $(this).width(modWidth).addClass("next");
 
-                if ($(this).index() < 5) {
-                    modWidth -= 8;
-                } else {
-                    modWidth += 8;
+            //     if ($(this).index() < 5) {
+            //         modWidth -= 8;
+            //     } else {
+            //         modWidth += 8;
+            //     }
+
+            // });
+
+            var divWidth = null;
+            var boolean = false;
+
+            $("div").click(function () {
+
+                divWidth = $(this).width();
+
+                $(this).width(divWidth).addClass("next");
+
+                if (divWidth - 10 <= 0) {
+                    boolean = false;
+                }
+                else if (divWidth + 10 >= 70) {
+                    boolean = true;
                 }
 
+                if (boolean == false) {
+                    $(this).width($(this).width() + 10);
+                }
+                else {
+                    $(this).width($(this).width() - 10);
+                }
             });
         });
     </script>
