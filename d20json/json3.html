@@ -5,6 +5,7 @@
     <title>json3</title>
     <script src="../script/jquery-3.7.0.min.js"></script>
     <!-- jquery를 이용한 json 데이터 출력 -->
+    <!-- 웹사이트에서 데이터를 다른 페이지로 전달할때 사용 -->
 </head>
 <body>
     <script>
@@ -55,8 +56,10 @@
         function jsonGetData(){
             console.log(param2.quiz["sport"].q1.question);
             console.log(param2.quiz["sport"].q1.options[2]);
+            console.log(param2.quiz["sport"].q1.Answer);
             console.log(param2.quiz["math"].q1.question);
             console.log(param2.quiz["math"].q1.options[2]);
+            console.log(param2.quiz["math"].q1.Answer);
         }
     </script>
 </body>
