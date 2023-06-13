@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jqRemove</title>
+    <script src="../script/jquery-3.7.0.min.js"></script>
+    <script>
+        $().ready(function(){
+            $("#button1").click(function(){
+                // 선택요소를 remove
+                $(".container").remove();
+                // remove는 자신과 자식요소 모두 삭제
+            });
+            $("#button2").click(function(){
+                $(".container").empty();
+                // empty는 자식요소 삭제
+            });
+        });
+    </script>
+</head>
+<body>
+    <style>
+        p{
+            background-color: yellow;
+        }
+        .container{
+            height: 80px; width: 200px; border: 2px solid red;
+        }
+    </style>
+    <button id="button1">remove</button>
+    <button id="button2">empty</button>
+    <div class="container">
+        <p class="hello">Hello</p>
+        <p class="bye">Bye Bye</p>
+    </div>
+</body>
+</html>
