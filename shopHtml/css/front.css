@@ -8,3 +8,19 @@
 #main_img img{
     margin: 9px 0 0 0;
 }
+article#front{
+    margin: 5px 0 5px 20px;
+}
+#solution{
+    border: 1px solid ccc;
+    border-radius: 10px;
+    width: 910px;
+    min-height: 150px;
+    background: #ebebeb;
+    padding: 10px;
+}
+#hosting, #security, #payment{
+    width: 260px; height: 30%;
+    float: left;
+    padding-left: 30px;
+}
