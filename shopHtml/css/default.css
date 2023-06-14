@@ -10,7 +10,7 @@ body{
     background-image: url(../images/shadow.png);
     /* y축으로만 repeat */
     background-repeat: repeat-y;
-    min-height: 870px;
+    min-height: 970px;
 }
 #logo{
     float: left; width: 265px; margin: 60px 0 0 40px;

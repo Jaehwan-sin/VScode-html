@@ -107,3 +107,99 @@ article .y2011 dl,article .y2010 dl,article .y2009 dl{
 article dl.dot_none{
     border-bottom: none;
 }
+
+/* notice */
+#sub_img_center{ /* notice center 이미지 */
+    width: 971px; height: 179px;
+    background-image: url(../images/center/sub_back.png);
+    background-repeat: no-repeat;
+    background-position: left top;
+}
+article table#notice{
+    width: 640px;
+    border-collapse: collapse;
+}
+article table#notice th{
+    height: 20px;
+    text-transform: capitalize;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    padding: 5px;
+    background-image: url(../images/center/t_back.jpg);
+    background-repeat: repeat-x;
+    background-position: center center;
+    color: #fff;
+}
+article table#notice td{
+    text-align: center;
+    padding: 6px 0;
+    border-bottom-width: 1px;
+    border-bottom-style: dotted;
+    border-bottom-color: #999;
+}
+
+article th.tno{
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    width: 50px;
+}
+article th.ttitle{
+    width: 400px;
+    letter-spacing: 0.7em;
+}
+article th.twriter{
+    width: 100px;
+}
+article th.tdate{
+    width: 50px;
+}
+article th.tread{
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    /* width: 50px; */
+}
+article #table_search{
+    margin: 15px 0 10px 0;
+    float: right;
+}
+article #table_search .input_box{
+    height: 20px;
+    width: 200px;
+    padding: 0 10px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background-color: #ddd;
+}
+article #table_search .input_box:focus{
+    background-color: antiquewhite;
+}
+article #table_search .btn{
+    padding: 2px;
+    margin: 0 0 0 5px;
+    width: 90px; height: 23px;
+    border: 1px solid #999;
+    border-radius: 5px;
+    color: #fff;
+    background-image: url(../images/center/t_back.jpg);
+    background-repeat: repeat-x;
+    background-position: center center;
+}
+#page_control{
+    text-align: center;
+    margin: 20px 0 0 0;
+    margin-right: auto; margin-left: auto;
+}
+#page_control a{
+    padding: 2px 5px;
+    text-decoration: none;
+    color: #333;
+    margin: 0 5px;
+}
+#page_control a:hover{
+    padding: 2px 5px;
+    font-weight: bold;
+    color: #f90;
+    margin: 0 5px;
+    text-decoration-line: underline;
+}
