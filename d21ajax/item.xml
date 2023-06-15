@@ -12,7 +12,7 @@
     </item>    
 
     <item id="3" name="레몬3">
-        <price>5000</price>
+        <price>5000</price> 
         <description>레몬이 포함되어있는 구연산은 피로회복에 좋아요!</description>
     </item>    
 </items>
