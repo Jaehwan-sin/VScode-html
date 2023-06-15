@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Shophtml</title>
     <link rel="stylesheet" href="./css/default.css">
     <link rel="stylesheet" href="./css/front.css">
     <link rel="stylesheet" href="./css/print.css">
+    <script src="./shopscript/jquery-3.7.0.min.js"></script>
+    <script src="./shopscript/s3Slider.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#s3slider').s3Slider({
+                timeOut:3000
+            });
+        });
+    </script>
 </head>
+
 <body>
     <div id="wrap">
         <header>
@@ -27,8 +38,46 @@
             </nav>
         </header>
         <div class="clear"></div>
-        <div id="main_img">
+        <!-- <div id="main_img">
             <img src="./images/img5.png" alt="" width="971" height="282">
+        </div>
+        jquery를 이용한 메인이미지 넣기 -->
+        <div id="main_img">
+            <!--<img src="images/main_img.jpg" width="971" height="282">-->
+            <!--s3slider-->
+            <div id="s3slider">
+                <ul id="s3sliderContent">
+                    <li class="s3sliderImage">
+                        <img src="./images/img5.png" width="971" height="282">
+                        <span>
+                            로렘 ipsum dolor sit amet, consecteur adipiscing elit. Nullam semper eratest<br>
+                            Aloiquam metus elit, blandit eu luctus vitae, dictum ist amet mauris. Integerut facilisis
+                            eros<br>
+                            Donec consectetur, velit id aliquam sagittis.
+                        </span>
+                    </li>
+                    <li class="s3sliderImage">
+                        <img src="./images/main_img.jpg" width="971" height="282">
+                        <span>
+                            로렘 ipsum dolor sit amet, consecteur adipiscing elit. Nullam semper eratest<br>
+                            Aloiquam metus elit, blandit eu luctus vitae, dictum ist amet mauris. Integerut facilisis
+                            eros<br>
+                            Donec consectetur, velit id aliquam sagittis.
+                        </span>
+                    </li>
+                    <li class="s3sliderImage">
+                        <img src="./images/main_img1.jpg" width="971" height="282">
+                        <span>
+                            로렘 ipsum dolor sit amet, consecteur adipiscing elit. Nullam semper eratest<br>
+                            Aloiquam metus elit, blandit eu luctus vitae, dictum ist amet mauris. Integerut facilisis
+                            eros<br>
+                            Donec consectetur, velit id aliquam sagittis.
+                        </span>
+                    </li>
+                    <div class="clear s3sliderImage"></div>
+                </ul>
+            </div>
+
         </div>
         <article id="front">
             <div id="solution">
@@ -93,22 +142,23 @@
                         <td>2011.04.25</td>
                     </tr>
                 </table>
-            </div> 
+            </div>
         </article>
         <div class="clear"></div>
         <footer>
             <hr>
-                <div id="copy">
-                    All content Copyright 2023 shopHtml Inc. all rights reserved <br>
-                    Contact mail : master@shopHtml.com Tel : +82 1111 2222 3333
-                </div>
-                <div id="social">
-                    <img src="./images/facebook.gif" alt="Facebook" width="33" height="33">
-                    <img src="./images/twitter.gif" alt="Twitter" width="33" height="33">
-                </div>
+            <div id="copy">
+                All content Copyright 2023 shopHtml Inc. all rights reserved <br>
+                Contact mail : master@shopHtml.com Tel : +82 1111 2222 3333
+            </div>
+            <div id="social">
+                <img src="./images/facebook.gif" alt="Facebook" width="33" height="33">
+                <img src="./images/twitter.gif" alt="Twitter" width="33" height="33">
+            </div>
             </hr>
         </footer>
     </div>
-    
+
 </body>
+
 </html>

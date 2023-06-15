@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ajaxEx1</title>
+    <script src="../script/jquery-3.7.0.min.js"></script>
+</head>
+<body>
+    <style>
+        div{
+            width: 300px; height: 200px;
+            border: 1px solid blue;
+        }
+    </style>
+        
+    <script>
+        $().ready(function(){
+            $("button").click(function(){
+                // ajax 기본 문법 참고 : https://beam307.github.io/2017/12/05/ajax/
+                $.ajax({
+                    url:'demo.txt',
+                    async:true,
+                    success:function(result){
+                        $("#div1").html(result);
+                    }
+                });
+            });
+        });
+    </script>
+
+    <div id="div1">
+        <h2>Let JQuery Ajax change!</h2>
+    </div>
+    <button>change txt</button>
+    <h3>Content</h3>
+    <h3>Content</h3>
+    <h3>Content</h3>
+
+</body>
+</html>
