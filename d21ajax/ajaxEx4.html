@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ajaxEx4</title>
+    <script src="../script/jquery-3.7.0.min.js"></script>
+    <style>
+        td{
+            border: 1px solid gray;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        $(function(){
+            $.ajax({
+                url:'item.json',
+                dataType:'json',
+                success:function(data){
+                    $("#treeData").append(
+                        "<tr><td>id</td>"+ 
+                            "<td>name</td>"+
+                            "<td>price</td>"+
+                            "<td>description</td></tr>"
+                    );
+                    // 자바의 foreach문 처럼 하나씩 끌어온다.
+                    $.each(data,function(i){
+                        $('#treeData').append(
+                            "<tr>"+"<td>"
+                                +this.id+"</td>"+"<td>"
+                                +this.name+"</td>"+"<td>"
+                                +this.price+"</td>"+"<td>"
+                                +this.description+"</td>"+"</tr>"
+                        );
+                    });
+                }
+            });
+        });
+    </script>
+    <!-- json 데이터를 추가 -->
+    <table id="treeData">
+        <h3>jsonData 추가</h3>
+    </table>
+</body>
+</html>

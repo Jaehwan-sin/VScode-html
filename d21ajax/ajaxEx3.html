@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ajaxEx2</title>
+    <title>ajaxEx3</title>
     <script src="../script/jquery-3.7.0.min.js"></script>
 </head>
 <body>
@@ -15,12 +15,23 @@
     <script>
         $().ready(function(){
             $("#menu1").click(function(){
-                $('#message1').load("menu.html");
-                return false;
+                // ajax로 출력하기
+                $.ajax({
+                    url:'menu.html',
+                    dataType:'html',
+                    success:function(data){
+                        $('#message1').html(data);
+                    }
+                });
             });
             $("#menu2").click(function(){
-                $('#message2').load("menu.html li");
-                return false;
+                $.ajax({
+                    url:'menu.html',
+                    dataType:'html',
+                    success:function(data){
+                        $('#message2').html($(data).find('li'));
+                    }
+                });
             });
         });
     </script>

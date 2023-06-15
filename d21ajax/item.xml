@@ -1,0 +1,18 @@
+<!-- xml을 사용할 때 xml 선언을 해야된다 -->
+<?xml version="1.0" encoding="UTF-8" ?>
+<items>
+    <item id="1" name="레몬1">
+        <price>3000</price>
+        <description>레몬이 포함되어있는 구연산은 피로회복에 좋아요!</description>
+    </item>    
+
+    <item id="2" name="레몬2">
+        <price>4000</price>
+        <description>레몬이 포함되어있는 구연산은 피로회복에 좋아요!</description>
+    </item>    
+
+    <item id="3" name="레몬3">
+        <price>5000</price>
+        <description>레몬이 포함되어있는 구연산은 피로회복에 좋아요!</description>
+    </item>    
+</items>
