@@ -115,7 +115,7 @@ select * from emp;
 delete from emp;
 --일부 삭제
 delete from emp where empno=7499;
---scott 삭제 대소문자를 가린다
+--scott 삭제 데이터값은 대소문자를 가린다
 delete from emp where ename='SCOTT';
 --직책으로 삭제 복수명이 삭제
 DELETE FROM EMP WHERE JOB='CLERK';
@@ -134,11 +134,14 @@ insert into dept values(20,'RESEARCH','DALLAS');
 insert into dept values(30,'SALES','CHICAGO');
 insert into dept values(40,'OPERATIONS','BOSTON');
 
---대소문자 변경 ALT + ' 
+--대소문자 변경 단축키 ALT + ' 
 select * from emp;
 
 --not null은 null을 허용하지 않겠다는 뜻
 --테이블의 무결성을 유지하기 위한 제약조건
+--데이터 무결성은 데이터의 정확성, 일관성, 유효성이 유지되는 것을 의미합니다. 
+--여기서 정확성이란 중복이나 누락이 없는 상태를 뜻하고, 일관성은 원인과 결과의 의미가 연속적으로 보장되어 변하지 않는 상태를 뜻합니다.
+
 create table address2(
 name varchar2(20) not null,
 addr varchar2(100) not null,
