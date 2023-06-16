@@ -330,10 +330,30 @@ SELECT * FROM EMP WHERE JOB IN ('CLERK','ANALYST');
 
 COMMIT;
 
+--like 연산자 비슷한 데이터 조회 ★★★ 중요!
+--sal 1로 시작하는 데이터 조회
+select * from emp where sal like '1%';
 
+--직원 이름이 w로 시작하는 데이터 조회
+select * from EMP where ename like 'W%';
 
+--직원 이름이 R로 끝나는 사람 데이터 조회
+select * from emp where ename like '%R';
 
+--A가 포함된 사람 데이터 조회
+select * from emp where ename like '%A%';
 
+--직원 이름 중에 두번째 글자가 L인 데이터 조회
+select * from emp where ename like '_L%';
+
+--3번째 글자가 R인 데이터 출력
+select * from emp where ename like '__R%';
+
+--이름 중 끝에서 세번째 글자가 N인 데이터 조회
+select * from emp where ename like '%N__';
+
+--ERD (Entity Reationship Diagram, 개체관계도)
+-- erd 만드는 사이트 : https://www.erdcloud.com/
 
 
 
