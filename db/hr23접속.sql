@@ -375,105 +375,19 @@ select * from emp where mgr is null;
 select * from emp where comm is not null;
 
 --복습 입사일이 82 1 1 이후이고 sal이 1300 이상인 사원의 정보 조회
-select * from emp where hiredate >= '1982-1-1' and sal >= 1300;
+select * from emp where hiredate > '1982-1-1' and sal > 1300;
 
 --급여가 1000 초과하고 커미션이 1000 미만이거나 커미션이 null인 사번, 이름, 급여, 커미션 조회
-select * from emp where sal > 1000 and (comm < 1000 or comm is null);
+select * from emp where sal > 1000 or comm < 1000 or comm is null;
 
--- 롤백 = 되돌리기 하지만 commit 후 롤백은 안된다.
-select * from emp;
-INSERT INTO EMP VALUES (8902, 'FORD',   'ANALYST',7566, TO_DATE('03-12-1981', 'DD-MM-YYYY'),  3000, NULL, 20);
-INSERT INTO EMP VALUES(8934, 'MILLER', 'CLERK',7782, TO_DATE('23-01-1982', 'DD-MM-YYYY'), 1300, NULL, 10);
 
-rollback;
-commit;
 
-delete from emp where empno in(8902,8934);
 
---외부의 sql 파일을 import 시키는 방법
-@c:\stuprodep.sql
-select * from student;
-select count(*) from student;
-select * from department;
-select * from professor;
 
-select * from emp;
-select * from dept;
 
---union 합집합 student,professor 테이블의 조건을 주고 그 조건에 해당하는 데이터를 출력
-select studno,name,deptno1 from student where deptno1 = 101
-union
-select profno,name,deptno from professor
-where deptno = 101;
 
---별칭부여
-select studno "pno sno",name,deptno1 from student where deptno1 = 101
-union
-select profno,name,deptno from professor
-where deptno = 101;
 
-select 1,ename from emp;
 
---1이 붙으면 student 테이블에서 가져온것 2가 붙으면 professor에서 가져온것
-select studno,name,deptno1,1 from student where deptno1 = 101
-union -- 중복값 배제
-select profno,name,deptno,2 from professor
-where deptno = 101;
-
-select studno,name,deptno1,1 from student where deptno1 = 101
-union all -- 모두 출력
-select profno,name,deptno,2 from professor
-where deptno = 101;
-
---차이나는 데이터
-select studno, name from student where deptno1 = 101
-union -- 중복값 출력 안 함
-select studno, name from student where deptno2 = 201;
-
-select studno, name,1 from student where deptno1 = 101
-union all -- 모두 출력
-select studno, name,2 from student where deptno2 = 201;
-
--- 교집합 intersect
-select studno, name from student where deptno1 = 101
-intersect -- 공통적인 것 출력
-select studno, name from student where deptno2 = 201;
-
--- 차집합 minus
-select studno, name from student where deptno1 = 101
-minus -- 공통적인 부분 제외 후 출력
-select studno, name from student where deptno2 = 201;
-
--- EMP에서 MINUS를 이용해서 급여가 2500달러 이하인 사람의 급여를 10달러 인상하시오.
-select * from emp;
-
-select empno,ename,sal,sal*1.1 from emp 
-minus
-select empno,ename,sal,sal*1.1 from emp where sal >= 2500;
--- 사용 시 주의점 ★★
--- 칼럼의 갯수,타입이 일치해야함.
-
--- 문법
---select 
---from 
---where 
---group by --그룹화 
---having -- 그룹의 조건
---order by -- 정렬
--- 실행
---from 
---where 
---group by --그룹화 
---select 
---having -- 그룹의 조건
---order by -- 정렬
-
---order by 정렬 오름차순 a,b,c 1,2,3 / 내림차순(desc) ★★★
-select * from emp;
---emp 테이블에서 ename으로 오름차순 정렬
-select * from emp order by ename asc;
---emp 테이블에서 ename으로 내림차순 정렬
-select * from emp order by ename desc;
 
 
 
