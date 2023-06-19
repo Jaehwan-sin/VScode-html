@@ -471,9 +471,43 @@ select empno,ename,sal,sal*1.1 from emp where sal >= 2500;
 --order by 정렬 오름차순 a,b,c 1,2,3 / 내림차순(desc) ★★★
 select * from emp;
 --emp 테이블에서 ename으로 오름차순 정렬
+--order by의 기본값이 오름차순이라 asc 생략가능
+select * from emp order by ename;
 select * from emp order by ename asc;
 --emp 테이블에서 ename으로 내림차순 정렬
 select * from emp order by ename desc;
+
+--여러 필드에 적용
+--job 오름차순, empno 내림차순
+select * from emp order by job asc, empno desc;-- 1차 정렬 2차 정렬 1차 정렬 후 2차 정렬이 된다.
+select * from emp order by empno asc, job desc;-- empno는 primary key이기 때문에 2차 정렬을 해도 의미가 없다.
+
+--deptno desc 1차 정렬, sal asc 2차 정렬
+select * from emp order by deptno desc, sal;
+
+--조건 20,30번만 출력
+select * from emp where deptno in(20,30) order by deptno desc, sal;
+
+--교수 테이블에서 이름의 첫글자가 M 이거나 부서번호가 102인 데이터를 교수번호로 내림차순하여
+--교수번호, 이름, 아이디, 부서번호, 이메일을 출력하시오.
+select * from professor;
+select profno,name,id,deptno,email from professor where name like 'M%' or deptno = 102 order by profno desc;
+
+--단일행 함수 한번에 하나씩 처리하는 함수
+--initcap 첫글자 대문자로 처리하는 함수
+select ename,initcap(ename) from emp where deptno = 10;
+
+--교수 테이블에서 이름에 첫 글자 대문자 적용 deptno = 101
+select name,initcap(name) from professor where deptno = 101;
+
+--Lower = 소문자 / Upper = 대문자
+select * from emp;
+select ename,lower(ename) lowername,upper(ename) uppername from emp;
+
+--length 문자길이, lengthb byte의 길이
+select ename,length(ename) from emp;
+select ename,lengthb(ename) from emp;
+INSERT INTO EMP VALUES(9000, '홍길동', 'CLERK',     7782, TO_DATE('23-01-1982', 'DD-MM-YYYY'), 1300.5678, NULL, 10);
 
 
 
