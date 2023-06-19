@@ -508,10 +508,75 @@ select ename,lower(ename) lowername,upper(ename) uppername from emp;
 select ename,length(ename) from emp;
 select ename,lengthb(ename) from emp;
 INSERT INTO EMP VALUES(9000, '홍길동', 'CLERK',     7782, TO_DATE('23-01-1982', 'DD-MM-YYYY'), 1300.5678, NULL, 10);
+select '홍길동',length('홍길동'),lengthb('홍길동'),length('洪'),lengthb('にほんご') from dual;
 
+--dual 테이블 ( 오라클 자체에서 제공되는 테이블 )
+--▶ Dual 테이블의 사용용도
+--   - dual 테이블은 사용자가 함수(계산)를 실행할 때 임시로 사용하는데 적합하다.
+--   - 함수에 대한 쓰임을 알고 싶을때 특정 테이블을 생성할 필요없이 dual 테이블을 이용하여 함수의 값을 리턴(return)받을 수 있다.
+   
+--concat 함수 문자열 연결 ||
+select * from emp;
+select ename || '''s 의 직업은 ' || job || '이다' from emp;
+select concat(ename,job) from emp;
+select concat(concat(ename,','),job) from emp;
+select concat(concat(ename,'의 직책은 '),job) from emp;
 
+--substr 문자열 특정길이 추출 ★★★★★
+--substr(문자열,위치,글자갯수);
+select 'ABCDEFG' from dual;
+select 'ABCDEFG', substr ('ABCDEFG',3) from dual; -- 3번째 위치부터 끝까지
+select 'ABCDEFG', substr ('ABCDEFG',3,2) from dual; -- 3번째 위치에서 2번째 갯수만큼
+select 'ABCDEFG', substr ('ABCDEFG',-3,2) from dual; -- 뒤에서 3번째 위치에서 2번째 갯수만큼
+select 'ABCDEFG', substr ('ABCDEFG',-3,2) from dual; -- 뒤에서 3번째 위치에서 2번째 갯수만큼
 
+--emp 테이블에 적용
+select ename,substr(ename,2,3),job,substr(job,2,3) from emp;
+--위 내용을 소문자로 변환
+select ename,lower(substr(ename,2,3)),job,lower(substr(job,2,3)) from emp;
 
+--instr 특정 문자열 위치값 변환 ★★★★★
+--instr(문자열, 찾는문자,시작위치,찾는 문자번째) = 찾는 문자가 위치하는 숫자를 리턴
+select 'A-B-C-D' from dual;
+select 'A-B-C-D',instr('A-B-C-D','A') from dual;
+select 'A-B-C-D',instr('A-B-C-D','-',1,1) from dual;-- 처음부터 검색해서 '-'를 찾아서 첫번째 나오는 위치
+select 'A-B-C-D',instr('A-B-C-D','-',1,2) from dual;-- 처음부터 검색해서 '-'를 찾아서 두번째 나오는 위치
+select 'A-B-C-D',instr('A-B-C-D','-',3,2) from dual;-- 3번째 글자부터 검색을 해서 '-'를 찾아서 두번째 나오는 위치
+select 'A-B-C-D',instr('A-B-C-D','-',3,5) from dual;-- 찾는 결과가 없을 때는 0으로 리턴
+
+-- 지역번호 추출 지역번호의 길이가 다름
+-- 길이가 동일할때 추출
+select tel from student;
+select substr(tel,1,3) from student;
+--위치값 변환
+select tel,instr(tel,')',1,1) from student;
+--적용
+select substr(tel,1,instr(tel,')',1,1)-1) 지역번호 from student;
+
+--EMAIL의 아이디만 추출
+select * from professor;
+select instr(email,'@',1,1) from professor;
+select substr(email,1,instr(email,'@',1,1)-1) 이메일 from professor;
+
+--lpad 왼쪽에 채운다. ★
+--lpad(채울 곳,총 길이,채울 언어) 총 길이만큼 채울 언어로 채워진다.
+select name,id,lpad(id,10,'*') from student where deptno1 = 201;
+
+--12345 lpad 적용
+select name,id,lpad(id,10,'123456789') from student where deptno1 = 201;
+
+--rpad 오른쪽에 채운다
+select ename,rpad(ename,10,'-') from emp where deptno = 10;
+
+--변형
+select ename,rpad(ename,10,'123456789') from emp where deptno = 10;
+
+select ename,instr(ename,substr(ename,-1)),rpad(ename,10,'456789') from emp;
+
+--CLARK12345 -> CLARK56789 MILLER6789 변형해보기
+select ename,rpad(ename,10,substr('123456789',6)) from emp where ename='MILLER';
+select ename,rpad(ename,10,substr('123456789',4)) from emp where ename='FORD';
+select ename,rpad(ename,10,substr('123456789',length(ename))) from emp where ename='FORD';
 
 
 
