@@ -363,7 +363,7 @@ select * from emp where ename like '%N__';
 --select from where group by having order by
 --from where group by having select order by
 
---230619
+-----------------------------------------------------------------------------230619---------------------------------------------------------------------------------------------
 --null 조회 null 값 조회 시 is null 로 조회한다.
 select * from emp;
 select * from emp where comm is null;
@@ -555,7 +555,7 @@ select substr(tel,1,instr(tel,')',1,1)-1) 지역번호 from student;
 
 --EMAIL의 아이디만 추출
 select * from professor;
-select instr(email,'@',1,1) from professor;
+select instr(email,'@',1,1) from professor;-- @의 위치 출력
 select substr(email,1,instr(email,'@',1,1)-1) 이메일 from professor;
 
 --lpad 왼쪽에 채운다. ★
