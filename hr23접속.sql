@@ -1,3 +1,4 @@
+-----------------------------------------------------------------------------230616---------------------------------------------------------------------------------------------
 --DBMS (database management system)
 --종류 : oracle, mysql, mariadb, mssql
 --RDB : (Relational Database) 관계형 데이터베이스
@@ -480,8 +481,10 @@ select * from emp order by ename desc;
 --여러 필드에 적용
 --job 오름차순, empno 내림차순
 select * from emp order by job asc, empno desc;-- 1차 정렬 2차 정렬 1차 정렬 후 2차 정렬이 된다.
-select * from emp order by empno asc, job desc;-- empno는 primary key이기 때문에 2차 정렬을 해도 의미가 없다.
 
+select job,empno,ename from emp order by job asc, empno desc;
+
+select * from emp order by empno asc, job desc;-- empno는 primary key이기 때문에 2차 정렬을 해도 의미가 없다.
 --deptno desc 1차 정렬, sal asc 2차 정렬
 select * from emp order by deptno desc, sal;
 
@@ -507,7 +510,7 @@ select ename,lower(ename) lowername,upper(ename) uppername from emp;
 --length 문자길이, lengthb byte의 길이
 select ename,length(ename) from emp;
 select ename,lengthb(ename) from emp;
-INSERT INTO EMP VALUES(9000, '홍길동', 'CLERK',     7782, TO_DATE('23-01-1982', 'DD-MM-YYYY'), 1300.5678, NULL, 10);
+INSERT INTO EMP VALUES(9000, '홍길동', 'CLERK', 7782, TO_DATE('23-01-1982', 'DD-MM-YYYY'), 1300.5678, NULL, 10);
 select '홍길동',length('홍길동'),lengthb('홍길동'),length('洪'),lengthb('にほんご') from dual;
 
 --dual 테이블 ( 오라클 자체에서 제공되는 테이블 )
@@ -577,6 +580,275 @@ select ename,instr(ename,substr(ename,-1)),rpad(ename,10,'456789') from emp;
 select ename,rpad(ename,10,substr('123456789',6)) from emp where ename='MILLER';
 select ename,rpad(ename,10,substr('123456789',4)) from emp where ename='FORD';
 select ename,rpad(ename,10,substr('123456789',length(ename))) from emp where ename='FORD';
+
+-----------------------------------------------------------------------------230620---------------------------------------------------------------------------------------------
+--replace 문자열 대치 ★★★
+--replace(칼럼, 문자1, 문자2) 칼럼에서 문자1을 문자2로 바꾸겠다는 의미
+select * from emp;
+commit;
+
+--ename의 앞에 2글자를 ★대치
+select ename, replace(ename,'SM','★★') from emp;
+select ename, replace(ename,substr(ename,1,2),'★★') from emp;
+
+--job 앞에 2글자를 --로 변환
+select job, replace(job,substr(job,1,2),'★★') replacejob from emp;
+
+select * from student;
+-- tel의 -를 제거하기
+select tel, instr(tel,'-') from student;
+select tel, replace(tel,substr(tel,8),'*') replacetel from student;
+select tel, replace(tel,substr(tel,instr(tel,'-')),' ') replacetel from student;
+select tel, replace(tel,substr(tel,instr(tel,'-'),1),' ') replacetel from student;
+
+--JUMIN - 추가
+select jumin, concat(concat(jumin,'-'),substr(jumin,6,11)) replacejumin from student;
+
+select jumin,substr(jumin,1,6),substr(jumin,7) from student;
+select jumin,concat(substr(jumin,1,6),'-'),substr(jumin,7) from student;
+select jumin,concat(concat(substr(jumin,1,6),'-'),substr(jumin,7)) replacejumin from student;
+
+--숫자 관련 함수
+--round 반올림 함수 ★★
+select 987.456,round(987.456,2) from dual; --소수점 2째자리까지 표현
+select 987.456,round(987.556,0) from dual; --소수점 0번째자리까지 표현
+select 987.456,round(987.556,-1) from dual; --10단위까지 표현
+select 987.456,round(987.556,-2) from dual; --100단위까지 표현
+
+--trunc 절삭함수 ★★
+select 987.456,trunc(987.456,2) from dual; --자리수 뒤로 제거
+select 987.456,trunc(987.456,0) from dual; --자리수 뒤로 제거
+select 987.456,trunc(987.456,-1) from dual; --자리수 뒤로 제거
+
+--mod ceil floor
+select mod(121,10) from dual;--120/10 한 나머지
+select ceil(100.123) from dual;
+select floor(100.123) from dual;
+select floor(-100.123) from dual;
+
+--ceil 함수응용
+select rownum,empno,ename from emp;
+--팀 구분
+select rownum,ceil(rownum/3) || '팀' team,ename from emp;
+
+--power 함수
+select power(2,3) from dual;--2의 3승
+
+--날짜함수 sysdate ★★★ 현재날짜 : 오라클이 설치된 시스템의 날짜
+select sysdate from dual;
+
+--months_between ★★ 특정기간 개월수
+select months_between('23/6/20','23/2/5') from dual;
+select ceil(months_between('23/6/20','23/1/5')) from dual;
+select floor(months_between('23/6/20','23/1/5')) from dual;
+
+--add_months 달의 수를 추가
+select sysdate,add_months(sysdate,5) from dual;
+
+--next_day 다가오는 날짜
+select sysdate,next_day('23/6/20','월요일') from dual;-- 다가오는 다음 월요일의 날짜 출력
+
+--last_day 월의 마지막 날
+select sysdate,last_day(sysdate) from dual;
+
+--묵시적 형변환, 자동 형변환
+select '2'+'2' from dual;
+select 2+'2' from dual;
+select 2+to_number(2) from dual;-- 명시적 형변환
+
+--year format
+select sysdate from dual;
+select sysdate,to_char(sysdate,'yyyy-MM-dd') from dual;
+select sysdate,to_char(sysdate,'yy-mm-dd') from dual;
+select sysdate,to_char(sysdate,'year') from dual;
+
+--month format
+select sysdate,to_char(sysdate,'MM') from dual;
+select sysdate,to_char(sysdate,'MON') from dual;
+select sysdate,to_char(sysdate,'MONTH') from dual;
+select sysdate,to_char(sysdate,'MONTH','NLS_DATE_LANGUAGE=ENGLISH') from dual;
+
+--DAY FORMAT
+select sysdate,to_char(sysdate,'DD') from dual;
+select sysdate,to_char(sysdate,'DAY') from dual;-- 한글로 나옴
+select sysdate,to_char(sysdate,'DDTH') from dual;-- dayTH
+
+--HOUR FOMAT
+select sysdate,to_char(sysdate,'RRRR-MM-DD HH24:MI:SS') from dual;
+
+--숫자형을 문자형으로 변환 ★★★
+select ename, sal, comm, sal+comm from emp;
+select ename, sal, comm, sal+comm*12,to_char(sal+comm*12,'$999,999,999') from emp;
+
+--to_number ★★★
+select to_number('55') from dual;
+
+--nvl ★★★★★★ null value
+--nvl(comm,0) comm이 null일때 0으로 바꿔준다.
+select comm from emp;
+select sal,comm,sal+comm from emp;-- sal 값이 null인 경우 sal+comm에 원하는 결과가 나타나지않는다.
+select sal,comm,sal+nvl(comm,0) from emp;
+
+--nvl2 ★★★★★★
+--nvl2(col1,col2,col3) col1이 null이 아니면 col2, col1이 null이면 col3이다.
+select ename,sal from emp;
+select ename,sal,nvl2(comm,sal+comm,sal+0) from emp;
+
+select * from student;
+--student에서 deptno2가 null값을 0으로 nv1를 활용해서 치환하고
+--이름 아이디 주민 deptno2를 출력
+--조건 deptno1이 201이거나 103인 데이터
+select name,id,jumin,nvl(deptno2,0) deptno2 from student where deptno1 in (201,103);
+
+--decode 함수 if문과 유사하다. ★★★
+--decode(deptno,101,'computer engineering','etc') deptno가 101이면 'computer engineering'라고 출력하고 나머지는 'etc' 출력
+select deptno,name from professor;
+select deptno,name,decode(deptno,101,'Computer Enginerring','ETC') from professor;
+
+ --동시에 적용하기
+select deptno,name,decode(deptno,
+101,'Computer Enginerring',
+102,'Multi Enginerring',
+103,'Software Enginerring',
+201,'Electronic Enginerring',
+202,'Mechanic Enginerring',
+203,'Chemical Enginerring',
+301,'Infomation science',
+'ETC') job
+from professor;
+
+--emp 테이블에 적용하기
+select * from emp;
+select * from dept;
+ --decode를 사용해서 emp 테이블에 부서이름을 출력하기
+select ename,job,deptno,decode(deptno,
+10,'ACCOUNTING',
+20,'RESEARCH',
+30,'SALES',
+40,'OPERATIONS',
+'ETC') decode
+from emp;
+ 
+--case 조건 when 결과 then 출력 ★★★
+select * from student;
+--tel의 지역번호에 맞는 case 문 적용
+select substr(tel,1,instr(tel,')',1,1)-1) 지역번호 from student where deptno1=201;
+ 
+select substr(tel,1,instr(tel,')',1,1)-1) 지역번호,
+case(substr(tel,1,instr(tel,')',1,1)-1))
+    when '02' then 'seoul'
+    when '031' then 'gyeongi'
+    when '051' then 'busan'
+    when '053' then 'daegu'
+    when '033' then 'gangwondo'
+    else 'etc'
+end loc
+from student 
+where deptno1=201;
+ 
+--복수행함수 그룹함수 ★★★
+select count(*),count(comm) from emp;
+ 
+--sum함수
+select count(comm), sum(comm) from emp;
+ 
+--average 함수
+select count(comm), sum(comm), round(avg(comm),0) from emp;
+select count(comm), sum(comm), round(avg(nvl(comm,0)),2) from emp;
+
+--max min
+select max(sal),min(sal) from emp;
+ 
+-- stddev variance 표준편차,분산
+select stddev(sal) 표준편차, variance(sal) 분산 from emp;
+select round(stddev(sal),2) 표준편차, round(variance(sal),2) 분산 from emp;
+ 
+--group by ★★★★★★ 그룹화
+select * from emp;
+--deptno로 그룹화 = 부서별로 그룹핑
+select deptno from emp group by deptno;
+
+--부서별로 sal의 합계를 구하기
+--select from 사이엔 그룹이 적용된 함수만 사용가능하다.
+select deptno,sum(sal) from emp group by deptno;
+ 
+--group by의 조건절 표현 
+select deptno,sum(sal) from emp group by deptno having sum(sal)>9000;
+ 
+select deptno,sum(sal)
+from emp
+where deptno in (20,30)
+group by deptno 
+having sum(sal)>9000 
+order by deptno desc;
+
+-- 실행
+-- from 
+-- where 
+-- group by --그룹화 
+-- select 
+-- having -- 그룹의 조건
+-- order by -- 정렬
+ 
+select * from student; 
+--deptno1과 weight를 이용한 그룹화적용
+select deptno1,sum(weight)
+from student
+where deptno1 like '1%'
+group by deptno1
+having sum(weight)>200
+order by sum(weight) asc;
+
+--2차그룹핑
+select * from emp;
+--deptno, job으로 2차 그룹핑
+select deptno,job,sum(sal),avg(sal),count(sal) from emp group by deptno,job order by deptno asc;
+
+select deptno,job,sum(sal),avg(sal),count(sal) from emp group by deptno,job having count(sal)<=3 order by deptno asc;
+
+select * from professor;
+--교수테이블에서 분야별로(deptno) 보너스를 받은 사람의 수와 보너스 합계
+--정렬은 deptno
+select deptno,count(bonus),sum(bonus)
+from professor
+group by deptno
+order by deptno asc;
+
+--그룹필드를 년도사용
+select * from professor;
+--년도 조회
+select to_char(hiredate,'yyyy') from professor;
+--년도별로 그룹화 및 정렬
+select to_char(hiredate,'yyyy') from professor group by to_char(hiredate,'yyyy') order by to_char(hiredate,'yyyy');
+
+--10년 단위로 표현
+select round(to_number(to_char(hiredate,'yyyy')),-1) ,count(pay),sum(pay)
+from professor
+group by round(to_number(to_char(hiredate,'yyyy')),-1)
+order by round(to_number(to_char(hiredate,'yyyy')),-1);
+
+--별칭 사용
+select round(to_number(to_char(hiredate,'yyyy')),-1) tenyear,count(pay),sum(pay)
+from professor
+group by round(to_number(to_char(hiredate,'yyyy')),-1)
+order by tenyear;
+
+select * from student;
+--jumin필드의 년도별로 묶고 학생의 평균 키 평균 몸무게 합계 키 출력하기
+select concat(concat(19,substr(jumin,1,2)),'년생') yyjumin,sum(height),sum(weight),round(avg(height),0),round(avg(weight),0)
+from student
+group by substr(jumin,1,2)
+order by yyjumin;
+
+
+
+
+
+
+
+
+
+
 
 
 
