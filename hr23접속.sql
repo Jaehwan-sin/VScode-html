@@ -688,7 +688,7 @@ select to_number('55') from dual;
 --nvl(comm,0) comm이 null일때 0으로 바꿔준다.
 select comm from emp;
 select sal,comm,sal+comm from emp;-- sal 값이 null인 경우 sal+comm에 원하는 결과가 나타나지않는다.
-select sal,comm,sal+nvl(comm,0) from emp;
+select sal,comm,sal+nvl(comm,0) salcomm from emp;
 
 --nvl2 ★★★★★★
 --nvl2(col1,col2,col3) col1이 null이 아니면 col2 출력, col1이 null 이면 col3 출력
@@ -1019,21 +1019,137 @@ select a.id,a.name,b.car
 from tbl1 a , tbl2 b
 where a.id = b.id;
 
+--left outer join 왼쪽 테이블 전체 오른쪽 테이블 교집합
+--ansi join
+select t1.id, t2.car from tbl1 t1 left outer join tbl2 t2 on t1.id=t2.id;
+--oracle join
+select t1.id, t2.car from tbl1 t1, tbl2 t2 where t1.id=t2.id(+);
 
+--RIGHT OUTER JOIN 왼쪽 테이블 전체 오른쪽 테이블 교집합
+--ANSI JOIN
+select t1.id, t2.car from tbl1 t1 right outer join tbl2 t2 on t1.id=t2.id;
+--ORACLE JOIN
+select t1.id, t2.car from tbl1 t1, tbl2 t2 where t1.id(+)=t2.id;
 
+--공통부분 제외
+select t1.id, t2.car from tbl1 t1 right outer join tbl2 t2 on t1.id=t2.id where t1.id is null;
 
+--공통부분만 조회
+select t1.id, t2.car from tbl1 t1 right outer join tbl2 t2 on t1.id=t2.id where t1.id is not null;
+select t1.id, t2.car from tbl1 t1 right outer join tbl2 t2 on t1.id=t2.id where t1.id = t2.id;
 
+--FULL OUTER JOIN (테이블 모두 조회)
+--ANSI JOIN
+select t1.id,name, t2.car from tbl1 t1 full outer join tbl2 t2 on t1.id=t2.id;
+--ORACLE JOIN
+select t1.id,name, t2.car from tbl1 t1, tbl2 t2 where t1.id=t2.id(+);
+union
+select t1.id,name, t2.car from tbl1 t1, tbl2 t2 where t1.id(+)=t2.id;
 
+--공통부분 제거
+select T1.id,name, t2.CAR from TBL1 T1 full outer join TBL2 t2 on T1.id=t2.id where t2.Car Is Null Or T1.Id Is Null;
 
+--join 활용 ( emp,dept 테이블 활용 )
+--사원 테이블에서 부서코드에 매칭되는 부서의 이름을 출력
+--empno,ename,deptno,dname 출력
+select * from emp;
+select * from dept;
+select e.empno,e.ename,e.deptno, d.dname from emp e inner join dept d on e.deptno=d.deptno order by dname;
 
+--학생과 교수테이블을 join하여 학생이름, 지도교수번호, 지도교수이름을 조회
+select * from student;
+select * from professor;
+select s.name,s.profno,p.name from student s inner join professor p on s.profno=p.profno order by profno;
 
+--위 내용을 오라클 조인으로 처리
+select s.name,s.profno,p.name from student s, professor p where s.profno=p.profno order by profno;
 
+--update 내용 수정
+--update 테이블 set col1='value',col2='value2' where 조건;
+select * from emp;
+--table copy
+create table emp2
+as
+select * from emp;
 
+select * from emp2;
+--allen의 급여를 500 인상
+update emp2 set sal=sal+500 where ename='ALLEN';
+--JAMES의 급여를 1000 인상
+update emp2 set sal=sal+1000 where ename='JAMES';
+--martin,blake 급여 500 인상
+update emp2 set sal=sal+500 where ename in ('MARTIN','BLAKE');
 
+drop table emp2;
+--SAL가 2000 이하인 사람의 급여 1000 인상
+update emp2 set sal=sal+1000 where sal<=2000;
 
+--복수컬럼 적용
+--sal 3000이상인 사람은 sal 100 인상, comm을 1000으로 수정
+update emp2 set sal=sal+100, comm=1000 where sal>=3000;
+select * from emp2 where sal>=3000;
 
+--sal 2000 이상이고 deptno 20인 사람의 sal 1000인상, comm 2000 수정
+select * from emp2 where sal>=2000 and deptno=20;
+update emp2 set sal=sal+1000, comm=2000 where sal>=2000 and deptno=20;
 
+--직급이 조교수 assistant professor 보너스를 200만원 인상
+select * from professor;
+update professor set bonus=nvl(bonus,0)+200 where position='assistant professor';-- bonus값이 null이면 0으로 수정
+update professor set bonus=nvl2(bonus,bonus+200,0+200) where position='assistant professor';-- bonus값이 null 이면 0+200, null이 아니면 bonus+200
+select * from professor where position='assistant professor';
+rollback;
 
+create table player(
+player_id number,
+player_name varchar2(20),
+team_id varchar2(50));
 
+insert into player values (2012137,'이고르','K05');
+insert into player values (2012136,'오비나','K08');
+insert into player values (2012135,'윤원일','K03');
 
+create table stadium(
+stadium_id varchar2(30),
+stadium_name varchar2(100),
+seat_count number);
 
+insert into stadium values ('D03','전주월드컵경기장',28000);
+insert into stadium values ('B02','성남종합운동장',27000);
+insert into stadium values ('C06','포항스틸야드',25000);
+
+create table team(
+team_id varchar2(20),
+team_name varchar2(200),
+region_name varchar2(50),
+stadium_id varchar2(100));
+
+delete from player;
+
+drop table player;
+drop table stadium;
+drop table team;
+
+insert into team values ('K05','현대모터스','전북','D03');
+insert into team values ('K08','일화천마','성남','B02');
+insert into team values ('K03','스틸러스','포항','C06');
+
+select * from player;
+select * from stadium;
+select * from team;
+
+commit;
+--관계 설정하기
+alter table stadium add constraint pk_stadium_stadium_id primary key(stadium_id);
+alter table team add constraint fk_team_stadium_id foreign key(stadium_id) references stadium(stadium_id);
+
+alter table team add constraint pk_team_team_id primary key(team_id);
+alter table player add constraint fk_player_team_id foreign key(team_id) references team(team_id);
+
+select * from all_constraints where table_name in ('STADIUM','TEAM','PLAYER');
+
+--관계설정 dept 테이블에 deptno를 emp 테이블의 deptno에 참조하기
+alter table dept add constraint pk_dept_deptno primary key(deptno);
+alter table emp add constraint fk_emp_deptno foreign key(deptno) references dept(deptno);
+
+select * from all_constraints where table_name in ('EMP','DEPT');
