@@ -549,7 +549,8 @@ select 'A-B-C-D',instr('A-B-C-D','-',3,5) from dual;-- 찾는 결과가 없을 때는 0으
 
 -- 지역번호 추출 지역번호의 길이가 다름
 -- 길이가 동일할때 추출
-select tel from student;
+select * from student;
+select concat(19,substr(jumin,1,2)) jumin from student group by substr(jumin,1,2) order by jumin;
 select substr(tel,1,3) from student;
 --위치값 변환
 select tel,instr(tel,')',1,1) from student;
@@ -690,9 +691,11 @@ select sal,comm,sal+comm from emp;-- sal 값이 null인 경우 sal+comm에 원하는 결과
 select sal,comm,sal+nvl(comm,0) from emp;
 
 --nvl2 ★★★★★★
---nvl2(col1,col2,col3) col1이 null이 아니면 col2, col1이 null이면 col3이다.
+--nvl2(col1,col2,col3) col1이 null이 아니면 col2 출력, col1이 null 이면 col3 출력
+--nvl2 참고사이트 https://gent.tistory.com/189
 select ename,sal from emp;
 select ename,sal,nvl2(comm,sal+comm,sal+0) from emp;
+select empno,ename,comm as comm, nvl2(comm,'Y','N') as comm2 from emp;
 
 select * from student;
 --student에서 deptno2가 null값을 0으로 nv1를 활용해서 치환하고
@@ -720,6 +723,7 @@ from professor;
 --emp 테이블에 적용하기
 select * from emp;
 select * from dept;
+
  --decode를 사용해서 emp 테이블에 부서이름을 출력하기
 select ename,job,deptno,decode(deptno,
 10,'ACCOUNTING',
@@ -839,6 +843,181 @@ select concat(concat(19,substr(jumin,1,2)),'년생') yyjumin,sum(height),sum(weigh
 from student
 group by substr(jumin,1,2)
 order by yyjumin;
+
+-----------------------------------------------------------------------------230621---------------------------------------------------------------------------------------------
+--관계 설정 ★★★★★
+create table one(
+no number,
+name varchar2(10));
+
+create table two(
+num number,
+addr varchar2(30));
+
+select * from one;
+select * from two; 
+
+insert into one values(10,'seoul1');
+insert into one values(20,'seoul2');
+insert into one values(30,'seoul3');
+insert into one values(40,'seoul4');
+insert into one values(50,'seoul5');
+
+insert into two values(10,'busan1');
+insert into two values(20,'busan2');
+insert into two values(30,'busan3');
+insert into two values(40,'busan4');
+insert into two values(500,'busan5');
+---▲▲▲관계 설정 전 상황▲▲▲---
+-- 참조해주는 테이블 먼저 삭제 불가
+drop table one;
+drop table two;
+
+delete from one;
+delete from two;
+--관계 설정하기
+alter table one add constraint pk_one_no primary key(no); -- one 테이블에 primary key를 no 필드에 pk_one_no라는 이름으로 제약조건을 추가하겠다. / no 필드에 pk 적용
+alter table two add constraint fk_two_num foreign key(num) references one(no);-- two 테이블에 foreign key를 num필드에 fk_two_num 이름으로 제약조건을 추가하는데 one테이블의 no필드를 참고해라.
+
+--제약 조건 조회
+select * from all_constraints where table_name='TWO';
+select * from all_constraints where table_name='ONE';
+
+--제약 조건 삭제
+alter table two drop constraint FK_TWO_NUM;
+alter table one drop constraint PK_ONE_NO;
+
+--연습문제
+create table regions3(
+region_id number,
+region_name varchar2(50));
+
+create table countries3(
+country_id varchar2(30),
+country_name varchar2(100),
+region_id number);
+
+select * from regions3;
+select * from countries3;
+
+insert into regions3 values (1,'Europe');
+insert into regions3 values (2,'Americas');
+insert into regions3 values (3,'Asia');
+insert into regions3 values (4,'Middle East and Africa');
+
+insert into countries3 values ('AR','Argentina',2);
+insert into countries3 values ('AU','Australia',3);
+insert into countries3 values ('BE','Belgium',1);
+insert into countries3 values ('BR','Brazil',2);
+insert into countries3 values ('CA','Canada',2);
+
+insert into countries3 values ('CA','Canada',20);
+delete from countries3 where region_id=20;
+
+--관계 설정하기
+alter table regions3 add constraint pk_rg3_id primary key(region_id);
+alter table countries3 add constraint fk_ct3_id foreign key(region_id) references regions3(region_id);
+
+--제약 조건 조회
+select * from all_constraints where table_name='REGIONS3';
+select * from all_constraints where table_name='COUNTRIES3';
+select * from all_constraints where table_name IN ('REGIONS3','COUNTRIES3');
+
+--제약 조건 삭제
+alter table REGIONS3 drop constraint PK_RG3_ID;
+alter table countries3 drop constraint FK_CT3_ID;
+
+create table emp(
+empno number(4) not null,--사번 UNIQUE NOT NULL
+ename varchar2(10),--사원이름
+job varchar2(9),--직책
+mgr number(4),--사수번호
+hiredate date,--입사일
+sal number(7,2),--급여
+comm number(7,2),--커미션
+deptno number(2));--부서번호
+desc emp; -- 테이블 구조보기
+select * from emp;
+
+delete from emp;
+
+INSERT INTO EMP VALUES(7369,'SMITH','CLERK',7902,TO_DATE('17-12-1980','dd-mm-yyyy'),800,NULL,20);
+INSERT INTO EMP VALUES (7499, 'ALLEN',  'SALESMAN',  7698,TO_DATE('20-02-1981', 'DD-MM-YYYY'), 1600,  300, 30);
+INSERT INTO EMP VALUES(7521, 'WARD',   'SALESMAN',  7698,TO_DATE('22-02-1981', 'DD-MM-YYYY'), 1250,  500, 30);
+INSERT INTO EMP VALUES(7566, 'JONES',  'MANAGER',   7839,TO_DATE('02-04-1981', 'DD-MM-YYYY'),  2975, NULL, 20);
+INSERT INTO EMP VALUES(7654, 'MARTIN', 'SALESMAN',  7698,TO_DATE('28-09-1981', 'DD-MM-YYYY'), 1250, 1400, 30);
+INSERT INTO EMP VALUES(7698, 'BLAKE',  'MANAGER',   7839,TO_DATE('01-05-1981', 'DD-MM-YYYY'),  2850, NULL, 30);
+INSERT INTO EMP VALUES(7782, 'CLARK',  'MANAGER',   7839,TO_DATE('09-06-1981', 'DD-MM-YYYY'),  2450, NULL, 10);
+INSERT INTO EMP VALUES(7788, 'SCOTT',  'ANALYST',   7566,TO_DATE('09-12-1982', 'DD-MM-YYYY'), 3000, NULL, 20);
+INSERT INTO EMP VALUES(7839, 'KING',   'PRESIDENT', NULL, TO_DATE('17-11-1981', 'DD-MM-YYYY'), 5000, NULL, 10);
+INSERT INTO EMP VALUES(7844, 'TURNER', 'SALESMAN',  7698, TO_DATE('08-09-1981', 'DD-MM-YYYY'),  1500, NULL, 30);
+INSERT INTO EMP VALUES(7876, 'ADAMS',  'CLERK',     7788,TO_DATE('12-01-1983', 'DD-MM-YYYY'), 1100, NULL, 20);
+INSERT INTO EMP VALUES(7900, 'JAMES',  'CLERK',     7698, TO_DATE('03-12-1981', 'DD-MM-YYYY'),   950, NULL, 30);
+INSERT INTO EMP VALUES (7902, 'FORD',   'ANALYST',   7566, TO_DATE('03-12-1981', 'DD-MM-YYYY'),  3000, NULL, 20);
+INSERT INTO EMP VALUES(7934, 'MILLER', 'CLERK',     7782, TO_DATE('23-01-1982', 'DD-MM-YYYY'), 1300, NULL, 10);
+
+create table dept(
+deptno number,
+dname varchar2(14),
+loc varchar2(13));
+desc dept;
+select * from dept;
+
+insert into dept values(10,'ACCOUNTING','NEW YORK');
+insert into dept values(20,'RESEARCH','DALLAS');
+insert into dept values(30,'SALES','CHICAGO');
+insert into dept values(40,'OPERATIONS','BOSTON');
+
+delete from emp;
+
+drop table emp purge;
+drop table dept purge;
+
+select * from emp;
+select * from dept;
+
+--관계설정 dept 테이블에 deptno를 emp 테이블의 deptno에 참조하기
+alter table dept add constraint pk_dept_deptno primary key(deptno);
+alter table emp add constraint fk_emp_deptno foreign key(deptno) references dept(deptno);
+
+select * from all_constraints where table_name in ('EMP','DEPT');
+
+-- JOIN ★★★★★★★★★★★★ 테이블과 테이블을 결합
+create table tbl1(
+id number,
+name varchar2(10));
+
+create table tbl2(
+id number,
+car varchar2(10));
+
+insert into tbl1 values(1,'AAA');
+insert into tbl1 values(2,'BBB');
+insert into tbl1 values(3,'CCC');
+insert into tbl1 values(4,'DDD');
+insert into tbl1 values(5,'EEE');
+select * from tbl1;
+
+insert into tbl2 values(2,'AVANTE');
+insert into tbl2 values(3,'SONATA');
+insert into tbl2 values(2,'MINI');
+insert into tbl2 values(6,'PONY');
+select * from tbl2;
+commit;
+
+--ansi join style / 다른 데이터베이스 프로그램에서도 사용 가능
+select a.id,a.name,b.car-- 실행순서가 from보다 select가 늦게 실행되서 별칭을 써도된다.
+from tbl1 a inner join tbl2 b
+on a.id = b.id;
+
+select a.id,name,car --중복된 곳에선 별칭을 써준다.
+from tbl1 a inner join tbl2 b
+on a.id = b.id;
+
+--oracle join / Oracle에서만 사용가능
+select a.id,a.name,b.car
+from tbl1 a , tbl2 b
+where a.id = b.id;
 
 
 
