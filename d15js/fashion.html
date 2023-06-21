@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Nike Shop</title>
+    <script src="../script/jquery-3.7.0.min.js"></script>
     <style>
         #caption1,#caption2,#caption3,#caption4,#caption5,#caption6 {
             color: black; font-size: 20px; 
@@ -20,6 +21,14 @@
     <div class="img">
         <table>
             <tr>
+                <script>
+                    $().ready(function(){
+                        $("#image1").click(function(){
+                            // alert('호출');
+                            window.open('./nike1detail.html');
+                        });
+                    });
+                </script>
                 <td><img src="../imgs/nike1.png" alt="나이키" id="image1" width="500px" height="400px"></td>
                 <td><img src="../imgs/nike2.png" alt="나이키" id="image2" width="500px" height="400px"></td>
                 <td><img src="../imgs/nike3.png" alt="나이키" id="image3" width="500px" height="400px"></td>
