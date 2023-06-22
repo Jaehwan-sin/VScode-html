@@ -515,8 +515,8 @@ select '홍길동',length('홍길동'),lengthb('홍길동'),length('洪'),lengthb('にほん�
 
 --dual 테이블 ( 오라클 자체에서 제공되는 테이블 )
 --▶ Dual 테이블의 사용용도
---   - dual 테이블은 사용자가 함수(계산)를 실행할 때 임시로 사용하는데 적합하다.
---   - 함수에 대한 쓰임을 알고 싶을때 특정 테이블을 생성할 필요없이 dual 테이블을 이용하여 함수의 값을 리턴(return)받을 수 있다.
+-- - dual 테이블은 사용자가 함수(계산)를 실행할 때 임시로 사용하는데 적합하다.
+-- - 함수에 대한 쓰임을 알고 싶을때 특정 테이블을 생성할 필요없이 dual 테이블을 이용하여 함수의 값을 리턴(return)받을 수 있다.
    
 --concat 함수 문자열 연결 ||
 select * from emp;
@@ -1055,6 +1055,7 @@ select T1.id,name, t2.CAR from TBL1 T1 full outer join TBL2 t2 on T1.id=t2.id wh
 select * from emp;
 select * from dept;
 select e.empno,e.ename,e.deptno, d.dname from emp e inner join dept d on e.deptno=d.deptno order by dname;
+select e.empno,e.ename,e.deptno,d.dname,d.loc from emp e inner join dept d on e.deptno = d.deptno order by deptno;
 
 --학생과 교수테이블을 join하여 학생이름, 지도교수번호, 지도교수이름을 조회
 select * from student;
@@ -1096,7 +1097,7 @@ update emp2 set sal=sal+1000, comm=2000 where sal>=2000 and deptno=20;
 --직급이 조교수 assistant professor 보너스를 200만원 인상
 select * from professor;
 update professor set bonus=nvl(bonus,0)+200 where position='assistant professor';-- bonus값이 null이면 0으로 수정
-update professor set bonus=nvl2(bonus,bonus+200,0+200) where position='assistant professor';-- bonus값이 null 이면 0+200, null이 아니면 bonus+200
+update professor set bonus=nvl2(bonus,bonus-200,0+200) where position='assistant professor';-- bonus값이 null 이면 0+200, null이 아니면 bonus+200
 select * from professor where position='assistant professor';
 rollback;
 
@@ -1147,9 +1148,295 @@ alter table team add constraint pk_team_team_id primary key(team_id);
 alter table player add constraint fk_player_team_id foreign key(team_id) references team(team_id);
 
 select * from all_constraints where table_name in ('STADIUM','TEAM','PLAYER');
+-----------------------------------------------------------------------------230622---------------------------------------------------------------------------------------------
+--서브쿼리 ( subquery ) ★★★★★★ 쿼리 속에 쿼리
+--select * from emp where 조건 (select sal from emp where ~~~)
 
---관계설정 dept 테이블에 deptno를 emp 테이블의 deptno에 참조하기
-alter table dept add constraint pk_dept_deptno primary key(deptno);
-alter table emp add constraint fk_emp_deptno foreign key(deptno) references dept(deptno);
+--단일행 서브쿼리 서브쿼리의 결과가 단일행이다. 결과가 하나가 나온다는 뜻
+--scott의 sal보다 작은 급여를 받는 사람의 정보를 출력하시오.
+select ename,sal from emp where ename='SCOTT' ;
 
-select * from all_constraints where table_name in ('EMP','DEPT');
+select * from emp 
+where sal<3000;--soctt 급여가 인상이 되면 잘못된 정보 출력
+
+select * from emp where sal<(select sal from emp where ename='SCOTT');
+
+--emp테이블에서 ward보다 comm을 적게 받는 사람의 이름과 comm 출력
+select * from emp;
+select * from emp where comm<(select comm from emp where ename='WARD');
+
+--professor 테이블에서 sharon stone 교수의 직급과 동일한 교수 중 현재급여가 250이 안되는 교수의 급여를 20% 인상
+select * from professor;
+--직급 출력
+select position from professor where name='Sharon Stone';
+--동일한 직급 정보
+select * from professor
+where position=(
+select position 
+from professor 
+where name='Sharon Stone'
+) and pay < 250;
+
+update professor
+set pay = pay*1.2
+where position=(
+select position 
+from professor 
+where name='Sharon Stone'
+) and pay < 250;
+
+select * from professor where position='instructor';
+rollback;
+
+--subquery의 주의점
+--1. 서브 쿼리 부분은 where절에 연산자 오른쪽에 위치하고 반드시 ()로 묶는다.
+--2. 특별한 경우를 제외하고 서브 쿼리 절에 order by 사용하지 못한다.
+--3. 단일행 서브쿼리, 다중행 서브쿼리로 나뉜다.
+--단일행 서브쿼리 연산자 : =, <> 같지않다, >, >=, <, <=
+
+--student 테이블과 department 테이블을 사용하여 'Anthony Hopkins'학생과 1전공(deptno1)이
+--동일한 학생들의 이름과 1전공 이름을 출력
+--'Anthony Hopkins'학생과 1전공
+select * from student;
+select * from department;
+--Hopkins의 전공번호 출력
+select deptno1 from student where name = 'Anthony Hopkins';
+--조인해서 Hopkins의 1전공이름 출력
+select s.name,s.deptno1,d.dname from student s , department d where s.deptno1 = d.deptno and s.deptno1=103;
+select s.name,s.deptno1,d.dname from student s inner join department d on s.deptno1 = d.deptno and s.deptno1=103;
+--위 코드를 서브쿼리 적용
+select s.name,s.deptno1,d.dname from student s , department d where s.deptno1 = d.deptno and s.deptno1=(select deptno1 from student where name = 'Anthony Hopkins');
+
+--student 테이블에서 1전공이 201번인 학과평균 몸무게보다 몸무게가 많은 학생의 이름과 몸무게 출력
+--테이블에서 1전공이 201번인 학과평균 몸무게
+select * from student where deptno1=201;
+select avg(weight) from student where deptno1=201;
+
+select name,weight from student where weight>(select avg(weight) from student where deptno1=201);
+
+--다중행 서브쿼리 / 결과행이 2개이상
+-- IN 결과를 메인에서 모두 검색
+-- EXISTS 값이 있으면
+-- >ANY 최소값보다큰
+-- <ANY 최대값보다 작은
+-- <ALL 최소값보다 작은
+-- >ALL 최대값보다 큰
+select sal from emp where deptno=20;
+
+create table dept2(
+dcode varchar2(6) primary key,
+dname varchar2(30) not null,
+pdept varchar2(6),
+area varchar2(30));
+
+INSERT INTO DEPT2 VALUES ('0001','President','','Pohang Main Office');
+INSERT INTO DEPT2 VALUES ('1000','Management Support Team','0001','Seoul Branch Office');
+INSERT INTO DEPT2 VALUES ('1001','Financial Management Team','1000','Seoul Branch Office');
+INSERT INTO DEPT2 VALUES ('1002','General affairs','1000','Seoul Branch Office');
+INSERT INTO DEPT2 VALUES ('1003','Engineering division','0001','Pohang Main Office');
+INSERT INTO DEPT2 VALUES ('1004','H/W Support Team','1003','Daejeon Branch Office');
+INSERT INTO DEPT2 VALUES ('1005','S/W Support Team','1003','Kyunggi Branch Office');
+INSERT INTO DEPT2 VALUES ('1006','Business Department','0001','Pohang Main Office');
+INSERT INTO DEPT2 VALUES ('1007','Business Planning Team','1006','Pohang Main Office');
+INSERT INTO DEPT2 VALUES ('1008','Sales1 Team','1007','Busan Branch Office');
+INSERT INTO DEPT2 VALUES ('1009','Sales2 Team','1007','Kyunggi Branch Office');
+INSERT INTO DEPT2 VALUES ('1010','Sales3 Team','1007','Seoul Branch Office');
+INSERT INTO DEPT2 VALUES ('1011','Sales4 Team','1007','Ulsan Branch Office');
+
+create table emp2(
+empno number primary key,
+name varchar2(30) not null,
+birthday date,
+deptno varchar2(6) not null,
+emp_type varchar2(30),
+tel varchar2(15),
+hobby varchar2(30),
+pay number,
+position varchar2(30),
+pempno number);
+
+INSERT INTO EMP2 VALUES (19900101,'Kurt Russell',TO_DATE('19640125','YYYYMMDD'),'0001','Permanent employee','054)223-0001','music',100000000,'Boss',null);
+INSERT INTO EMP2 VALUES (19960101,'AL Pacino',TO_DATE('19730322','YYYYMMDD'),'1000','Permanent employee','02)6255-8000','reading',72000000,'Department head',19900101);
+INSERT INTO EMP2 VALUES (19970201,'Woody Harrelson',TO_DATE('19750415','YYYYMMDD'),'1000','Permanent employee','02)6255-8005','Fitness',50000000,'Section head',19960101);
+INSERT INTO EMP2 VALUES (19930331,'Tommy Lee Jones',TO_DATE('19760525','YYYYMMDD'),'1001','Perment employee','02)6255-8010','bike',60000000,'Deputy department head',19960101);
+INSERT INTO EMP2 VALUES (19950303,'Gene Hackman',TO_DATE('19730615','YYYYMMDD'),'1002','Perment employee','02)6255-8020','Marathon',56000000,'Section head',19960101);
+INSERT INTO EMP2 VALUES (19966102,'Kevin Bacon',TO_DATE('19720705','YYYYMMDD'),'1003','Perment employee','052)223-4000','Music',75000000,'Department head',19900101);
+INSERT INTO EMP2 VALUES (19930402,'Hugh Grant',TO_DATE('19720815','YYYYMMDD'),'1004','Perment employee','042)998-7005','Climb',51000000,'Section head',19966102);
+INSERT INTO EMP2 VALUES (19960303,'Keanu Reeves',TO_DATE('19710925','YYYYMMDD'),'1005','Perment employee','031)564-3340','Climb',35000000,'Deputy Section chief',19966102);
+INSERT INTO EMP2 VALUES (19970112,'Val Kilmer',TO_DATE('19761105','YYYYMMDD'),'1006','Perment employee','054)223-4500','Swim',68000000,'Department head',19900101);
+INSERT INTO EMP2 VALUES (19960212,'Chris O''Donnell',TO_DATE('19721215','YYYYMMDD'),'1007','Perment employee','054)223-4600',null,49000000,'Section head',19970112);
+INSERT INTO EMP2 VALUES (20000101,'Jack Nicholson',TO_DATE('19850125','YYYYMMDD'),'1008','Contracted Worker','051)123-4567','Climb', 30000000,'',19960212);
+INSERT INTO EMP2 VALUES (20000102,'Denzel Washington',TO_DATE('19830322','YYYYMMDD'),'1009','Contracted Worker','031)234-5678','Fishing', 30000000,'',19960212);
+INSERT INTO EMP2 VALUES (20000203,'Richard Gere',TO_DATE('19820415','YYYYMMDD'),'1010','Contracted Worker','02)2345-6789','Baduk', 30000000,'',19960212);
+INSERT INTO EMP2 VALUES (20000334,'Kevin Costner',TO_DATE('19810525','YYYYMMDD'),'1011','Contracted Worker','053)456-7890','Singing', 30000000,'',19960212);
+INSERT INTO EMP2 VALUES (20000305,'JohnTravolta',TO_DATE('19800615','YYYYMMDD'),'1008','Probation','051)567-8901','Reading book', 22000000,'',19960212);
+INSERT INTO EMP2 VALUES (20006106,'Robert De Niro',TO_DATE('19800705','YYYYMMDD'),'1009','Probation','031)678-9012','Driking',   22000000,'',19960212);
+INSERT INTO EMP2 VALUES (20000407,'Sly Stallone',TO_DATE('19800815','YYYYMMDD'),'1010','Probation','02)2789-0123','Computer game', 22000000,'',19960212);
+INSERT INTO EMP2 VALUES (20000308,'Tom Cruise',TO_DATE('19800925','YYYYMMDD'),'1011','Intern','053)890-1234','Golf', 20000000,'',19960212);
+INSERT INTO EMP2 VALUES (20000119,'Harrison Ford',TO_DATE('19801105','YYYYMMDD'),'1004','Intern','042)901-2345','Drinking',   20000000,'',19930402);
+INSERT INTO EMP2 VALUES (20000210,'Clint Eastwood',TO_DATE('19801215','YYYYMMDD'),'1005','Intern','031)345-3456','Reading book', 20000000,'',19960303);
+
+select * from dept2;
+select * from emp2;
+COMMIT;
+--emp2 테이블과 dept2 테이블을 참조하여 근무지역(dept2 테이블의 area 컬럼)이 'Pohang Main Office'인 모든 사원들의 사번과 이름, 부서번호 출력
+
+--근무지역(dept2 테이블의 area 컬럼)이 'Pohang Main Office'인
+select dcode from dept2 where area='Pohang Main Office';
+
+select empno,name,deptno from emp2 where deptno in (select dcode from dept2 where area='Pohang Main Office');
+
+--emp2 테이블에서 전체 직원 중 'Section head'직급의 최소 연봉자보다 연봉이 높은 사람의 이름과 직급, 연봉을 출력
+--emp2 테이블에서 전체 직원 중 'Section head' 직급의 연봉은?
+
+select * from emp2;
+select pay from emp2 where position='Section head';
+50000000
+56000000
+51000000
+49000000
+
+-- >ANY 최소값보다큰
+select name,position,pay from emp2 where pay > any (select pay from emp2 where position='Section head');
+
+-- <ANY 최대값보다 작은
+select name,position,pay from emp2 where pay < any (select pay from emp2 where position='Section head');
+
+-- <all 최소값보다 작은
+select name,position,pay from emp2 where pay < all (select pay from emp2 where position='Section head');
+
+-- >all 최대값보다 큰
+select name,position,pay from emp2 where pay > all (select pay from emp2 where position='Section head');
+
+--exists=존재하다. 활용
+select * from dept where deptno=20;
+
+--결과값이 있으면 실행하고 없으면 실행 안 함.
+select * from dept where exists(select * from dept where deptno=50);
+
+--다중 컬럼 서브쿼리
+select * from student;
+
+select grade,max(weight) from student group by grade order by grade;
+
+--학년별로 몸무게가 제일 많이 나가는 학생의 이름 몸무게 출력
+select grade,name,weight from student where (grade,weight) in (select grade,max(weight) from student group by grade);
+
+--professor, department 테이블에서 각 학과별로 입사일이 가장 오래된 교수의 교수 번호와 이름, 학과명 출력
+select * from professor;
+select * from department;
+select deptno from professor group by deptno;
+
+select profno,name,deptno from professor where (deptno,hiredate) in (select deptno,min(hiredate) from professor group by deptno);
+
+--각 학과별로 입사일이 가장 오래된 교수
+select deptno,min(hiredate) from professor group by deptno order by deptno;
+
+--교수 번호와 이름, 학과명 출력
+select p.profno,p.name,d.dname from professor p , department d where p.deptno = d.deptno;
+
+--위 두개 결합
+select p.profno,p.name,d.dname 
+from professor p , department d 
+where p.deptno = d.deptno 
+and (p.deptno,p.hiredate) in (
+select deptno,min(hiredate)
+from professor 
+group by deptno)
+order by p.deptno;
+
+--------------------------------------
+--사용자 만들기 시스템 계정에서 만들기 ★★★★★★
+show user;
+
+commit;
+
+show user;
+-- 사용자 만들기
+create user blue IDENTIFIED by 123456;
+-- 권한 설정
+grant connect, resource, dba to blue;
+
+conn blue;
+
+show user;
+
+--사용자 삭제
+drop user blue cascade;
+
+---------------------------
+--view 활용 ★★★
+--view란 가상테이블을 의미, 원래 테이블은 데이터가 들어있지만 뷰에는 데이터가 없고
+--원본 테이블에서 데이터를 불러오는 쿼리만 존재
+--일반적으로 데이터를 조회할 목적으로 사용
+
+create view aview
+as
+select empno,ename,hiredate from emp;
+
+select * from aview;
+
+--view 삭제
+drop view aview;
+
+create table o_table(
+a number,
+b number);
+
+select * from o_table;
+
+--o_table 형식으로 뷰 만들기
+create view view1
+as
+select a,b
+from o_table;
+
+--view1에 데이터 입력
+insert into view1 values(1,2);
+
+select * from view1;
+select * from o_table;
+rollback;
+
+insert into o_table values(1,2);
+
+create view view2
+as
+select a,b
+from o_table
+with read only;
+
+insert into view2 values(3,4);--read-only 기 때문에 데이터 삽입 불가
+insert into o_table values(7,8);
+
+select * from o_table;
+select * from view2;-- 읽기 가능
+
+create view view3
+as
+select a,b
+from o_table
+where a=5-- a가 5인 값만 허용하겠다.
+with check option;
+
+insert into view3 values(3,4);--check option에 걸림
+insert into view3 values(5,6);--가능
+
+select * from view3;
+
+update view3 set a=50;--check option에 걸림
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
