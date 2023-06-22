@@ -1426,6 +1426,126 @@ select * from view3;
 
 update view3 set a=50;--check option에 걸림
 
+--view join과 함께 활용
+--emp dept 테이블 조인결과를 view로 생성
+
+create view empdeptview
+as
+select e.empno,e.ename,e.job,d.dname
+from emp e inner join dept d
+on e.deptno=d.deptno
+order by e.ename;
+
+select * from empdeptview;
+select * from empdeptview where empno=7499;
+
+update emp set job = 'clerk2222' where ename='ADAMS';
+
+--sequence 시퀀스 ★★★★★ 자동증가
+create table s_order(
+ord_no number(4),
+ord_name varchar2(10),
+p_name varchar2(20),
+p_qty number);
+
+select * from s_order;
+
+insert into s_order values(1,'ja','apple',5);
+
+--시퀀스 생성 위 테이블 데이터 입력에 활용
+--sequence : 정수를 순차적으로 생성하는 역할을 하는 객체
+create sequence sorer_ordno_seq
+increment by 1
+start with 100
+maxvalue 110
+minvalue 90
+cycle
+cache 2;
+
+select * from s_order;
+insert into s_order values(sorer_ordno_seq.nextval,'ja','apple',5);-- 다음번호
+select sorer_ordno_seq.currval from dual;--현재 시퀀스 번호 확인
+
+/
+begin
+    for i in 1..100 loop
+        insert into s_order values(sorer_ordno_seq.nextval,'ja','apple',5);
+    end loop;
+end;
+/
+
+--게시판용 테이블에 적용
+create table board10(
+num number,--글 번호
+title varchar2(100),--글 제목
+memo varchar2(300)); 
+
+--nextval : 시퀀스에서 다음 값을 가져오는 함수로 자동으로 생성되고 반환
+--currval : 시퀀스의 현재값을 가져오는 함수
+create sequence board10_seq;
+/
+begin
+    for i in 1..100 loop
+        insert into board10 values(board10_seq.nextval,'ja','apple');
+    end loop;
+end;
+/
+select * from board10;
+
+delete from board10;
+
+--시퀀스 검색
+select * from user_sequences
+where sequence_name = 'BOARD10_SEQ';
+--시퀀스 수정
+alter sequence board10_seq
+increment by 1;
+
+desc user_sequences;
+
+--시퀀스 초기화
+/
+create or replace procedure re_seq
+(
+    SNAME in varchar2
+)
+is
+    VAL number;
+begin
+   EXECUTE IMMEDIATE 'SELECT ' || SNAME || '.NEXTVAL FROM DUAL ' INTO  VAL;
+   EXECUTE IMMEDIATE 'ALTER SEQUENCE ' || SNAME || ' INCREMENT BY -' || VAL || ' MINVALUE 0';
+   EXECUTE IMMEDIATE 'SELECT ' || SNAME || '.NEXTVAL FROM DUAL ' INTO VAL;
+   EXECUTE IMMEDIATE 'ALTER SEQUENCE ' || SNAME || ' INCREMENT BY 1 MINVALUE 0';    
+end;
+/
+;
+
+select BOARD10_SEQ.currval from dual;
+
+exec re_seq('BOARD10_SEQ');
+
+--시퀀스 삭제
+drop sequence board10_seq;
+
+--* NEXTVAL 및 CURRVAL을 사용할 수 있는 경우
+-- - 서브쿼리가 아닌 SELECT문
+-- - INSERT문의 SELECT절
+-- - INSERT문의 VALUE절
+-- - UPDATE문의 SET절
+
+--* NEXTVAL 및 CURRVAL을 사용할 수 없는 경우
+-- - VIEW의 SELECT절
+-- - DISTINCT 키워드가 있는 SELECT문
+-- - GROUP BY, HAVING, ORDER BY절이 있는 SELECT문
+-- - SELECT, DELETE, UPDATE의 서브쿼리
+-- - CREATE TABLE, ALTER TABLE 명령의 DEFAULT값
+
+
+
+
+
+
+
 
 
 
