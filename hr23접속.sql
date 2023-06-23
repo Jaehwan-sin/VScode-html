@@ -1153,12 +1153,12 @@ select * from all_constraints where table_name in ('STADIUM','TEAM','PLAYER');
 --select * from emp where 조건 (select sal from emp where ~~~)
 
 --단일행 서브쿼리 서브쿼리의 결과가 단일행이다. 결과가 하나가 나온다는 뜻
---scott의 sal보다 작은 급여를 받는 사람의 정보를 출력하시오.
-select ename,sal from emp where ename='SCOTT' ;
+select ename,sal from emp where ename='SCOTT';
 
 select * from emp 
 where sal<3000;--soctt 급여가 인상이 되면 잘못된 정보 출력
 
+--scott의 sal보다 작은 급여를 받는 사람의 정보를 출력하시오.
 select * from emp where sal<(select sal from emp where ename='SCOTT');
 
 --emp테이블에서 ward보다 comm을 적게 받는 사람의 이름과 comm 출력
@@ -1202,7 +1202,9 @@ select * from department;
 --Hopkins의 전공번호 출력
 select deptno1 from student where name = 'Anthony Hopkins';
 --조인해서 Hopkins의 1전공이름 출력
+--oracle join
 select s.name,s.deptno1,d.dname from student s , department d where s.deptno1 = d.deptno and s.deptno1=103;
+--ansi join
 select s.name,s.deptno1,d.dname from student s inner join department d on s.deptno1 = d.deptno and s.deptno1=103;
 --위 코드를 서브쿼리 적용
 select s.name,s.deptno1,d.dname from student s , department d where s.deptno1 = d.deptno and s.deptno1=(select deptno1 from student where name = 'Anthony Hopkins');
@@ -1540,14 +1542,361 @@ drop sequence board10_seq;
 -- - SELECT, DELETE, UPDATE의 서브쿼리
 -- - CREATE TABLE, ALTER TABLE 명령의 DEFAULT값
 
+-----------------------------------------------------------------------------230623---------------------------------------------------------------------------------------------
+--시퀀스 적용예제
+--addrmemo 테이블에 번호(ano), 이름(aname), 주소(addr), 전화번호(atel)
+--번호에 시퀀스 적용(ano_seq)
+--데이터 5개 정도 입력
 
+create table addrmemo(
+ano number,
+aname varchar2(30),
+addr varchar2(200),
+atel varchar2(200));
 
+--시퀀스 생성
+create sequence ano_seq
+increment by 1
+start with 1
+maxvalue 100
+minvalue 1
+cycle
+cache 2;
 
+drop sequence ano_seq;
+select * from addrmemo;
+insert into addrmemo values(ano_seq.nextval,'홍길동','서울시','010-1111-1111');-- 다음번호
+select ano_seq.currval from dual;--현재 시퀀스 번호 확인
 
+/
+begin
+    for i in 1..5 loop
+        insert into addrmemo values(ano_seq.nextval,'홍길동','서울시','010-1111-1111');
+    end loop;
+end;
+/
 
+delete from addrmemo;
 
+--시퀀스 예제 풀이
+CREATE TABLE ADDRMEMO(
+ANO NUMBER PRIMARY KEY
+,ANAME VARCHAR2(50)
+,ADDR VARCHAR2(100)
+,ATEL VARCHAR2(50)
+);
 
+SELECT *FROM ADDRMEMO;
 
+CREATE SEQUENCE ANO_SEQ
+INCREMENT BY 1
+START WITH 1
+MAXVALUE 999999999
+NOCYCLE
+CACHE 20;
+
+INSERT INTO ADDRMEMO VALUES(ANO_SEQ.NEXTVAL, 'AAA','서울특별시 금천구 ~~', '010-1234-5678');
+INSERT INTO ADDRMEMO VALUES(ANO_SEQ.NEXTVAL, 'BBB','서울특별시 구로구 ~~', '010-8888-4234');
+INSERT INTO ADDRMEMO VALUES(ANO_SEQ.NEXTVAL, 'CCC','서울특별시 동작구 ~~', '010-7677-2243');
+INSERT INTO ADDRMEMO VALUES(ANO_SEQ.NEXTVAL, 'DDD','인천광역시 소래포구 ~~', '010-5432-1358');
+
+SELECT *FROM ADDRMEMO;
+
+--저장프로시저 precedure pl/sql(procedure language/sql) 오라클에서 제공하는 프로그래밍 언어
+create table board2(
+bid number,
+btitle varchar2(30),
+bcontent varchar2(100),
+bwriter varchar2(20),
+bstep number);
+
+desc board2;
+
+--시퀀스 만들기
+create sequence board2_seq;
+
+--시퀀스 삭제
+drop sequence board2_seq;
+select board2_seq.currval from dual;
+
+select board2_seq.nextval from dual;
+
+--데이터 입력
+insert into board2 values(board2_seq.nextval,'big data','빅데이터 전망','hong1',3);
+
+select * from board2;
+commit;
+
+--버퍼에 메시지 출력되도록 세팅
+set serveroutput on;
+
+insert into board2 values(board2_seq.nextval,'big data','빅데이터 전망','hong1',3);
+--이 쿼리를 프로시저 적용하면서 이해
+/
+create or replace procedure brd2_insert(
+    title varchar2,bcontent varchar2,writer varchar2,step number
+)
+is
+begin
+    insert into board2 values(board2_seq.nextval,title,bcontent,writer,step);
+    dbms_output.put_line(title || ',' || writer);
+end;
+/
+
+select * from board2;
+
+--프로시저 실행
+exec brd2_insert('big data2','bbbb','hong2',5);
+exec brd2_insert('big data5','bbbb5','hong5',5);
+
+--프로시저 예제
+--emp 테이블 적용
+select * from emp;
+--emp_insert
+--8000 n TOM v ANALYST v 7839 n 날짜 3500 n 500 n 20 n
+--INSERT INTO EMP VALUES(7369,'SMITH','CLERK',7902,TO_DATE('17-12-1980','dd-mm-yyyy'),800,NULL,20);
+create or replace procedure emp_insert(
+    empno number,ename varchar2,job varchar2,mgr number,sal number,comm number,deptno number
+)
+is
+begin
+    INSERT INTO EMP VALUES(empno,ename,job,mgr,sysdate,sal,comm,deptno);
+--    dbms_output.put_line(title || ',' || writer);
+end;
+/
+
+exec emp_insert(111, 'hong1', 'hong1',111,111,111,11);
+desc emp;
+
+--update : emp_update
+--ford sal 10000 수정
+update emp set sal=10000 where ename='FORD';
+
+create or replace procedure emp_update(
+    selname varchar2
+)
+is
+begin
+    update emp set sal=30000 where ename=selname;
+    dbms_output.put_line(selname);
+end;
+/
+exec emp_update('FORD')
+select * from emp;
+
+--미션 정답
+--emp 테이블 적용
+select * from emp;
+--emp_insert
+--8000 n TOM v  ANALYST v 7839 n  오늘날자  3500 n  500 n  20 n
+--INSERT INTO EMP VALUES (7499, 'ALLEN',  'SALESMAN',  7698,TO_DATE('20-02-1981', 'DD-MM-YYYY'), 1600,  300, 30);
+
+/
+create or replace procedure emp_insert(
+    col1 number,col2 varchar2,col3 varchar2,col4 number,col5 number,col6 number,col7 number 
+)
+is
+begin
+    insert into emp values(col1,col2,col3,col4,sysdate,col5,col6,col7);
+    dbms_output.put_line(col1 || ',' || col2);
+end;
+/
+select * from emp;
+exec emp_insert(8001,'tom','analyst',8000,3000,500,20);
+
+--SELECT 프로시저만들기
+select * from employees;
+
+--extract 발췌하다.
+select extract(year from hire_date),hire_date from employees;
+
+--입사일이 2003년인 사람들
+select employee_id,last_name,hire_date from employees where extract(year from hire_date)=2003;
+
+--프로시저 이름 yearselect
+--STEP1
+/
+create or replace procedure yearselect(
+    
+)
+is
+begin
+    select employee_id,last_name,hire_date from employees where extract(year from hire_date)=2003;
+end;
+/
+
+--STEP2
+/
+create or replace procedure yearselect(
+    p_year number   
+)
+is
+--변수 선언
+    id employees.employee_id%type; --employees 테이블의 employee_id의 타입을 그대로 사용하겠다.
+    name employees.last_name%type;
+    hiredate employees.hire_date%type;
+begin
+    select employee_id,last_name,hire_date
+-- into절 필요
+    into id,name,hiredate
+    from employees 
+    where extract(year from hire_date)=p_year;
+-- 스크립트에 출력
+    dbms_output.put_line(id || ':' || name);
+end;
+/
+
+exec yearselect(2001); -- 1개 레코드 가능
+exec yearselect(2003); -- 여러개 레코드 읽기 불가
+
+select * from employees;
+
+--STEP3
+/
+create or replace procedure yearselect(
+    p_year number   
+)
+is
+--변수 선언
+    emp employees%ROWTYPE;--테이블 통으로 타입가져오기
+--커서 등록
+    CURSOR EMP_CUR IS select employee_id,last_name,hire_date
+    from employees 
+    where extract(year from hire_date)=p_year;
+begin
+    LOOP
+    
+    END LOOP;
+-- 스크립트에 출력
+    dbms_output.put_line(id || ':' || name);
+end;
+/
+
+exec yearselect(2001); -- 1개 레코드 가능
+exec yearselect(2003); -- 여러개 레코드 읽기 불가
+
+--STEP4
+/
+create or replace procedure yearselect(
+    P_YEAR NUMBER
+)
+is
+--    변수선언
+    emp employees%ROWTYPE;--테이블 통으로 타입가져오기
+--    커서등록
+    CURSOR EMP_CUR IS SELECT EMPLOYEE_ID,LAST_NAME,HIRE_DATE
+    FROM EMPLOYEES
+    WHERE EXTRACT(YEAR FROM HIRE_DATE)=P_YEAR;
+    
+begin
+    --커서오픈
+    OPEN EMP_CUR;
+    LOOP
+--    데이터 읽기
+        FETCH EMP_CUR INTO EMP.EMPLOYEE_ID,EMP.LAST_NAME,EMP.HIRE_DATE;
+        EXIT WHEN EMP_CUR%NOTFOUND;
+        dbms_output.put_line(EMP.EMPLOYEE_ID || ':' || EMP.LAST_NAME || ':' || EMP.HIRE_DATE); 
+    END LOOP;
+    --CURSOR CLOSE
+    CLOSE EMP_CUR;
+end;
+/
+
+desc employees;
+exec YEARSELECT(2001);
+--1개 레코드 가능
+exec YEARSELECT(2003); 
+--여러개 레코드 읽기 불능
+
+--ALTER ★★★★★
+--테이블과 같은 데이터 구조를 정의하는데 사용되는 명령어들로 (생성,변경,삭제,이름변경)
+--데이터 구조와 관련된 명령어들을 말함.
+
+CREATE TABLE USERS(
+DEPTNAME VARCHAR2(50) NOT NULL,
+USERNAME VARCHAR2(50),
+ID NUMBER PRIMARY KEY,
+SALARY NUMBER);
+
+INSERT INTO USERS VALUES('영업팀','김영업',101,5000000);
+INSERT INTO USERS VALUES('영업팀','박영업',102,3000000);
+INSERT INTO USERS VALUES('영업팀','박인사',103,6000000);
+INSERT INTO USERS VALUES('영업팀','최영업',104,2000000);
+INSERT INTO USERS VALUES('영업팀','김총무',105,5000000);
+
+--테이블 이름 변경
+ALTER TABLE USERS RENAME TO USERNAME;
+ALTER TABLE USERNAME RENAME TO USERS;
+
+SELECT * FROM USERNAME;
+SELECT * FROM USERS;
+
+--칼럼 추가
+ALTER TABLE USERS ADD(ADDR VARCHAR2(1000));
+
+DESC USERS;
+
+ALTER TABLE USERS ADD (POINT NUMBER);
+
+--칼럼 삭제
+ALTER TABLE USERS DROP COLUMN ADDR;
+ALTER TABLE USERS DROP COLUMN POINT;
+
+--칼럼 이름변경
+--SALARY > SAL
+ALTER TABLE USERS RENAME COLUMN SALARY TO SAL;
+
+--SAL > PAY
+ALTER TABLE USERS RENAME COLUMN SAL TO PAY;
+ALTER TABLE USERS RENAME COLUMN PAY TO SALARY;
+SELECT * FROM USERS;
+DESC USERS;
+
+--칼럼 타입변경 타입을 VARCHAR2에서 NUMBER로 바꿀 땐 안에 데이터가 없어야한다.
+ALTER TABLE USERS MODIFY SALARY VARCHAR2(30);
+ALTER TABLE USERS MODIFY SALARY NUMBER;
+
+--USERNAME의 타입변경 같은 타입이지만 크기를 변경할 땐 데이터가 있어도 변경 가능
+ALTER TABLE USERS MODIFY USERNAME VARCHAR2(60);
+SELECT * FROM USERS;
+DESC USERS;
+-----------------------------------------------------------------------------------------
+--서브쿼리 보충
+CREATE TABLE SALGRADE
+        (GRADE NUMBER,
+         LOSAL NUMBER,
+         HISAL NUMBER);
+
+INSERT INTO SALGRADE VALUES (1,  700, 1200);
+INSERT INTO SALGRADE VALUES (2, 1201, 1400);
+INSERT INTO SALGRADE VALUES (3, 1401, 2000);
+INSERT INTO SALGRADE VALUES (4, 2001, 3000);
+INSERT INTO SALGRADE VALUES (5, 3001, 9999); 
+COMMIT;
+SELECT * FROM SALGRADE;
+
+--서브쿼리 FROM절에 사용
+SELECT * FROM EMP WHERE DEPTNO=10;
+
+SELECT E10.EMPNO,E10.ENAME,E10.DEPTNO
+FROM (SELECT * FROM EMP WHERE DEPTNO=10) E10;
+
+--JOIN 적용
+SELECT E10.EMPNO,E10.ENAME,E10.DEPTNO,D.DNAME,D.LOC
+FROM (SELECT * FROM EMP WHERE DEPTNO=10) E10,
+(SELECT * FROM DEPT) D
+WHERE E10.DEPTNO = D.DEPTNO;
+
+--SELECT 절에 사용하기
+SELECT GRADE FROM SALGRADE
+WHERE E.SAL BETWEEN LOSAL AND HISAL;
+
+--EMP테이블에 급여를 SALGRADE의 급여구간으로 나눈 GRADE를 참고해서 EMP테이블의 급여를 GRADE로 출력
+SELECT EMPNO,ENAME,(SELECT GRADE FROM SALGRADE WHERE E.SAL BETWEEN LOSAL AND HISAL) AS SALGRADE
+FROM EMP E ORDER BY SALGRADE;
+
+SELECT * FROM SALGRADE;
+SELECT * FROM EMP;
 
 
 
