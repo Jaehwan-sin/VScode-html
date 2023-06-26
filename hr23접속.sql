@@ -1542,7 +1542,7 @@ drop sequence board10_seq;
 -- - SELECT, DELETE, UPDATE의 서브쿼리
 -- - CREATE TABLE, ALTER TABLE 명령의 DEFAULT값
 
------------------------------------------------------------------------------230623---------------------------------------------------------------------------------------------
+ -----------------------------------------------------------------------------230623---------------------------------------------------------------------------------------------
 --시퀀스 적용예제
 --addrmemo 테이블에 번호(ano), 이름(aname), 주소(addr), 전화번호(atel)
 --번호에 시퀀스 적용(ano_seq)
@@ -1688,7 +1688,7 @@ select * from emp;
 --emp 테이블 적용
 select * from emp;
 --emp_insert
---8000 n TOM v  ANALYST v 7839 n  오늘날자  3500 n  500 n  20 n
+--8000 n TOM v  ANALYST v 7839 n  오늘날짜  3500 n  500 n  20 n
 --INSERT INTO EMP VALUES (7499, 'ALLEN',  'SALESMAN',  7698,TO_DATE('20-02-1981', 'DD-MM-YYYY'), 1600,  300, 30);
 
 /
@@ -1781,23 +1781,23 @@ create or replace procedure yearselect(
     P_YEAR NUMBER
 )
 is
---    변수선언
+-- 변수선언
     emp employees%ROWTYPE;--테이블 통으로 타입가져오기
---    커서등록
+-- 커서등록
     CURSOR EMP_CUR IS SELECT EMPLOYEE_ID,LAST_NAME,HIRE_DATE
     FROM EMPLOYEES
     WHERE EXTRACT(YEAR FROM HIRE_DATE)=P_YEAR;
     
 begin
-    --커서오픈
+-- 커서오픈
     OPEN EMP_CUR;
     LOOP
---    데이터 읽기
+-- 데이터 읽기
         FETCH EMP_CUR INTO EMP.EMPLOYEE_ID,EMP.LAST_NAME,EMP.HIRE_DATE;
         EXIT WHEN EMP_CUR%NOTFOUND;
         dbms_output.put_line(EMP.EMPLOYEE_ID || ':' || EMP.LAST_NAME || ':' || EMP.HIRE_DATE); 
     END LOOP;
-    --CURSOR CLOSE
+-- CURSOR CLOSE
     CLOSE EMP_CUR;
 end;
 /
@@ -1941,6 +1941,334 @@ select ename,empno,deptno from emp where not deptno in ('20','30');
 select empno,ename,hiredate,deptno from emp where ename like 'S%';
 -- 20번 입사일이 81년도인 사람의 모든 정보를 출력하라.
 select * from emp where hiredate between to_date('1981-01-01','YY-MM-DD') and to_date('1981-12-31','YY-MM-DD');
+
+-----------------------------------------------------------------------------230626---------------------------------------------------------------------------------------------
+-- 프로시저2 if문
+/
+declare--=선언하다
+    vnum number:=15;
+begin
+    if mod(vnum,2) = 1 then
+        dbms_output.put_line(vnum || '는 홀수');
+    else
+        dbms_output.put_line(vnum || '는 짝수');
+    end if;
+end;
+/
+
+--case문
+declare
+    vnum number:=60;
+begin
+    case
+        when vnum>=90 then dbms_output.put_line(vnum || ' : A등급');
+        when vnum>=80 then dbms_output.put_line(vnum || ' : B등급');
+        when vnum>=70 then dbms_output.put_line(vnum || ' : C등급');
+        when vnum>=60 then dbms_output.put_line(vnum || ' : D등급');
+        
+    end case;
+end;
+/
+
+--loop문 exit키워드가 있다.
+/
+declare
+    vnum number:=4;
+begin
+    loop
+           dbms_output.put_line('현재 vnum : ' || vnum);
+           vnum := vnum + 1;
+           exit when vnum > 5;
+    end loop;
+end;
+/
+
+--while문 exit키워드가 없다.
+/
+declare
+    vnum number:=0;
+begin
+    while vnum < 5 loop
+        dbms_output.put_line('현재 while vnum : ' || vnum);
+        vnum := vnum + 1;
+    end loop;
+end;
+/
+
+--for문 vnum 변수가 없다.
+/
+declare
+    
+begin
+    for i in 0..5 loop
+        dbms_output.put_line('현재 for vnum : ' || i);
+    end loop;
+end;
+/
+
+--예외처리 vwrong을 number타입으로 선언했기때문에 dname은 varchar2타입이라 실행하면 예외발생
+desc dept;
+/
+declare
+    vwrong number;
+begin
+    select deptno into vwrong
+    from dept where deptno = 10;
+    dbms_output.put_line('예외 발생하고 실행 될까요?');
+exception
+    when value_error then
+            dbms_output.put_line('예외 발생');        
+end;
+/
+
+--join 보충
+create table student2(
+no number,
+name varchar2(15),
+subject_id number,
+score number);
+
+create table grade(
+grade char(4),
+min_score number,
+max_score number);
+
+create table subject(
+subject_id number,
+subject_name varchar2(30));
+
+insert into subject values(10,'Computer Enginnerring');
+insert into subject values(20,'Music');
+insert into subject values(30,'English');
+insert into subject values(40,'History');
+insert into subject values(50,'Math');
+commit;
+
+insert into student2 values(1000,'James',10,98);
+insert into student2 values(1001,'Ford',10,91);
+insert into student2 values(1002,'Allen',20,89);
+insert into student2 values(1003,'Steve',30,83);
+insert into student2 values(1004,'Miller',40,78);
+commit;
+
+insert into grade values('A+',96,100);
+insert into grade values('A0',90,95);
+insert into grade values('B+',86,89);
+insert into grade values('B0',80,85);
+insert into grade values('C+',76,79);
+insert into grade values('C0',70,75);
+insert into grade values('D+',66,69);
+insert into grade values('D0',60,65);
+insert into grade values('F',0,64);
+commit;
+
+select * from student2;
+select * from grade;
+select * from subject;
+
+--join 처리
+--등가 조인 equip join 테이블 2개
+select s.name,b.subject_name from student2 s join subject b on s.subject_id = b.subject_id;
+
+--3개 테이블 조인해서 점수별로 grade 출력
+--ansi join
+select s.name,b.subject_name,s.score,g.grade from student2 s join subject b on s.subject_id = b.subject_id
+join grade g on s.score between g.min_score and g.max_score;
+
+--Oracle join
+select s.name,b.subject_name,s.score,g.grade from student2 s , subject b , grade g where s.subject_id = b.subject_id
+and s.score between g.min_score and g.max_score;
+
+--self join
+--smith의 사수이름은 ford / join처리
+select * from emp;
+
+select e1.empno,e1.ename,e2.ename as managername from emp e1 , emp e2 where e1.mgr = e2.empno order by e1.empno;
+
+--trigger 방아쇠처럼 신호를 감지하고 그 신호에 반응해서 동작하는 쿼리
+create table test01(
+no number not null,
+name varchar2(10),
+a number,
+b number);
+
+insert into test01 values(1,'A',10,20);
+
+--test01의 내용을 가지고 test02 테이블을 만들겠다.
+create table test02
+as
+select * from test01;
+
+select * from test01;
+select * from test02;
+commit;
+
+--insert 트리거 만들기
+--트리거란? 데이터베이스 이벤트에 반응하여 실행되는 프로그램 단위이다.
+--주요 사용 목적은 테이블 데이터의 무결성 보장,데이터베이스 관리의 자동화이다.
+--DML 트리거란? DML문 (insert,update,delete)이 테이블 하나 이상의 데이터에 영향을 미칠 때 자동으로 실행되는 트리거이다.
+--DML 트리거 특징 
+--1. 자동으로 실행되며 수동으로는 실행 불가
+--2. 어떤 동작에서 실행되는지 지정해야한다.
+--3. 작동이 일어난 트리거 대상 테이블에 대해서는 트리거 내용이 존재할 수 없다.
+--4. BEFORE, AFTER 두 가지 트리거가 있다.
+--5. 트랜잭션 일부로 처리된다. (COMMIT,ROLLBACK,SAVEPOINT 문장 포함 못 함)
+/
+create or replace trigger in_test02
+    after insert on test01
+    for each row
+declare
+--변수선언
+begin
+    insert into test02 values(:new.no,:new.name,:new.a,:new.b);    
+end;
+/
+
+select * from test01;
+select * from test02;
+
+insert into test01 values(1,'A',10,20);--트리거 in_test02가 test01의 insert 신호를 받아 동작
+insert into test01 values(300,'A',100,200);--트리거 in_test02가 test01의 insert 신호를 받아 동작
+
+--delete trigger 만들기
+/
+create or replace trigger del_test02
+    after delete on test01
+    for each row
+declare
+--변수선언
+begin
+    delete test02 where no=:old.no;
+end;
+/
+
+delete test01 where no=1;
+
+--update trigger 만들기
+/
+create or replace trigger up_test02
+    after update on test01
+    for each row
+declare
+--변수선언
+begin
+    update test02 set no=:new.no where no=:old.no;
+end;
+/
+
+delete test01 where no=1;
+
+update test01 set no=50 where no=1;
+
+select * from test01;
+select * from test02;
+
+--트리거 통합
+/
+CREATE OR REPLACE TRIGGER T_INDELUP_TEST02
+    AFTER INSERT OR DELETE OR UPDATE ON TEST01
+    FOR EACH ROW
+DECLARE
+--변수선언
+BEGIN
+    IF INSERTING THEN
+        INSERT INTO TEST02 VALUES(:NEW.NO,:NEW.NAME,:NEW.A,:NEW.B);
+    ELSIF DELETING THEN
+        DELETE TEST02 WHERE NO=:OLD.NO;
+    ELSIF UPDATING THEN
+        UPDATE TEST02 SET NO=:NEW.NO WHERE NO=:OLD.NO;
+    END IF;
+END;
+/
+drop trigger del_test02;
+drop trigger in_test02;
+drop trigger up_test02;
+
+insert into test01 values(1,'A',10,20);--트리거 in_test02가 test01의 insert신호를 받아 동작
+insert into test01 values(300,'A',100,200);
+delete from test01;
+delete from test02;
+select * from test01;
+select * from test02;
+
+delete test01 where no=1;
+delete test01 where no=300;
+
+update test01
+set no=30
+where no=50;
+
+--index 쿼리의 결과값을 효율적으로 검색 지원
+--무조건 많은 인덱스를 설정하면 스플릿 현상으로 더 악영향 미친다.
+select * from user_indexes;
+select rowid,empno,ename from emp;
+
+select * from employees;
+select * from user_indexes
+where table_name='EMPLOYEES';
+
+--모니터링 시작
+alter index EMP_EMP_ID_PK monitoring usage;
+
+--사용여부 확인
+select index_name,monitoring,used from v$object_usage where index_name = 'EMP_EMP_ID_PK';
+
+--index 밸런싱 확인
+create table i_test6(
+no number);
+
+select * from i_test6 order by no;
+/
+begin
+    for i in 1..10000 loop
+        insert into i_test6 values(i);
+    end loop;
+    commit;
+end;
+/
+
+--index 생성
+create index idx_test6_no
+on i_test6(no);
+
+select * from user_indexes where table_name='I_TEST6';
+
+--밸런싱 조회
+select * from index_stats;
+desc index_stats;
+
+--분석 명령
+analyze index IDX_TEST6_NO validate structure;
+select del_lf_rows,lf_rows_len from index_stats;
+
+--밸런스 조회
+select (del_lf_rows_len/lf_rows_len)*100 balance from index_stats;
+--0에 가까울수록 컨디션 좋음
+
+--일부 데이터 삭제
+delete from i_test6 where no between 3000 and 6000;
+
+select count(*) from i_test6;
+commit;
+
+--밸런스 조회
+select (del_lf_rows_len/lf_rows_len)*100 balance from index_stats;
+
+--밸런스 초기화
+alter index idx_test6_no rebuild;
+
+select count(*) from bigemp;
+
+--성능 테스트 테이블 준비
+select * from bigemp order by dbms_random.value;
+
+
+
+
+
+
+
+
 
 
 
