@@ -1983,7 +1983,7 @@ select ename,empno,sal from emp where deptno = 30 and sal >= 1500;
 select empno,ename,deptno from emp where ename like 'K%' or deptno=30;
 
 -- 28번 급여가 $1500 이상이고 부서번호가 30번인 사원 중 직업이 MANAGER인 사람의 정보를 추력하라.
-select * from emp where sal>=1500 and deptno=30 and job='MANAGER';
+select * from emp where sal>=1500 and deptno=30 and job='MANAGER'; 
 
 -- 29번 부서번호가 30인 사람 중 사원번호가 SORT.
 select * from emp where deptno=30 order by empno;
@@ -2065,6 +2065,7 @@ select deptno,trunc(avg(sal),0) avg ,max(sal) max ,min(sal) min ,count(sal) coun
 select deptno,job,count(*) "인원 수" from emp group by deptno,job order by deptno;
 -----------------------------------------------------------------------------230626---------------------------------------------------------------------------------------------
 -- 프로시저2 if문
+SET SERVEROUTPUT ON;-- 프로시저 결과를 질의 결과에 출력하기위해 하는 명령어 기본값은 off
 /
 declare--=선언하다
     vnum number:=15;
@@ -2078,8 +2079,9 @@ end;
 /
 
 --case문
+/
 declare
-    vnum number:=60;
+    vnum number:=80;
 begin
     case
         when vnum>=90 then dbms_output.put_line(vnum || ' : A등급');
@@ -2098,7 +2100,7 @@ declare
 begin
     loop
            dbms_output.put_line('현재 vnum : ' || vnum);
-           vnum := vnum + 1;
+           vnum := vnum + 1;-- :=은 대입 연산자
            exit when vnum > 5;
     end loop;
 end;
@@ -2204,7 +2206,7 @@ and s.score between g.min_score and g.max_score;
 --smith의 사수이름은 ford / join처리
 select * from emp;
 
-select e1.empno,e1.ename,e2.ename as managername from emp e1 , emp e2 where e1.mgr = e2.empno order by e1.empno;
+select e1.empno,e1.ename,e2.ename managername from emp e1 , emp e2 where e1.mgr = e2.empno order by e1.empno;
 
 --trigger 방아쇠처럼 신호를 감지하고 그 신호에 반응해서 동작하는 쿼리
 create table test01(
@@ -2417,17 +2419,252 @@ select * from emp;
 update emp set ename = 'ALLEN5' where empno=7499;
 
 commit;
+-----------------------------------------------------------------------------230627---------------------------------------------------------------------------------------------
+--랜덤 데이터 만들기
+--랜덤 넘버 생성 (양수, 음수)
+select dbms_random.random from dual;
 
+--랜덤 넘버 생성 (0~1)
+select dbms_random.value from dual;
 
+--랜덤 넘버 생성 (0~1000)
+select dbms_random.value(1,1000) from dual;
+select round(dbms_random.value(1,1000),0) "정수만 나오게" from dual;
 
+--랜덤 문자 생성 (대문자)
+select dbms_random.string('U',10) from dual;-- U는 대문자, 10은 길이
 
+--랜덤 문자 생성 (소문자)
+select dbms_random.string('L',10) from dual;-- l은 소문자
 
+--랜덤 문자 생성 (대,소문자)
+select dbms_random.string('A',10) from dual;-- A는 대,소문자
 
+--랜덤 문자 생성 (숫자,영어 대문자)
+select dbms_random.string('X',10) from dual;-- X는 숫자,영어 대문자
 
+--랜덤 문자 생성 (출력가능한 문자)
+select dbms_random.string('P',10) from dual;-- P는 키보드에 있는 문자 랜덤
 
+create table example(
+x number,
+y varchar2(2000));
 
+/
+begin
+    for i in 1..1000 loop
+        insert into example values(i,rpad(dbms_random.random,5,'*'));
+    end loop;
+end;
+/
 
+select * from example;
+select count(*) from example;
 
+--의미있는 테이블 만들기
+create table random5(
+cola varchar2(20),
+colb number,
+colc number,
+cold varchar2(30),
+cole varchar2(30),
+colf varchar2(30),
+colg number,
+colh varchar2(30),
+coli varchar2(30));
 
+select * from random5;
 
+--step1
+/
+declare
+    type tbl_ins is table of random5%rowtype index by binary_integer;--random5%type은 random5 테이블의 타입을 그대로 사용하겠다.
+    w_ins tbl_ins;
+begin
+    
+    for i in 1..14000 loop
+        w_ins(i).cola:=i;
+        w_ins(i).colb:=300000;
+        w_ins(i).colc:=99;
+        w_ins(i).cold:='ABC' || dbms_random.string('x',10);
+        w_ins(i).cole:='EEEEEEEEEEEEEEEEE';
+        w_ins(i).colf:='FFFFFFFFFFFFFFFFFFFF';
+        w_ins(i).colg:=9999999;
+        w_ins(i).colh:='HHHHHHHHHHHHHHH';
+        w_ins(i).coli:='IIIIIIIIIIIIIIIIIIIIIII';
+    end loop;
+    forall i in 1..14000 insert into random5 values w_ins(i);
+    commit;
+    
+end;
+/
 
+select count(*) from random5;
+select * from random5;
+delete from random5;
+commit;
+
+--step2
+/
+declare
+    type tbl_ins is table of random5%rowtype index by binary_integer;--random5%type은 random5 테이블의 타입을 그대로 사용하겠다.
+    w_ins tbl_ins;
+begin
+    
+    for i in 1..14000 loop
+        w_ins(i).cola:=i;
+        w_ins(i).colb:=300000;
+        w_ins(i).colc:=99;
+        w_ins(i).cold:=to_date(round(dbms_random.value(1,28))
+                                        ||'-'|| round(dbms_random.value(1,12))   
+                                        ||'-'|| round(dbms_random.value(1900,2022)),
+                                        'DD-MM-YYYY');
+        w_ins(i).cole:='EEEEEEEEEEEEEEEEE';
+        w_ins(i).colf:='FFFFFFFFFFFFFFFFFFFF';
+        w_ins(i).colg:=9999999;
+        w_ins(i).colh:='HHHHHHHHHHHHHHH';
+        w_ins(i).coli:='IIIIIIIIIIIIIIIIIIIIIII';
+    end loop;
+    forall i in 1..14000 insert into random5 values w_ins(i);
+    commit;
+    
+end;
+/
+
+select count(*) from random5;
+select * from random5;
+delete from random5;
+commit;
+
+----------------------------------------------------------
+create table sale2(
+cola number,--판매구분
+colb date,--판매날짜
+colc number,--옷의 종류(예를 들어 청바지1~청바지5)
+cold number,--판매가격
+cole number);--판매량
+
+create index idx_cola on sale2(cola);
+
+--step3
+/
+declare
+    type tbl_ins is table of sale2%rowtype index by binary_integer;--sale2%type은 random5 테이블의 타입을 그대로 사용하겠다.
+    w_ins tbl_ins;
+begin
+    
+    for i in 1..14000 loop
+        w_ins(i).cola:=i;
+        w_ins(i).colb:=to_date(round(dbms_random.value(1,28))
+                                        ||'-'|| round(dbms_random.value(1,12))   
+                                        ||'-'|| round(dbms_random.value(1900,2022)),
+                                        'DD-MM-YYYY');
+        w_ins(i).colc:=round(dbms_random.value(1,5));
+        w_ins(i).cold:=round(dbms_random.value(10000,20000));
+        w_ins(i).cole:=round(dbms_random.value(5,10));
+    end loop;
+    forall i in 1..14000 insert into sale2 values w_ins(i);
+    commit;
+    
+end;
+/
+
+select count(*) from sale2;
+select * from sale2;
+delete from sale2;
+commit;
+
+--통계처리
+select colc,sum(cold)*sum(cole) "판매가격 총합" from sale2 group by colc order by colc;
+
+select colc,round(sum(cold)*(sum(cole)/1000000)) "Total Price(100만 단위)" from sale2 group by colc order by colc;
+
+--decode 함수 적용
+select decode(colc,1,'청바지1',2,'청바지2',3,'청바지3',4,'청바지4',5,'청바지5') goods, 
+round(sum(cold)*(sum(cole)/1000000)) "Total Price(100만 단위)" from sale2 group by colc order by goods;
+
+--backup cmd창에서 해야하는 작업이다.
+--hr계정 콘솔백업
+C:\backuphr>exp userid=hr/123456@xe file=c:\backuphr\hralltable.dump
+C:\backuphr>imp hr/123456@xe file=c:\backuphr\hralltable.dump--복원
+
+--특정테이블 백업
+C:\backuphr>exp userid=hr/123456@xe file=c:\backuphr\hrbigemptable.dump tables=bigemp
+C:\backuphr>imp hr/123456@xe file=c:\backuphr\hrbigemptable.dump--복원
+
+--복수개테이블 백업
+C:\backuphr>exp userid=hr/123456@xe file=c:\backuphr\hr3table.dump tables=(bigemp,dept,emp)
+C:\backuphr>imp userid=hr/123456@xe file=c:\backuphr\hr3table.dump tables=(bigemp,dept,emp)--복원
+
+--꼼수로 테이블 삭제하는 법
+select 'drop table '|| table_name || ' cascade constraints;' from user_tables;
+
+drop table LOCATIONS cascade constraints;
+drop table DEPARTMENTS cascade constraints;
+drop table JOBS cascade constraints;
+drop table EMPLOYEES cascade constraints;
+drop table JOB_HISTORY cascade constraints;
+drop table BOARD1 cascade constraints;
+drop table STUDENTBOARD cascade constraints;
+drop table SIZEINFO cascade constraints;
+drop table EPL cascade constraints;
+drop table BOOKINFO cascade constraints;
+drop table MEMBER cascade constraints;
+drop table RESERVES cascade constraints;
+drop table BOATS cascade constraints;
+drop table ADDR cascade constraints;
+drop table SAMPLE cascade constraints;
+drop table PROFESSOR cascade constraints;
+drop table DEPARTMENT cascade constraints;
+drop table STUDENT cascade constraints;
+drop table REGIONS3 cascade constraints;
+drop table COUNTRIES3 cascade constraints;
+drop table TBL1 cascade constraints;
+drop table TBL2 cascade constraints;
+drop table STADIUM cascade constraints;
+drop table TEAM cascade constraints;
+drop table PLAYER cascade constraints;
+drop table ONE cascade constraints;
+drop table TWO cascade constraints;
+drop table DEPT2 cascade constraints;
+drop table EMP2 cascade constraints;
+drop table O_TABLE cascade constraints;
+drop table S_ORDER cascade constraints;
+drop table BOARD10 cascade constraints;
+drop table BOARD2 cascade constraints;
+drop table USERS cascade constraints;
+drop table SALGRADE cascade constraints;
+drop table STUDENT2 cascade constraints;
+drop table GRADE cascade constraints;
+drop table SUBJECT cascade constraints;
+drop table TEST01 cascade constraints;
+drop table TEST02 cascade constraints;
+drop table I_TEST6 cascade constraints;
+drop table EMP10 cascade constraints;
+drop table EMP_IDX cascade constraints;
+drop table EXAMPLE cascade constraints;
+drop table RANDOM5 cascade constraints;
+drop table SALE2 cascade constraints;
+drop table ADDRMEMO cascade constraints;
+drop table BIGEMP cascade constraints;
+drop table DEPT cascade constraints;
+drop table EMP cascade constraints;
+drop table COUNTRIES cascade constraints;
+
+--check option gender 필드엔 남,여 말고 다른 옵션이 들어갈 수 없다.
+create table chtable(
+name varchar2(10),
+gender char(3) constraint emp_gender check(gender in('남','여')));
+
+select * from chtable;
+
+insert into chtable values('홍길동','여');
+
+--check option 범위로 제약
+create table chtable2(
+name varchar2(10),
+score number constraint chtable2_chk check(score between 50 and 100));
+
+insert into chtable2 values('hong',30);
+
+select * from chtable2;
