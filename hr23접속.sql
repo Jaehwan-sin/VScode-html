@@ -2044,8 +2044,8 @@ select deptno,ename,last_day(hiredate)-hiredate "근무일수" from emp;
 
 -- 44번 모든 사원의 60일이 지난 후의 MONDAY 는 몇 년 , 몇 월, 몇 일 인가를 구하여
 -- 이름, 입사일, MONDAY를 출력하라.
-select ename,hiredate,next_day(add_months(hiredate,6),'월요일') MONDAY from emp;
-
+select ename,hiredate,next_day((hiredate+60),'월요일') MONDAY from emp;
+ 
 -- 45번 입사일로부터 오늘까지의 일수를 구하여 이름, 입사일, 근무일수를 출력하라.
 select ename,hiredate,trunc(sysdate-hiredate,0) workday from emp;
 
@@ -2053,16 +2053,32 @@ select ename,hiredate,trunc(sysdate-hiredate,0) workday from emp;
 select ename, to_char(hiredate,'YYYY"년"MM"월"DD"일"') "입사일" from emp;
 
 -- 47번 이름의 글자수가 6자 이상인 사람의 이름을 앞에서 3자리만 구하여 소문자로 이름만을 출력하라.
-select lower(ename) from emp where length(ename)>=6;
+select substr(lower(ename),1,3) "이름" from emp where length(ename)>=6;
 
 -- 48번 10번 부서 월급의 평균, 최고, 최저, 인원수를 구하여 출력하라.
-select trunc(avg(sal),0) avg,max(sal) max,min(sal) min,count(sal) "인원 수" from emp where deptno=10;
+select trunc(avg(sal),0) avg,max(sal) max,min(sal) min,count(sal) "인원 수" from e mp where deptno=10;
 
 -- 49번 각 부서별 급여의 평균, 최고, 최저, 인원수를 구하여 출력하라.
 select deptno,trunc(avg(sal),0) avg ,max(sal) max ,min(sal) min ,count(sal) count from emp group by deptno;
 
 -- 50번 각 부서별 같은 업무를 하는 사람의 인원수를 구하여 부서번호, 업무명, 인원수를 출력하라.
 select deptno,job,count(*) "인원 수" from emp group by deptno,job order by deptno;
+
+-- 51번 같은 업무를 하는 사람의 수가 4명 이상인 업무와 인원수를 출력하라.
+select job,count(job) from emp group by job having count(job) >= 4;
+
+-- 52번 각 부서별 평균 월급, 전체 월급, 최고 월급, 최저 월급 을 구하여 평균 월급이 많은 순으로 출력하라.
+select deptno,trunc(avg(sal)) avg,sum(sal),max(sal),min(sal) from emp group by deptno order by avg desc;
+
+-- 53번 EMP와 DEPT TABLE 을 JOIN하여 부서번호, 부서명, 이름, 급여를 출력하라.
+select e.deptno,d.dname,e.ename,e.sal from emp e inner join dept d on e.deptno = d.deptno;
+
+-- 54번 이름이 ALLEN인 사원의 부서명을 출력하라.
+select e.deptno,e.ename,d.dname from emp e inner join dept d on e.deptno = d.deptno where e.ename='ALLEN';
+
+-- 55번 DEPT TABLE 에 있는 모든 부서를 출력하고, EMP  TABLE 에 있는 DATA와 JOIN하여 
+-- 모든 사원의 이름, 부서번호, 부서명, 급여를 출력하라.
+select e.ename,e.deptno,d.dname,e.sal from emp e full outer join dept d on e.deptno = d.deptno order by deptno;
 -----------------------------------------------------------------------------230626---------------------------------------------------------------------------------------------
 -- 프로시저2 if문
 SET SERVEROUTPUT ON;-- 프로시저 결과를 질의 결과에 출력하기위해 하는 명령어 기본값은 off
@@ -2416,7 +2432,7 @@ commit;
 select * from emp;
 
 --UPDATE 실행
-update emp set ename = 'ALLEN5' where empno=7499;
+update emp set ename = 'ALLEN' where empno=7499;
 
 commit;
 -----------------------------------------------------------------------------230627---------------------------------------------------------------------------------------------
