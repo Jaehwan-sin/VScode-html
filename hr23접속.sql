@@ -3333,3 +3333,52 @@ B.DNAME AS 부서명,
 A.SAL AS  급여
 FROM EMP A, DEPT B
 WHERE A.DEPTNO = B.DEPTNO;
+
+------------------------------------------JSP 연습 테이블 생성------------------------------------------
+create table member1(
+id varchar2(100) primary key,--중복값이 없어야되니까 primary key
+pw varchar2(100),
+name varchar2(100),
+addr varchar2(300));
+
+select * from member1;
+delete * from member1;
+select id,pw,name,addr from member1;
+insert into member1 values('a','b','c','d');
+update member1 set name='hong1', addr='seoul' where id='1';
+delete from member1 where id='5';
+commit;
+
+create table studentinfo(
+no number primary key,
+name varchar2(20),
+addr varchar2(20),
+grade number,
+deptno number,
+score number);
+
+select * from studentinfo;
+drop table studentinfo;
+insert into studentinfo values(1,'차태현','인천 남동구',4,10,7);
+update studentinfo set name='hong1', addr='seoul' where id='1';
+delete from studentinfo where id='9';
+select no,name,addr,grade,deptno,score from studentinfo;
+commit;
+
+select no,name,addr,grade,deptno,score from studentinfo order by no;
+
+update studentinfo set name='신재환', addr='경기도 부천시', grade=27, deptno=10, score=200 where no='2';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
