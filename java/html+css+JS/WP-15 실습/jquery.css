@@ -1,0 +1,231 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+
+body{
+	width: 960px;
+	margin: 0 auto;
+}
+
+li{
+	list-style: none;
+}
+
+a{
+	text-decoration: none;
+}
+
+img{
+	border: 0;
+}
+
+header{
+	width: 900px;
+	height: 80px;
+	background-color: #f6f9d4;
+	position: fixed;
+	z-index: 2;	/*#animation_test영역보다 위에 위치*/
+	top: 0;
+	padding: 40px 30px 0 30px;
+}
+
+#title{
+	height: 40px;
+	text-align: center;
+	font-size: 30px;
+	font-weight: bold;
+	font-family: 'Pacifico', cursive;
+}
+
+header > nav{
+	height: 40px;
+	overflow: hidden;
+}
+
+#ctime{
+	width: 250px;
+	height: 36px;
+	float: right;
+	border: 1px dashed orange;
+	border-radius: 15px;
+	font-family: 'Indie Flower', cursive;
+	line-height: 36px;
+	text-align: center;
+}
+
+.main-menu{
+	display: block;
+	float: left;
+	width: 100px;
+	height: 40px;
+	text-align: center;
+	line-height: 40px;
+	color: black;
+	text-decoration: underline;
+}
+
+#content{
+	margin-top: 120px;
+	padding: 10px;
+}
+
+footer{
+	padding: 20px;
+	width: 920px;
+	background-color: #d2f299;
+}
+
+footer > p{
+	font-weight: bold;
+	text-align: center;
+}
+
+.lab{
+	padding: 10px;
+	border: 1px solid black;
+	margin-top: 10px;
+}
+
+footer p{
+	font-family: 'Shadows Into Light Two', cursive;
+}
+
+/*                  */
+div.out{
+	width: 300px;
+	height: 150px;
+	background-color: yellow;
+}
+
+div.out p{
+	text-align: center;
+	line-height: 50px;
+	height: 50px;
+	border: 2px solid red;
+	border-radius: 10px;
+}
+
+#off_test{
+	color: red;
+	background-color: yellow;
+}
+
+#schedule_header{
+	overflow: hidden;
+	height: 50px;
+}
+
+#add_img{
+	float: right;
+}
+
+#schedule_header h2{
+	float: left;
+}
+
+#note_form{
+	display: none;
+}
+
+.popup{
+	position: fixed;	/*화면에 정중앙에 위치(스크롤에 상관없이)*/
+	top: 30%;	/*화면 크기가 변할 수 있으므로 px단위 대신 %단위를 씀*/
+	left: 32%;
+	background-color: white;
+	padding: 30px 20px;
+	z-index: 1;	/*pop-up형태이므로 다른 영역보다 위에 출력*/
+	width: 500px;
+	height: 400px;
+	border: 1px solid black;
+	text-align: center;
+}
+
+#animation_test{
+	position: relative;	/*자식영역의 position이 absolute이므로*/
+	height: 100px;
+}
+
+#moving_box{
+	position: absolute;	/*박스가 #animation_test내에서 움직임*/
+	height: 50px;
+	width: 50px;
+	background: blue;
+}
+
+dl{
+	width: 420px;
+	margin: 0 auto 20px;
+}
+
+dt{
+	font-size: 16px;
+	color: #fff;
+	background: #31374c;
+	padding: 8px 12px;
+	border-radius: 3px;
+	margin: 0 0 2px;
+}
+
+dd{
+	font-size: 14px;
+	color: #4d4d4d;
+	background: #fff;
+	padding: 10px 20px;
+	margin: 0 0 2px;
+}
+
+dt.closed{
+	background-color: #9396a2;	/*dt가 닫혀있을 경우에는 밝은색으로 출력*/
+	cursor: pointer;	/*dt가 닫혀있을 때 커서모양은 손모양으로 초기화*/
+}
+
+dd.closed{
+	display: none;	/*dd가 닫혀있을 때에는 화면에서 숨기기*/
+}
+
+.slideshow{
+	width: 210px;
+	height: 150px;
+	margin: 10px 20px;
+	position: relative;
+	display: inline-block;
+}
+
+.slideshow img{
+	position: absolute;
+	top: 0;
+	left: 0;
+	border: 5px solid #dfdfdf;
+}
+
+.slideshow img.alt{
+	display: none;/*처음에는 첫번째 이미지를 제외한 나머지 이미지들은 숨기기*/
+}
+
+#textbox{
+	width: 800px;
+	height: 400px;
+	border: 1px solid black;
+}
+
+#textbox table{	/*팝업창의 테이블에는 적용되지 않음*/
+	text-align: center;	/*테이블내 모든 글자 가운데 정렬*/
+	border: 3px solid black;
+	width: 700px;
+	height: 300px;
+	margin: 20px auto;	/*테이블을 수평가운데 정렬*/
+	border-spacing: 0;	/*테이블 테두리를 한겹으로 설정*/
+}
+
+#textbox th{	/*팝업창의 테이블에는 적용되지 않음*/
+	border: 1px dotted black;
+	background-color: pink;
+	color: blue;
+}
+
+#textbox td{	/*팝업창의 테이블에는 적용되지 않음*/
+	border: 1px dotted black;
+	background-color: yellow;
+	color: gray;
+}

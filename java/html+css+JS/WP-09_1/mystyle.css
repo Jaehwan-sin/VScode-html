@@ -1,0 +1,134 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+
+li{
+	list-style: none;
+}
+
+body{
+	font-family: serif;
+}
+
+a{
+	text-decoration: none;
+}
+
+img{
+	border: 0;
+}
+
+#title{
+	font-family: 'Bilbo Swash Caps';
+	font-size: 40px;
+	font-weight: bold;
+	color: black;
+}
+
+header{
+	height: 200px;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	background-color: yellow;
+	line-height: 200px;
+	text-align: center;
+	border-bottom: 1px solid gray;
+}
+
+#page{
+	margin-top: 201px;	/*height+border*/
+	background-color: #e7f4cc;
+}
+
+#side{
+	position: fixed;
+	left: 0;
+	top: 201px;
+	width: 200px;
+	padding: 10px 10px 0 10px;
+	height: 100%;
+	border-right: 1px solid gray;
+	background-color: white;
+}
+
+#main{
+	margin-left: 220px;
+	text-align: center;
+}
+
+#content{
+	width: 700px;
+	height: 700px;
+	background-color: #96ce19;
+	margin: 0 auto;
+}
+
+footer{
+	width: 700px;
+	height: 150px;
+	background-color: white;
+	text-align: center;
+	line-height: 150px;
+	border-top: 1px solid gray;
+	border-bottom: 1px solid gray;
+	font-size: 20px;
+	font-weight: bold;
+	margin: 0 auto;
+}
+
+.menu{	/*label태그에 글자 속성 적용*/
+	margin-top: 20px;
+	text-align: center;
+	line-height: 50px;
+	width: 180px;
+}
+
+.submenu{
+	width: 180px;
+	background-color: orange;
+	text-align: center;
+}
+
+label{
+	display: block;
+	height: 50px;
+	font-size: 16px;
+	font-weight: bold;
+	line-height: 50px;
+}
+
+input{
+	display: none;
+}
+
+input:nth-of-type(1) ~ .menu:nth-of-type(1) .submenu{
+	display: none;
+}
+
+input:nth-of-type(1):checked ~ .menu:nth-of-type(1) .submenu{
+	display: block;
+}
+
+input:nth-of-type(2) ~ .menu:nth-of-type(2) .submenu{
+	display: none;
+}
+
+input:nth-of-type(2):checked ~ .menu:nth-of-type(2) .submenu{
+	display: block;
+}
+
+input:nth-of-type(3) ~ .menu:nth-of-type(3) .submenu{
+	display: none;
+}
+
+input:nth-of-type(3):checked ~ .menu:nth-of-type(3) .submenu{
+	display: block;
+}
+
+#content > img{
+	width: 600px;
+	display: block;
+	margin: 0 auto;
+}
