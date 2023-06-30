@@ -3369,16 +3369,20 @@ select no,name,addr,grade,deptno,score from studentinfo order by no;
 
 update studentinfo set name='신재환', addr='경기도 부천시', grade=27, deptno=10, score=200 where no='2';
 
+create table productinfo(
+pno number primary key,
+pname varchar2(100),
+pinfo varchar2(100),
+pprice number,
+pdate date);
 
+select * from productinfo;
+drop table productinfo;
 
+insert into productinfo values(1001,'흰색 라운드티','흰색 반팔티',29000,TO_DATE('2023-06-29','YYYY-MM-DD'));
+update productinfo set pname='검은색 라운드티', pinfo='검은색 반팔티', pprice=33333, pdate='2023-06-29' where pno='1001';
 
-
-
-
-
-
-
-
+commit;
 
 
 
