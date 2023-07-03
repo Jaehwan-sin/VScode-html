@@ -3384,5 +3384,54 @@ update productinfo set pname='검은색 라운드티', pinfo='검은색 반팔티', pprice=33
 
 commit;
 
+---------------------------------------------------------------------------------------
+--notices 테이블
+create table notices(
+seq varchar2(10),--중복값 배제
+title varchar2(200),
+writer varchar2(50),
+content varchar2(1000),
+regdate timestamp,
+hit number);
+
+select * from notices;
+
+select seq,title,writer,content,regdate,hit from notices order by to_number(seq) desc;--seq가 번호가 커지면 이상해져서 넘버타입으로 변경 후 진행
+
+select seq,title,writer,content,regdate,hit from notices where seq='1';
+
+rollback;
+insert into notices values('1','JSP프로그래밍1','CJ','냉무1',sysdate,0);
+insert into notices values('2','JSP프로그래밍2','CJ','냉무2',sysdate,0);
+insert into notices values('3','JSP프로그래밍3','CJ','냉무3',sysdate,0);
+insert into notices values('4','JSP프로그래밍4','CJ','냉무4',sysdate,0);
+insert into notices values('5','JSP프로그래밍5','CJ','냉무5',sysdate,0);
+
+insert into notices values((select max(to_number(seq))+1 from notices),'JSP프로그래밍5','CJ','냉무5',sysdate,0);
+--서브쿼리로 seq가 max값에서 +1 되는 값을 삽입한다.
+
+commit;
+
+delete from notices;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
