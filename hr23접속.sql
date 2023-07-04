@@ -3335,6 +3335,7 @@ FROM EMP A, DEPT B
 WHERE A.DEPTNO = B.DEPTNO;
 
 ------------------------------------------JSP 연습 테이블 생성------------------------------------------
+---------------------230630
 create table member1(
 id varchar2(100) primary key,--중복값이 없어야되니까 primary key
 pw varchar2(100),
@@ -3384,7 +3385,7 @@ update productinfo set pname='검은색 라운드티', pinfo='검은색 반팔티', pprice=33
 
 commit;
 
----------------------------------------------------------------------------------------
+---------------------230703
 --notices 테이블
 create table notices(
 seq varchar2(10),--중복값 배제
@@ -3410,28 +3411,79 @@ insert into notices values('5','JSP프로그래밍5','CJ','냉무5',sysdate,0);
 insert into notices values((select max(to_number(seq))+1 from notices),'JSP프로그래밍5','CJ','냉무5',sysdate,0);
 --서브쿼리로 seq가 max값에서 +1 되는 값을 삽입한다.
 
+--수정
+update notices set title='수정',content='수정내용' where seq='8';
+
+--삭제
+delete from notices where seq='8';
+
 commit;
 
 delete from notices;
 
+--------------------------
+--guroboard 테이블
+
+create table guroboard(
+no varchar2(10) primary key,
+title varchar2(100),
+content varchar2(2000),
+dept varchar2(20),
+writer varchar2(50),
+regdate timestamp,
+hit number);
+
+select * from guroboard;
+
+select no,title,content,dept,writer,regdate,hit from guroboard order by no desc;
+
+insert into guroboard values('1','소상공인 전담셀러 정부지원사업 안내1','내용1','지역경제과','임혜민1',sysdate,0);
+insert into guroboard values('2','소상공인 전담셀러 정부지원사업 안내2','내용2','지역경제과','임혜민2',sysdate,0);
+insert into guroboard values('3','소상공인 전담셀러 정부지원사업 안내3','내용3','지역경제과','임혜민3',sysdate,0);
+insert into guroboard values('4','소상공인 전담셀러 정부지원사업 안내4','내용4','지역경제과','임혜민4',sysdate,0);
+insert into guroboard values('5','소상공인 전담셀러 정부지원사업 안내5','내용5','지역경제과','임혜민5',sysdate,0);
+commit;
+rollback;
+update guroboard set title='수정', content='수정내용' where no='1';
+delete from guroboard where no='5';
+
+insert into guroboard values((select max(to_number(no))+1 from guroboard),?,?,?,sysdate,0);
 
 
+---------------------230704
+create table member(
+id varchar2(50),
+pwd varchar2(50),
+name varchar2(50),
+gender varchar2(10),
+birth varchar2(10),
+is_lunar varchar2(10),
+cphone varchar2(15),
+email varchar2(50),
+hobby varchar2(200),
+regdate date
+);
+select * from member;
+delete from member;
+delete member where id='1';
+insert into member values('blue','1111','hong','남성','2023-1-1','양력','111-111','abc@naver.com','movie',sysdate);
 
+select id,pwd from member where id='blue';
+commit;
 
+------------join,login 미션
+create table member_mission(
+id varchar2(50),
+pwd varchar2(50),
+name varchar2(50),
+gender varchar2(10),
+birth varchar2(10),
+phone varchar2(15),
+email varchar2(50),
+hobby varchar2(200),
+regdate date
+);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+commit;
+delete from member_mission;
+select * from member_mission;
