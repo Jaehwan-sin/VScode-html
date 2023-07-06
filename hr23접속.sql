@@ -3487,3 +3487,27 @@ regdate date
 commit;
 delete from member_mission;
 select * from member_mission;
+
+---230706 정규화 1,2단계 jobkroea mission
+create table jobhm(
+no varchar2(10),
+work varchar2(50),
+company varchar2(50),
+title varchar2(50),
+career varchar2(30),
+academic_ability varchar2(30),
+prefer_basic varchar2(20),
+prefer_language varchar2(20),
+employment_type varchar2(20),
+salary varchar2(10),
+location varchar2(30),
+time varchar2(20),
+position varchar2(30));
+
+delete from jobhm;
+select * from jobhm;
+commit;
+rollback;
+insert into jobhm values('1','개발연구원','LG화학','[CTO] 7월 경력사원 채용','경력','석사↑','학력무관','영어','정규직','1억','서울시','~2023-07-31','개발자');
+insert into jobhm values((select max(to_number(no))+1 from jobhm),'개발연구원2','LG화학2','[CTO] 7월 경력사원 채용2','경력2','석사↑2','학력무관2','영어2','정규직2','2억','서울시2','~2023-07-31','개발자2');
+no,work,company,title,career,academic_ability,prefer_basic,prefer_language,employment_type,salary,location,time,position
