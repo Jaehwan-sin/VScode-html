@@ -3504,10 +3504,14 @@ location varchar2(30),
 time varchar2(20),
 position varchar2(30));
 
-delete from jobhm;
+delete from jobhm where no='1';
 select * from jobhm;
 commit;
 rollback;
+update jobhm set title='[CTO] 7월 경력사원 채용1', career='경력1', salary='1억1' where no='1';
 insert into jobhm values('1','개발연구원','LG화학','[CTO] 7월 경력사원 채용','경력','석사↑','학력무관','영어','정규직','1억','서울시','~2023-07-31','개발자');
 insert into jobhm values((select max(to_number(no))+1 from jobhm),'개발연구원2','LG화학2','[CTO] 7월 경력사원 채용2','경력2','석사↑2','학력무관2','영어2','정규직2','2억','서울시2','~2023-07-31','개발자2');
+insert into jobhm values((select max(to_number(no))+1 from jobhm),'개발연구원3','LG화학3','[CTO] 7월 경력사원 채용3','경력3','석사↑3','학력무관3','영어3','정규직3','3억','서울시3','~2023-07-31','개발자3');
+insert into jobhm values((select max(to_number(no))+1 from jobhm),'개발연구원4','LG화학4','[CTO] 7월 경력사원 채용4','경력4','석사↑4','학력무관4','영어4','정규직4','4억','서울시4','~2023-07-31','개발자4');
+insert into jobhm values((select max(to_number(no))+1 from jobhm),'개발연구원5','LG화학5','[CTO] 7월 경력사원 채용5','경력5','석사↑5','학력무관5','영어5','정규직5','5억','서울시5','~2023-07-31','개발자5');
 no,work,company,title,career,academic_ability,prefer_basic,prefer_language,employment_type,salary,location,time,position
