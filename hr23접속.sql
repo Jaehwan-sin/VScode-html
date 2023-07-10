@@ -3421,6 +3421,14 @@ commit;
 
 delete from notices;
 
+--search 기능 추가
+select seq,title,writer,content,regdate,hit from notices order by to_number(seq) desc;
+select seq,title,writer,content,regdate,hit from notices where title like '%로%' order by to_number(seq) desc;
+
+--hit 조회수 기능 추가
+update notices set hit=hit+1 where seq='1';
+
+
 --------------------------
 --guroboard 테이블
 
@@ -3515,3 +3523,25 @@ insert into jobhm values((select max(to_number(no))+1 from jobhm),'개발연구원3',
 insert into jobhm values((select max(to_number(no))+1 from jobhm),'개발연구원4','LG화학4','[CTO] 7월 경력사원 채용4','경력4','석사↑4','학력무관4','영어4','정규직4','4억','서울시4','~2023-07-31','개발자4');
 insert into jobhm values((select max(to_number(no))+1 from jobhm),'개발연구원5','LG화학5','[CTO] 7월 경력사원 채용5','경력5','석사↑5','학력무관5','영어5','정규직5','5억','서울시5','~2023-07-31','개발자5');
 no,work,company,title,career,academic_ability,prefer_basic,prefer_language,employment_type,salary,location,time,position
+
+-------------------------------------------
+--230710 볼링 게시판 만들기
+create table bowlboard(
+bno varchar2(100),
+btitle varchar2(300),
+bcontent varchar2(1000),
+bwriter varchar2(40),
+bdate date,
+bcnt varchar2(50));
+
+select * from bowlboard;
+insert into bowlboard values('1','1번째 게시물','내용1','홍길동1',sysdate,'0');
+insert into bowlboard values('2','2번째 게시물','내용2','홍길동2',sysdate,'0');
+insert into bowlboard values('3','3번째 게시물','내용3','홍길동3',sysdate,'0');
+insert into bowlboard values('4','4번째 게시물','내용4','홍길동4',sysdate,'0');
+insert into bowlboard values('5','5번째 게시물','내용5','홍길동5',sysdate,'0');
+
+commit;
+
+select bno,btitle,bcontent,bwriter,bdate,bcnt from bowlboard order by bno desc;
+select bno,btitle,bcontent,bwriter,bdate,bcnt from bowlboard order by bno desc;
