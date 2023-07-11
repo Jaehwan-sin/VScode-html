@@ -3475,10 +3475,13 @@ select * from member;
 delete from member;
 delete member where id='1';
 insert into member values('blue','1111','hong','남성','2023-1-1','양력','111-111','abc@naver.com','movie',sysdate);
+insert into member values('3','3','hong3','남성3','2023-1-1','양력','333-333','abc@naver.com','movie',sysdate);
 
 select id,pwd from member where id='blue';
 commit;
 
+desc member;
+select * from member where id='blue';
 ------------join,login 미션
 create table member_mission(
 id varchar2(50),
@@ -3540,7 +3543,7 @@ insert into bowlboard values('2','2번째 게시물','내용2','홍길동2',sysdate,'0');
 insert into bowlboard values('3','3번째 게시물','내용3','홍길동3',sysdate,'0');
 insert into bowlboard values('4','4번째 게시물','내용4','홍길동4',sysdate,'0');
 insert into bowlboard values('5','5번째 게시물','내용5','홍길동5',sysdate,'0');
-
+update bowlboard set btitle=99, bcontent=990 where bno=8;
 commit;
 
 select bno,btitle,bcontent,bwriter,bdate,bcnt from bowlboard order by bno desc;
