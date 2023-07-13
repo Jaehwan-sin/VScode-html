@@ -3395,7 +3395,7 @@ content varchar2(1000),
 regdate timestamp,
 hit number);
 
-select * from notices;
+select * from notices order by to_number(seq) desc;
 
 select seq,title,writer,content,regdate,hit from notices order by to_number(seq) desc;--seq가 번호가 커지면 이상해져서 넘버타입으로 변경 후 진행
 
@@ -3427,7 +3427,7 @@ select seq,title,writer,content,regdate,hit from notices where title like '%로%'
 
 --hit 조회수 기능 추가
 update notices set hit=hit+1 where seq='1';
-
+select seq,title,writer,content,regdate,hit,filesrc from notices where seq=12;
 
 --------------------------
 --guroboard 테이블
@@ -3548,3 +3548,31 @@ commit;
 
 select bno,btitle,bcontent,bwriter,bdate,bcnt from bowlboard order by bno desc;
 select bno,btitle,bcontent,bwriter,bdate,bcnt from bowlboard order by bno desc;
+--------------------------------------------
+--230713 게시판 만들기 세미 프로젝트
+create table jhetcseoul(
+jhno varchar2(20),
+jhtitle varchar2(200),
+jhwriter varchar2(50),
+jhcontent varchar2(1000),
+jhdate date,
+jhhit number);
+
+insert into jhetcseoul values('1','제목1','작성자1','내용1',sysdate,'0');
+insert into jhetcseoul values('2','제목2','작성자2','내용2',sysdate,'0');
+insert into jhetcseoul values('3','제목3','작성자3','내용3',sysdate,'0');
+select * from jhetcseoul;
+
+commit;
+
+select jhno,jhtitle,jhwriter,jhcontent,jhdate,jhhit from jhetcseoul;
+
+update jhetcseoul set jhtitle='제목2',jhcontent='내용2' where jhno=2;
+
+update jhetcseoul set jhtitle='제목3 수정',jhcontent='내용3 수정' where jhno=3;
+
+select jhno,jhtitle,jhwriter,jhcontent,jhdate,jhhit from jhetcseoul where jhno=3;
+
+
+
+
