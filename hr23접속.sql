@@ -3563,6 +3563,8 @@ insert into jhetcseoul values('2','제목2','작성자2','내용2',sysdate,'0');
 insert into jhetcseoul values('3','제목3','작성자3','내용3',sysdate,'0');
 select * from jhetcseoul;
 
+select jhno,jhtitle,jhwriter,jhcontent,jhdate,jhhit from jhetcseoul where jhcontent like '%5%' order by to_number(jhno) desc;
+
 commit;
 
 select jhno,jhtitle,jhwriter,jhcontent,jhdate,jhhit from jhetcseoul;
@@ -3572,7 +3574,6 @@ update jhetcseoul set jhtitle='제목2',jhcontent='내용2' where jhno=2;
 update jhetcseoul set jhtitle='제목3 수정',jhcontent='내용3 수정' where jhno=3;
 
 select jhno,jhtitle,jhwriter,jhcontent,jhdate,jhhit from jhetcseoul where jhno=3;
-
 
 
 
