@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>여행 검색</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+  <div class="search-container">
+    <label for="destination"></label>
+    <input type="text" id="destination" placeholder="목적지를 입력하세요" class="destination-input">
+    <div id="second-line">
+    <label for="date">날짜:</label>
+    <div class="date-dropdown">
+      <input type="date" id="departure-date" placeholder="출발일자">
+      <input type="date" id="return-date" placeholder="도착일자">
+    </div>
+
+    <div class="dropdown-container">
+      <label for="adults">성인:</label>
+      <div class="dropdown">
+        <button class="dropdown-btn" onclick="changeAdults(-1)">-</button>
+        <span id="adults-count">1</span>
+        <button class="dropdown-btn" onclick="changeAdults(1)">+</button>
+      </div>
+    </div>
+
+    <div class="dropdown-container">
+      <label for="children">어린이:</label>
+      <div class="dropdown">
+        <button class="dropdown-btn" onclick="changeChildren(-1)">-</button>
+        <span id="children-count">0</span>
+        <button class="dropdown-btn" onclick="changeChildren(1)">+</button>
+      </div>
+    </div>
+
+    <button onclick="search()">검색</button>
+  </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
