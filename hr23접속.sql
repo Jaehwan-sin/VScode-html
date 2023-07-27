@@ -3575,6 +3575,50 @@ update jhetcseoul set jhtitle='¼ÕÈï¹Î2',jhcontent='¼ÕÈï¹Î2' where jhno=11;
 update jhetcseoul set jhtitle='Á¦¸ñ3 ¼öÁ¤',jhcontent='³»¿ë3 ¼öÁ¤' where jhno=3;
 
 select jhno,jhtitle,jhwriter,jhcontent,jhdate,jhhit from jhetcseoul where jhno=3;
+------------------Spring 230727-----------------------------
+create table replyboard(
+bid number(4) primary key,
+bname varchar2(20),
+btitle varchar2(100),
+bcontent varchar2(300),
+bdate Date default sysdate,
+bhit number(4) default 0,
+bgroup number(4),
+bstep number(4),
+bindent number(4));
+
+select * from replyboard;
+create sequence replyboard_seq;
+insert into replyboard values(replyboard_seq.nextval,'jh','java1','java111',sysdate,0,replyboard_seq.currval,0,0);
+commit; 
+
+--¼Ò¹®ÀÚ º¯È¯ Alt+'
+select bid,bname,btitle,bcontent,bdate,bhit,bgroup,bstep,bindent from replyboard;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
