@@ -3590,7 +3590,7 @@ bindent number(4));
 select * from replyboard;
 create sequence replyboard_seq;
 insert into replyboard values(replyboard_seq.nextval,'jh','java1','java111',sysdate,0,replyboard_seq.currval,0,0);
-commit; 
+commit;
 
 --소문자 변환 Alt+'
 select bid,bname,btitle,bcontent,bdate,bhit,bgroup,bstep,bindent from replyboard;
