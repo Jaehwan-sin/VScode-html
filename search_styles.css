@@ -8,12 +8,10 @@ body {
 .main-section {
     height: 500px;
     flex-grow: 1;
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    display: flex;
-    justify-content: space-between;
 }
 
 .date-guest-search {
@@ -52,9 +50,17 @@ button {
 .search-box select {
     margin: 5px;
     padding: 10px;
-    display: flex;
+    /* display: flex; */
 }
 
+.person {
+    margin: 5px;
+}
+
+.search-box input[type="date"],
+.search-box .person {
+    /* flex-wrap: wrap; */
+}
 /* 드롭다운 버튼 스타일 */
 .dropdown-btn {
     background-color: #007bff;

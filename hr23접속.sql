@@ -3590,35 +3590,30 @@ bindent number(4));
 select * from replyboard;
 create sequence replyboard_seq;
 insert into replyboard values(replyboard_seq.nextval,'jh','java1','java111',sysdate,0,replyboard_seq.currval,0,0);
+-- replyboard_seq.currval 의 의미는 앞에 replyboard_seq.nextval과 동일한 번호가 입력되라는 뜻
 commit;
 
 --소문자 변환 Alt+'
 select bid,bname,btitle,bcontent,bdate,bhit,bgroup,bstep,bindent from replyboard;
 
+----------------------230728 pizzamission-----------------------------------
+create table pz_board(
+pzid number(4) primary key,
+pzname varchar2(20),
+pzsubj varchar2(100),
+pzcontent varchar2(300),
+pzdate Date default sysdate,
+pzhit number(4) default 0,
+pzgroup number(4),
+pzstep number(4),
+pzintent number(4));
 
+create sequence pz_board_seq;
 
+select * from pz_board;
+insert into pz_board values(pz_board_seq.nextval,'피자name','피자subj','피자내용',sysdate,0,pz_board_seq.currval,0,0);
+commit;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+select pzid,pzname,pzsubj,pzcontent,pzdate,pzhit,pzgroup,pzstep,pzintent from pz_board where pzid=1;
+delete from pz_board where pzid=1;
+rollback;
