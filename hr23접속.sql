@@ -3588,14 +3588,32 @@ bstep number(4),
 bindent number(4));
 
 select * from replyboard;
+select * from replyboard order by bid desc;
+delete replyboard where bid=1;
 create sequence replyboard_seq;
 insert into replyboard values(replyboard_seq.nextval,'jh','java1','java111',sysdate,0,replyboard_seq.currval,0,0);
 -- replyboard_seq.currval 의 의미는 앞에 replyboard_seq.nextval과 동일한 번호가 입력되라는 뜻
+
+update replyboard set bname='jh', btitle='java1', bcontent='java1111' where bid=1;
+
+--조회수 증가
+update replyboard set bhit=bhit+1 where bid=1;
+-- 답변(댓글) 작성
+insert into replyboard(bid,bname,btitle,bcontent,bgroup,bstep,bindent) 
+values(replyboard_seq.nextval,'jh2','java1','java111',2,1,1);
+
 commit;
 
 --소문자 변환 Alt+'
 select bid,bname,btitle,bcontent,bdate,bhit,bgroup,bstep,bindent from replyboard;
 
+--댓글 후 수정
+select bid,bname,btitle,bcontent,bdate,bhit,bgroup,bstep,bindent from replyboard order by bgroup desc,bstep;
+
+--step 1증가 시키는 쿼리
+update replyboard 
+set bstep=bstep+1
+where bgroup=2 and bstep>2;
 ----------------------230728 pizzamission-----------------------------------
 create table pz_board(
 pzid number(4) primary key,
@@ -3613,7 +3631,7 @@ create sequence pz_board_seq;
 select * from pz_board;
 insert into pz_board values(pz_board_seq.nextval,'피자name','피자subj','피자내용',sysdate,0,pz_board_seq.currval,0,0);
 commit;
-
+update pz_board set pzstep=pzstep+1 where pzgroup=1 and pzstep=0;
 select pzid,pzname,pzsubj,pzcontent,pzdate,pzhit,pzgroup,pzstep,pzintent from pz_board where pzid=1;
 delete from pz_board where pzid=1;
 rollback;
