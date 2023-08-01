@@ -3631,7 +3631,7 @@ create sequence pz_board_seq;
 select * from pz_board;
 insert into pz_board values(pz_board_seq.nextval,'피자name','피자subj','피자내용',sysdate,0,pz_board_seq.currval,0,0);
 commit;
-update pz_board set pzstep=pzstep+1 where pzgroup=1 and pzstep=0;
+update pz_board set pzstep=pzstep+1 where pzgroup=1 and pzstep>0;
 select pzid,pzname,pzsubj,pzcontent,pzdate,pzhit,pzgroup,pzstep,pzintent from pz_board where pzid=1;
 delete from pz_board where pzid=1;
 rollback;
