@@ -3,110 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="search_styles.css">
+    <link rel="stylesheet" href="datepicker.css">
+    <script src="search.js"></script> 
+    <!-- datepicker -->
+    <script src="datepicker.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- datepicker -->
+    <script>
+        $.datepicker.setDefaults({
+            dateFormat: 'yy-mm-dd',
+            prevText: '이전 달',
+            nextText: '다음 달',
+            monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+            dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+            dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+            showMonthAfterYear: true,
+            yearSuffix: '년'
+        });
+    
+        $(function() {
+            $("#datepicker1").datepicker();
+        });
+        
+        // 조회기간
+        $ (function() {
+            $("#datepicker1,#datepicker2").datepicker();
+        });
+    </script>
     <title>Airbnb Clone</title>
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            margin: 0;
-        }
-
-        .main-section {
-            height: 500px;
-            flex-grow: 1;
-            display: inline-flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .date-guest-search {
-            display: flex;
-            align-items: center;
-            margin-left: 10px; /* 수정된 부분: 좌측 마진 추가 */
-        }
-
-        .search-box {
-            /* width: 800px; */
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            margin-bottom: 20px;  
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            justify-content: space-around;
-        }
-
-        button {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            padding: 10px 20px;
-        }
-
-        .search-box input[type="text"] {
-            width: 600px;
-            border-style: none;
-            text-align: center;
-            font-size: 18px;
-        }
-
-        .search-box input[type="text"],
-        .search-box input[type="date"],
-        .search-box select {
-            margin: 5px;
-            padding: 10px;
-        }
-
-        .person {
-            margin: 5px;
-        }
-
-        .search-box input[type="date"],
-        .search-box .person {
-            /* flex-wrap: wrap; */
-        }
-
-        /* 드롭다운 버튼 스타일 */
-        .dropdown-btn {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            padding: 10px 20px;
-        }
-
-        /* 드롭다운 콘텐츠 스타일 - 기본적으로 숨김 */
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-        }
-
-        /* 드롭다운 콘텐츠 내의 링크 스타일 */
-        .dropdown-content a {
-            display: block;
-            padding: 10px;
-            text-decoration: none;
-            color: #333;
-        }
-
-        /* 드롭다운 콘텐츠에 마우스를 올렸을 때 스타일 */
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-        }
-
-        /* 드롭다운 콘텐츠 표시 - 버튼에 마우스를 올렸을 때 */
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-    </style>
-    <!-- <link rel="stylesheet" href="search_styles.css"> -->
-    <link rel="js" href="search.js">
 </head>
 <body>
 <!-- Header -->
@@ -115,58 +45,37 @@
 </header>
 
 <!-- Main Content -->
-<!-- <section class="main-section">
-    <div class="search-box">
-        <input type="text" placeholder="여행지를 검색하세요">
-        <div class="date-guest-search">
-            <input type="date" placeholder="체크인">
-            <input type="date" placeholder="체크아웃">
-            <div class="dropdown">
-                <button class="dropdown-btn">인원수</button>
-                <div class="dropdown-content">
-                    <div class="person">
-                        <span>성인</span>
-                        <button class="decrement-btn">-</button>
-                        <span class="count">0</span>
-                        <button class="increment-btn">+</button>
-                    </div>
-                    <div class="person">
-                        <span>어린이</span>
-                        <button class="decrement-btn">-</button>
-                        <span class="count">0</span>
-                        <button class="increment-btn">+</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <button>검색</button>
-    </div>
-</section> -->
+
 <section class="main-section">
     <div class="search-box">
-        <input type="text" placeholder="여행지를 검색하세요">
+        <input type="text" id="search_field" style="width: 740px;"  placeholder="여행지를 검색하세요.">
         <div class="date-guest-search">
-            <input type="date" placeholder="체크인">
-            <input type="date" placeholder="체크아웃">
+            <input type="text" id="datepicker1" placeholder="체크인">
+            <input type="text" id="datepicker2" placeholder="체크아웃">
+            
             <div class="dropdown">
-                <button class="dropdown-btn">인원수</button>
+                <button class="dropdown-btn">인원 수</button>
+                <button class="search_button">검색</button>
                 <div class="dropdown-content">
                     <div class="person">
+                        <div class="button-container">
                         <span>성인</span>
-                        <button class="decrement-btn">-</button>
-                        <span class="count">0</span>
-                        <button class="increment-btn">+</button>
+                            <button class="decrement-btn">-</button>
+                            <span class="count">0</span>
+                            <button class="increment-btn">+</button>
+                        </div>
                     </div>
                     <div class="person">
-                        <span>어린이</span>
-                        <button class="decrement-btn">-</button>
-                        <span class="count">0</span>
+                        <div class="button-container">
+                            <span>어린이</span>
+                            <button class="decrement-btn">-</button>
+                            <span class="count">0</span>
+                        </div>
                         <button class="increment-btn">+</button>
                     </div>
                 </div>
             </div>
         </div>
-        <button>검색</button>
     </div>
 </section>
 
