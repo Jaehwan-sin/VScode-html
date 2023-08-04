@@ -3635,3 +3635,54 @@ update pz_board set pzstep=pzstep+1 where pzgroup=1 and pzstep>0;
 select pzid,pzname,pzsubj,pzcontent,pzdate,pzhit,pzgroup,pzstep,pzintent from pz_board where pzid=1;
 delete from pz_board where pzid=1;
 rollback;
+
+-----------------230803 페이징 처리---------------------
+select * from replyboard;
+
+select rownum, replyboard. * from replyboard order by bdate desc;
+
+--정렬이 되고 rownum 추가
+select rownum,n. * from (select * from replyboard order by bdate desc) n;
+
+--1~5번까지 추출
+select rownum,n. * from (select * from replyboard order by bdate desc) n
+where rownum between 1 and 5;
+
+--6~10번까지 추출
+select rownum,n. * from (select * from replyboard order by bdate desc) n
+where rownum between 6 and 10;
+
+--6~10번까지 추출 해결
+select * from
+(select rownum num,n. * from (select * from replyboard order by bdate desc) n)
+where rownum between 6 and 10;
+
+--230804 search
+select * from replyboard;
+
+select count(*) from replyboard where btitle like '%답%';
+
+select * from
+(select rownum num,n. * from (select * from replyboard order by bdate desc) n
+where btitle like '%답%')
+where rownum between 1 and 5;
+
+select rownum num,n. * from (select * from replyboard order by bdate desc) n
+where btitle like '%답%';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
