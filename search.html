@@ -15,7 +15,11 @@
     <!-- datepicker -->
     <script>
         $.datepicker.setDefaults({
+<<<<<<< HEAD
             dateFormat: 'yy년 mm월 dd일',
+=======
+            dateFormat: 'yy-mm-dd',
+>>>>>>> 2bda8d303957a9061bf00fa5ad8a05419b47043e
             prevText: '이전 달',
             nextText: '다음 달',
             monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
@@ -45,6 +49,7 @@
 </header>
 
 <!-- Main Content -->
+<<<<<<< HEAD
 <!-- <form action="search_page"> -->
     <section class="main-section">
         <div class="search-box">
@@ -80,6 +85,41 @@
         </div>
     </section>
 </form>
+=======
+
+<section class="main-section">
+    <div class="search-box">
+        <input type="text" id="search_field" style="width: 740px;"  placeholder="여행지를 검색하세요.">
+        <div class="date-guest-search">
+            <input type="text" id="datepicker1" placeholder="체크인">
+            <input type="text" id="datepicker2" placeholder="체크아웃">
+            
+            <div class="dropdown">
+                <button class="dropdown-btn">인원 수</button>
+                <button class="search_button">검색</button>
+                <div class="dropdown-content">
+                    <div class="person">
+                        <div class="button-container">
+                        <span>성인</span>
+                            <button class="decrement-btn">-</button>
+                            <span class="count">0</span>
+                            <button class="increment-btn">+</button>
+                        </div>
+                    </div>
+                    <div class="person">
+                        <div class="button-container">
+                            <span>어린이</span>
+                            <button class="decrement-btn">-</button>
+                            <span class="count">0</span>
+                        </div>
+                        <button class="increment-btn">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+>>>>>>> 2bda8d303957a9061bf00fa5ad8a05419b47043e
 
 <footer>
     

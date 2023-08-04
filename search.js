@@ -24,4 +24,9 @@ document.addEventListener("DOMContentLoaded", function () {
         countSpan.textContent = count;
         });
     });
+<<<<<<< HEAD
 });
+=======
+});
+
+>>>>>>> 2bda8d303957a9061bf00fa5ad8a05419b47043e
