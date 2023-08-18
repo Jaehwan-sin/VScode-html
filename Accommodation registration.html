@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 카카오 지도 -->
+    <!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9bdfa0d98e7c6b1949b387b6e48e0de3"></script>  -->
+    <title>상품등록</title>
+</head>
+<body>
+    <p>숙소 등록</p>
+    <hr>
+    <p>숙소 공통 정보</p>
+    <select name="location">
+        <option value=" " selected>지역 선택</option>
+        <option value="서울">서울</option>
+        <option value="경기">경기</option>
+        <option value="제주">제주</option>
+        <option value="강원">강원</option>
+        <option value="전라">전라</option>
+        <option value="경상">경상</option>
+    </select>
+    <select name="hotel">
+        <option value=" " selected>카테고리</option>
+        <option value="호텔">호텔</option>
+        <option value="모텔">모텔</option>
+        <option value="펜션">펜션</option>
+    </select>
+    <p>제목</p>
+    <input type="text" name="title" id="title" value="제목을 입력하세요.">
+    <p>썸네일</p>
+    <div id="file" style="width: 300px; height: 400px; color: aqua;"></div>
+    <input type="file" class="real-upload" accept="image/*" value="업로드" required multiple>
+    <div class="upload"></div>
+    <script>
+        function getImageFiles(e) {
+        const files = e.currentTarget.files;
+        console.log(typeof files, files);
+        }
+
+        const realUpload = document.querySelector('.real-upload');
+        const upload = document.querySelector('.upload');
+
+        upload.addEventListener('click', () => realUpload.click());
+        realUpload.addEventListener('change', getImageFiles);
+    </script>
+    <!-- <label class="file-label" for="chooseFile">업로드</label>
+        <input class="file" id="chooseFile"
+        type="file" 
+        onchange="dropFile.handleFiles(this.files)"
+        accept="image/png, image/jpeg, image/gif"> -->
+        <div id="map" style="width:500px;height:400px; "></div>
+        <!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services"></script> -->
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9bdfa0d98e7c6b1949b387b6e48e0de3"></script>
+        <p>지도를 클릭해주세요!</p> 
+        <div id="clickLatlng"></div>
+        <script>
+            var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                mapOption = { 
+                    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                    level: 3 // 지도의 확대 레벨
+                };
+
+            var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+            // 지도를 클릭한 위치에 표출할 마커입니다
+            var marker = new kakao.maps.Marker({ 
+                // 지도 중심좌표에 마커를 생성합니다 
+                position: map.getCenter() 
+            }); 
+            // 지도에 마커를 표시합니다
+            marker.setMap(map);
+
+            // 지도에 클릭 이벤트를 등록합니다
+            // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
+            kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
+                
+                // 클릭한 위도, 경도 정보를 가져옵니다 
+                var latlng = mouseEvent.latLng; 
+                
+                // 마커 위치를 클릭한 위치로 옮깁니다
+                marker.setPosition(latlng);
+                
+                var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
+                message += '경도는 ' + latlng.getLng() + ' 입니다';
+                
+                var resultDiv = document.getElementById('clickLatlng'); 
+                resultDiv.innerHTML = message;
+                
+            });
+        </script>
+        <span>위도</span>
+        <input type="text" name="Latitude" value="위도를 입력해주세요.">
+        <span>경도</span>
+        <input type="text" name="longitude" value="경도를 입력해주세요.">
+        <p>숙소 정보</p>
+        <textarea name="acinfo" id="" cols="30" rows="10">숙소 공통 정보를 입력해주세요.</textarea>
+        <p>숙소 정책</p>
+        <textarea name="acinfo" id="" cols="30" rows="10">숙소 정책을 입력해주세요.</textarea>
+        <p>숙소 객실 정보</p>
+        <div id="detailinfo">
+            <input type="box" style="width: 200px; height: 200px; color: beige;">
+            <input type="box" style="width: 200px; height: 200px; color: beige;">
+            <input type="box" style="width: 200px; height: 200px; color: beige;">
+
+        </div>
+</body>
+</html>
